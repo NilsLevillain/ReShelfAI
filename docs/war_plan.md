@@ -238,7 +238,7 @@ How it works:
 
 ### 5.7 Greedy baseline
 
-Sort lots by value at risk (units × cost × urgency). Assign each lot to the admissible channel with the best recovery factor that still has capacity. It uses the same constraint checker as the optimizer, so the comparison is fair.
+A planner proxy, defined in ADR 005. Sort lots by value at risk (units × cost × urgency). Assign each lot to the admissible channel with the best recovery factor that still has capacity. It applies only the rules a planner checks by hand (shelf life, brand tier, channel capacity; configurable as `planner_rules`) and ignores assortment, coverage and push. The full constraint checker, the same one the optimizer uses, audits the plan and lists violations per named constraint. Reports raw value, violations, and compliant value after a deterministic repair. `baseline_expert` (all rules plus local swaps) runs in CI as a sensitivity check.
 
 ### 5.8 KPIs per scenario
 
@@ -247,7 +247,7 @@ Value recovered, units destroyed, brand risk index (Σ β·x / Σ v·x), SKUs se
 ### 5.9 Tests and benchmark
 
 * One pytest per constraint (feasible and violating cases), infeasible scenario, empty input, single channel, all lots eliminated.
-* Property test: optimizer value ≥ greedy value on any seeded dataset.
+* Property test (ADR 005): on 50 neutral seeds, optimizer score ≥ compliant baseline score, and optimizer net value ≥ baseline net value whenever the baseline score is within ε of the optimizer's, up to the reported MIP gap.
 * Benchmark matrix in `docs/benchmark.md`: 300 / 2,000 / 10,000 SKUs × 5 / 20 channels, with HiGHS and CBC, time and gap.
 
 ---
@@ -295,6 +295,7 @@ Home → Stock overview (globe + stock health table) → Parameters → Results 
 * The frontend reads precomputed JSON by default (Vercel or GitHub Pages).
 * If `VITE_API_URL` answers a health check, it switches to live mode.
 * A banner always shows "Cached results" or "Live solver".
+* The rule dial moves on a precomputed grid, so every dial position shows a real result.
 * API on Cloud Run, scaled to zero. Render is the fallback.
 
 ### 6.6 Built for the video
@@ -313,9 +314,9 @@ Each week is a vertical slice that ends with tests green and something runnable.
 | 1 | `docs/erd.md`, `docs/mapping.md`, rule defaults, generator | Solver | `make demo-data` reproducible, distribution tests pass |
 | 2 | Canonical schema, adapters, solver core, greedy baseline, constraint tests | API | `pytest` green, optimizer beats greedy on seed |
 | 3 | Rule trace, counterfactual, benchmark, FastAPI endpoints, persistence | UI | Endpoints in OpenAPI, benchmark table written |
-| 4 | Web shell, stock overview, stock table, globe | Parameters | Overview usable on precomputed JSON |
-| 5 | Parameter editor, run, results table and charts, deep dive, Excel export | Compare | Full planner flow runs end to end locally |
-| 6 | Scenario save, load, compare, Why panel UI | Second wave | Hero flow works, Playwright e2e passes |
+| 4 | Web shell, stock overview, stock table, thin hero slice (results, compare, Why panel) | Parameter editor, globe | Hero slice runs on precomputed JSON |
+| 5 | Parameter editor, run, results charts, scenario save and load, Excel export | Globe, deep dive | Full planner flow runs end to end locally |
+| 6 | Why panel full, compare polish, globe, Playwright e2e, deep dive (stretch) | Second wave | Hero flow works, Playwright e2e passes |
 | 7 | Docker, compose, CI/CD, deploy, demo mode, README, ADRs, screenshots, GIF | Video | Live link works from a cold start |
 | 8 | Remotion video | New features | 60 to 90 s MP4, embedded in README |
 
