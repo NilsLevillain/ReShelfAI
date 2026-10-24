@@ -6,6 +6,7 @@ How Reshelf was framed as a product before it was built. Start here.
 | --- | --- | --- |
 | `1_discovery/` | What do we know, what are we assuming, how do we test it? | Done (round 1) |
 | `2_strategy/` | Where do we play, how do we win, how do we make money? | Done (draft, hypotheses) |
+| `3_execution/` | What do we build, in what order, and how do we test it? | Draft (backlog, test scenarios) |
 | `product_statement/` | Who is it for, what problem, what vision? | To write |
 | `differentiators/` | Why Reshelf and not a spreadsheet or a planning suite? | To write |
 | `GTM_strategy/` | Who do we reach first, with what message and channel? | To write |
