@@ -67,9 +67,11 @@
   --rs-gradient-hero-overlay: linear-gradient(90deg, rgba(31,99,89,0.92) 0%, rgba(31,99,89,0.55) 55%, rgba(31,99,89,0.15) 100%);
   --rs-gradient-impact-card: linear-gradient(135deg, #a2b6d0 0%, #8bd8d3 100%);
   --rs-gradient-card-glow: radial-gradient(circle at 100% 100%, rgba(34,204,194,0.35) 0%, rgba(34,204,194,0) 55%);
+  --rs-gradient-hero-glow: radial-gradient(60rem 30rem at 85% 110%, rgba(34,204,194,0.38), transparent 70%), radial-gradient(40rem 20rem at 0% 0%, rgba(139,216,211,0.16), transparent 70%);
   --rs-type-family-sans: 'IBM Plex Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
   --rs-type-family-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --rs-type-family-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --rs-type-family-wordmark: 'Sitka Banner', 'Sitka Heading', 'Source Serif 4', Georgia, serif;
   --rs-type-size-xs: 0.75rem;
   --rs-type-size-sm: 0.8125rem;
   --rs-type-size-base: 0.875rem;
@@ -106,6 +108,11 @@
   --rs-space-6: 2rem;
   --rs-space-7: 3rem;
   --rs-space-8: 4rem;
+  --rs-size-icon-sm: 1rem;
+  --rs-size-icon-md: 1.25rem;
+  --rs-size-icon-lg: 1.5rem;
+  --rs-size-icon-chip: 2.5rem;
+  --rs-size-mark: 1.75rem;
   --rs-radius-sm: 4px;
   --rs-radius-md: 8px;
   --rs-radius-lg: 12px;
@@ -115,17 +122,25 @@
   --rs-motion-duration-fast: 120ms;
   --rs-motion-duration-base: 200ms;
   --rs-motion-duration-slow: 320ms;
+  --rs-motion-duration-flow: 1600ms;
   --rs-motion-easing-standard: cubic-bezier(0.2, 0, 0.38, 0.9);
   --rs-motion-easing-enter: cubic-bezier(0, 0, 0.38, 0.9);
   --rs-motion-easing-exit: cubic-bezier(0.2, 0, 1, 0.9);
-  --rs-layout-content-max: 1400px;
+  --rs-motion-easing-linear: linear;
+  --rs-layout-content-max: 2400px;
   --rs-layout-gutter: 24px;
   --rs-layout-nav-height: 56px;
   --rs-layout-hero-height: 136px;
   --rs-layout-hero-height-compact: 80px;
+  --rs-layout-root-size: clamp(16px, 0.3vw + 12.5px, 24px);
+  --rs-layout-pad: clamp(1rem, 4vw, 6rem);
+  --rs-layout-card-min: 272px;
+  --rs-layout-card-min-wide: 320px;
+  --rs-layout-card-min-stat: 192px;
   --rs-breakpoint-sm: 640px;
   --rs-breakpoint-md: 1024px;
   --rs-breakpoint-lg: 1440px;
+  --rs-breakpoint-xl: 1800px;
   --rs-bg-canvas: #f5f5f5;
   --rs-bg-surface: #ffffff;
   --rs-bg-subtle: #f0f0f0;
@@ -322,6 +337,10 @@
 .rs-text-code { font-family: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace; font-size: 0.75rem; line-height: 1rem; font-weight: 400; letter-spacing: 0; }
 .rs-text-kpi-hero { font-family: 'IBM Plex Sans', 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 3rem; line-height: 3.5rem; font-weight: 500; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
 .rs-text-delta { font-family: 'IBM Plex Sans', 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.8125rem; line-height: 1.25rem; font-weight: 500; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.rs-text-wordmark { font-family: 'Sitka Banner', 'Sitka Heading', 'Source Serif 4', Georgia, serif; font-size: 1.5rem; line-height: 1em; font-weight: 600; letter-spacing: -0.01em; }
+.rs-text-display-hero { font-family: 'Sitka Banner', 'Sitka Heading', 'Source Serif 4', Georgia, serif; font-size: clamp(2rem, 1rem + 3.6vw, 4.5rem); line-height: 1.06em; font-weight: 600; letter-spacing: -0.015em; }
+.rs-text-section-title { font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif; font-size: clamp(1.625rem, 0.9rem + 2.2vw, 3rem); line-height: 1.12em; font-weight: 600; letter-spacing: -0.015em; }
+.rs-text-stat-value { font-family: 'IBM Plex Sans', 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: clamp(2.5rem, 1.5rem + 2.4vw, 4rem); line-height: 1em; font-weight: 500; letter-spacing: -0.02em; }
 
 .rs-tabular { font-variant-numeric: tabular-nums; }
 :focus-visible { outline: 2px solid var(--rs-border-focus); outline-offset: 2px; }

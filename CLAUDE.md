@@ -57,7 +57,8 @@ Source tables (SAP style CSV/Parquet/warehouse) -> SourceAdapter -> Canonical da
 * Use the reserved `data-testid` names listed in section 6.4 of the spec for hero elements.
 * Images: generated banners by default, otherwise only free to use sources listed in `design_system/IMAGERY.md`, each recorded in `design_system/assets/CREDITS.md`. Never reuse a mockup image.
 * The `_private/Figma` mockups were a starting point. Adapt their patterns, do not copy screens pixel for pixel, and do not carry over any name, logo, label or text from them.
-* **Workflow**: edit `design_system/tokens/tokens.json` → run `node design_system/scripts/build.mjs` → commit both `tokens.json` and `dist/` together. Never hand edit `dist/` files.
+* **Workflow**: edit `design_system/tokens/tokens.json` → run `node design_system/scripts/build.mjs` → commit both `tokens.json` and `dist/` together. Never hand edit `dist/` files. The same build also reads `components/components.css` (components and layout), `assets/icons.json` (icons) and rebuilds `product_management/recap.html` from `recap.src.html`.
+* **Nothing visual lives only in a page.** New colors, sizes, icons, components, logo variants and layout rules go into the design system first (see sections 6.5 and 12 to 14 of the spec). Use `rs-*` component classes and the icon sprite. Pages are fluid, not a centered column.
 * **Color conventions**: brand tiers (luxury/premium/mass) use violet, blue and teal, never mixed. Chart series and channel colors use the categorical order defined in `tokens.json`. WCAG contrast checked: avoid teal.400 for small text (4.33:1 is below the 4.5:1 minimum).
 * **Remotion**: import `{ tokens } from 'design_system/dist/tokens'`. Use `tokens.video.theme[props.theme ?? 'light']` for scene colors and `tokens.semantic[props.theme ?? 'light']` for UI inside components. Default mode is `light`.
 

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330" fill="none" role="img" aria-label="Sleeping stock moving from one shelf to three second life channels: outlet stores, donation and a clearance website">
+  <!-- Storytelling asset. Plays once (units travel, land), then the dashed lines keep flowing lightly. -->
+  <!-- Colors read from design tokens when inlined in a page, with the token values as fallback when opened alone. -->
+  <style>
+    .fl-text { font-family: var(--rs-type-family-sans, 'IBM Plex Sans', sans-serif); fill: currentColor; }
+    .fl-shelf { fill: var(--rs-color-teal-200, #8bd8d3); }
+    .fl-line { stroke: var(--rs-color-cyan-400, #22ccc2); stroke-width: 2; stroke-dasharray: 5 6; opacity: .9; animation: fl-flow var(--rs-motion-duration-flow, 1600ms) linear infinite; }
+    .fl-risk { fill: var(--rs-color-amber-400, #f7c733); }
+    .fl-risk-soft { fill: var(--rs-color-amber-200, #ffecb0); }
+    .fl-ok { fill: var(--rs-color-green-500, #59e0a0); }
+    @keyframes fl-flow { to { stroke-dashoffset: -11; } }
+    @media (prefers-reduced-motion: reduce) { .fl-line { animation: none; } }
+  </style>
+  <text class="fl-text" x="10" y="22" font-size="14" font-weight="600">Sleeping stock</text>
+  <rect class="fl-shelf" x="10" y="118" width="190" height="8" rx="4"/>
+  <rect class="fl-risk" x="22" y="84" width="34" height="34" rx="5"><animate attributeName="opacity" to="0" begin=".4s" dur=".3s" fill="freeze"/></rect>
+  <rect class="fl-risk" x="62" y="84" width="34" height="34" rx="5"><animate attributeName="opacity" to="0" begin=".8s" dur=".3s" fill="freeze"/></rect>
+  <rect class="fl-risk" x="102" y="84" width="34" height="34" rx="5"><animate attributeName="opacity" to="0" begin="1.2s" dur=".3s" fill="freeze"/></rect>
+  <rect class="fl-risk-soft" x="142" y="84" width="34" height="34" rx="5"/>
+  <text class="fl-text" x="10" y="150" font-size="12" opacity=".75">Near expiry, discontinued, overproduced</text>
+
+  <path class="fl-line" d="M200 100 C 290 100, 300 50, 380 50"/>
+  <path class="fl-line" d="M200 100 C 290 100, 300 165, 380 165"/>
+  <path class="fl-line" d="M200 100 C 290 100, 300 280, 380 280"/>
+
+  <text class="fl-text" x="380" y="14" font-size="14" font-weight="600">Outlet stores</text>
+  <rect class="fl-shelf" x="380" y="58" width="170" height="8" rx="4"/>
+  <text class="fl-text" x="380" y="129" font-size="14" font-weight="600">Donation</text>
+  <rect class="fl-shelf" x="380" y="173" width="170" height="8" rx="4"/>
+  <text class="fl-text" x="380" y="244" font-size="14" font-weight="600">Clearance website</text>
+  <rect class="fl-shelf" x="380" y="288" width="170" height="8" rx="4"/>
+
+  <rect class="fl-ok" x="392" y="28" width="30" height="30" rx="5" opacity="0"><animate attributeName="opacity" to="1" begin="1.6s" dur=".3s" fill="freeze"/></rect>
+  <rect class="fl-ok" x="392" y="143" width="30" height="30" rx="5" opacity="0"><animate attributeName="opacity" to="1" begin="2.0s" dur=".3s" fill="freeze"/></rect>
+  <rect class="fl-ok" x="392" y="258" width="30" height="30" rx="5" opacity="0"><animate attributeName="opacity" to="1" begin="2.4s" dur=".3s" fill="freeze"/></rect>
+
+  <rect class="fl-ok" x="-15" y="-15" width="30" height="30" rx="5" opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.9;1" begin=".4s" dur="1.2s" fill="freeze"/><animateMotion path="M200 100 C 290 100, 300 50, 380 50" begin=".4s" dur="1.2s" fill="freeze"/></rect>
+  <rect class="fl-ok" x="-15" y="-15" width="30" height="30" rx="5" opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.9;1" begin=".8s" dur="1.2s" fill="freeze"/><animateMotion path="M200 100 C 290 100, 300 165, 380 165" begin=".8s" dur="1.2s" fill="freeze"/></rect>
+  <rect class="fl-ok" x="-15" y="-15" width="30" height="30" rx="5" opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.9;1" begin="1.2s" dur="1.2s" fill="freeze"/><animateMotion path="M200 100 C 290 100, 300 280, 380 280" begin="1.2s" dur="1.2s" fill="freeze"/></rect>
+</svg>

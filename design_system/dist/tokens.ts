@@ -258,13 +258,15 @@ export const tokens = {
   "gradient": {
     "hero-overlay": "linear-gradient(90deg, rgba(31,99,89,0.92) 0%, rgba(31,99,89,0.55) 55%, rgba(31,99,89,0.15) 100%)",
     "impact-card": "linear-gradient(135deg, #a2b6d0 0%, #8bd8d3 100%)",
-    "card-glow": "radial-gradient(circle at 100% 100%, rgba(34,204,194,0.35) 0%, rgba(34,204,194,0) 55%)"
+    "card-glow": "radial-gradient(circle at 100% 100%, rgba(34,204,194,0.35) 0%, rgba(34,204,194,0) 55%)",
+    "hero-glow": "radial-gradient(60rem 30rem at 85% 110%, rgba(34,204,194,0.38), transparent 70%), radial-gradient(40rem 20rem at 0% 0%, rgba(139,216,211,0.16), transparent 70%)"
   },
   "type": {
     "family": {
       "sans": "'IBM Plex Sans', 'Segoe UI', system-ui, -apple-system, sans-serif",
       "serif": "'Source Serif 4', Georgia, 'Times New Roman', serif",
-      "mono": "'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace"
+      "mono": "'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace",
+      "wordmark": "'Sitka Banner', 'Sitka Heading', 'Source Serif 4', Georgia, serif"
     },
     "size": {
       "xs": 12,
@@ -400,6 +402,34 @@ export const tokens = {
       "line": "20",
       "weight": "500",
       "tracking": "0"
+    },
+    "wordmark": {
+      "family": "'Sitka Banner', 'Sitka Heading', 'Source Serif 4', Georgia, serif",
+      "size": "24",
+      "line": "1em",
+      "weight": "600",
+      "tracking": "-0.01em"
+    },
+    "display-hero": {
+      "family": "'Sitka Banner', 'Sitka Heading', 'Source Serif 4', Georgia, serif",
+      "size": "clamp(2rem, 1rem + 3.6vw, 4.5rem)",
+      "line": "1.06em",
+      "weight": "600",
+      "tracking": "-0.015em"
+    },
+    "section-title": {
+      "family": "'Source Serif 4', Georgia, 'Times New Roman', serif",
+      "size": "clamp(1.625rem, 0.9rem + 2.2vw, 3rem)",
+      "line": "1.12em",
+      "weight": "600",
+      "tracking": "-0.015em"
+    },
+    "stat-value": {
+      "family": "'IBM Plex Sans', 'Segoe UI', system-ui, -apple-system, sans-serif",
+      "size": "clamp(2.5rem, 1.5rem + 2.4vw, 4rem)",
+      "line": "1em",
+      "weight": "500",
+      "tracking": "-0.02em"
     }
   },
   "space": {
@@ -412,6 +442,13 @@ export const tokens = {
     "6": 32,
     "7": 48,
     "8": 64
+  },
+  "size": {
+    "icon-sm": 16,
+    "icon-md": 20,
+    "icon-lg": 24,
+    "icon-chip": 40,
+    "mark": 28
   },
   "radius": {
     "sm": 4,
@@ -427,25 +464,33 @@ export const tokens = {
     "duration": {
       "fast": 120,
       "base": 200,
-      "slow": 320
+      "slow": 320,
+      "flow": 1600
     },
     "easing": {
       "standard": "cubic-bezier(0.2, 0, 0.38, 0.9)",
       "enter": "cubic-bezier(0, 0, 0.38, 0.9)",
-      "exit": "cubic-bezier(0.2, 0, 1, 0.9)"
+      "exit": "cubic-bezier(0.2, 0, 1, 0.9)",
+      "linear": "linear"
     }
   },
   "layout": {
-    "content-max": 1400,
+    "content-max": 2400,
     "gutter": 24,
     "nav-height": 56,
     "hero-height": 136,
-    "hero-height-compact": 80
+    "hero-height-compact": 80,
+    "root-size": "clamp(16px, 0.3vw + 12.5px, 24px)",
+    "pad": "clamp(1rem, 4vw, 6rem)",
+    "card-min": 272,
+    "card-min-wide": 320,
+    "card-min-stat": 192
   },
   "breakpoint": {
     "sm": 640,
     "md": 1024,
-    "lg": 1440
+    "lg": 1440,
+    "xl": 1800
   },
   "video": {
     "width": 1920,

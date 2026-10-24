@@ -2,7 +2,9 @@
 
 Evidence level: the base palette is **sampled from the author's early mockups**. The type pairing, the hero flow components, dark mode and the video themes are **derived** for this project from the strategy and war plan (marked *derived*). Nothing here is validated with users yet.
 
-Source of truth is `tokens/tokens.json`. Run `node design_system/scripts/build.mjs` to regenerate `dist/tokens.css`, `dist/tokens.ts` and `dist/preview.html` (open it to see everything below, with a theme switch).
+Source of truth is `tokens/tokens.json`, plus `assets/icons.json` for icons and `components/components.css` for components (hand written, tokens only). Run `node design_system/scripts/build.mjs` to regenerate everything in `dist/` and the recap page. Open `dist/preview.html` to see tokens, logo, icons and components, with a theme switch.
+
+Rule: nothing visual is invented inside a page. A new color, size, icon, component or layout rule goes into the design system first, then the page uses it. The recap page `product_management/recap.html` is built from this system and is the reference for the feature page pattern (section 6.5).
 
 ## 1. Provenance and what changed
 
@@ -113,7 +115,8 @@ KPI tiles use `tile.yellow`, `tile.aqua`, `tile.lilac`, `tile.rose`, in that ord
 | Role | Family | Why |
 |---|---|---|
 | UI and data | **IBM Plex Sans** | Open license (OFL), tabular figures, clear at 12px in tables |
-| Navigation and wordmark | **Source Serif 4** | Gives a calm editorial signature against dense data |
+| Navigation, page headlines | **Source Serif 4** | Gives a calm editorial signature against dense data |
+| Wordmark and feature hero headline | **Sitka Banner** (`type.family.wordmark`), Source Serif 4 as fallback | Sitka ships with Windows only, so any asset that must look identical gets the wordmark converted to outlines. Weight 600 |
 | IDs, codes, constraint names | **IBM Plex Mono** | EAN, SKU and rule names align in columns |
 
 Free for web, Remotion and print. Web: `@fontsource/ibm-plex-sans`, `@fontsource/source-serif-4`, `@fontsource/ibm-plex-mono`. Video: `@remotion/google-fonts`. The pairing is my call.
@@ -133,7 +136,7 @@ Free for web, Remotion and print. Web: `@fontsource/ibm-plex-sans`, `@fontsource
 
 Weights: 400 body, 500 labels and numbers, 600 titles and table head, 700 page titles. Numbers use tabular figures. Lines under 80 characters. Sentence case, no all caps.
 
-Text style roles (generated as `.rs-text-<role>`): `display`, `page-title`, `page-lede`, `card-title`, `nav`, `body`, `label`, `table-head`, `table-cell`, `kpi-value`, `kpi-label`, `kpi-hero`, `delta`, `code`.
+Text style roles (generated as `.rs-text-<role>`): `display`, `page-title`, `page-lede`, `card-title`, `nav`, `body`, `label`, `table-head`, `table-cell`, `kpi-value`, `kpi-label`, `kpi-hero`, `delta`, `code`, plus the feature page set: `wordmark`, `display-hero`, `section-title`, `stat-value`. The last three are fluid (`clamp`), so headlines and big numbers grow with the screen.
 
 ### Number format *derived*
 
@@ -150,8 +153,8 @@ Text style roles (generated as `.rs-text-<role>`): `display`, `page-title`, `pag
 * **Space**: 4px base. Steps 4, 8, 12, 16, 24, 32, 48, 64. Card padding 16 or 24, card gap 24.
 * **Radius**: 4 buttons and inputs, 8 cards and tiles, 12 modals, pill for chips.
 * **Shadow**: `card` faint two layer. `overlay` for modals and toasts only.
-* **Layout**: content max 1400, nav 56, hero 136 on the home page, 80 compact on inner pages, 24 gutter. Breakpoints 640, 1024, 1440. Tables scroll sideways with a sticky first column, they never wrap.
-* **Motion**: 120, 200, 320 ms. Motion answers an action: rule dial moves and numbers tick, panel opens, toast appears. No entrance animation on page load. Respects reduced motion. The one allowed flourish is the euro delta counting to its value after a rule change.
+* **Layout**: see section 14. Pages are fluid, nav is 56, hero 136 on the app home page, 80 compact on inner pages, 24 gutter between app panels. Tables scroll sideways with a sticky first column, they never wrap.
+* **Motion**: 120, 200, 320 ms. Motion answers an action: rule dial moves and numbers tick, panel opens, toast appears. No entrance animation on page load. Respects reduced motion. Allowed flourishes: the euro delta counting to its value after a rule change, and on a feature page the hero flow illustration (section 6.5), which plays once and then keeps its dashed lines flowing at `motion.duration.flow` (1600 ms per loop, linear). Hover on a card turns its border teal and fades in `gradient.card-glow`, and a chevron turns when a card opens. Decorative motion is never the only signal and stops under reduced motion.
 
 ## 6. Components
 
@@ -188,6 +191,33 @@ Text style roles (generated as `.rs-text-<role>`): `display`, `page-title`, `pag
 | AI draft card | Dashed indigo border, lilac ground, label "Drafted by AI, needs your approval", Approve and Discard buttons, the validated rule diff in a table | R18, R19 |
 | Decision log row | Owner, reason, approver, time, scenario link. Read only | R22 (pending E9) |
 | Empty and loading states | Plain sentence plus one action ("Run the optimizer to see results"). Skeleton rows for tables, never spinners alone | Voice |
+
+### 6.5 Feature page pattern (recap, landing, README site)
+
+Built in `components/components.css`, class prefix `rs-`. Reference page: `product_management/recap.html` (source `recap.src.html`).
+
+| Component | Class | Spec |
+|---|---|---|
+| Nav with tabs | `rs-nav`, `rs-tab` | 56 tall. Serif tab labels with an icon, active tab teal.500 with a 3px underline. Under 640 the tabs become a fixed bottom bar (thumb reach) |
+| Feature hero | `rs-hero` | `bg.brand` ground with `gradient.hero-glow`. `display-hero` headline in the wordmark family, one lede line, three outcome pills (icon in a teal.200 disc), a small "synthetic data" note, and the flow illustration on the right from 1024. The headline states the outcome in plain words, never the mechanism |
+| How it works strip | `rs-how` | Three steps overlapping the hero edge: icon chip, bold title, one line with a concrete example. Cost words use `compare.delta-cost` |
+| Page head | `rs-page-head`, `rs-evidence` | `section-title` question or claim, then one pill that states the evidence level (honest status) |
+| Stat card | `rs-card rs-stat` | `stat-value` number and a short label. The dashed variant (`rs-card--dashed`) is for an honest zero |
+| Card | `rs-card` | White, 8 radius, card shadow. **Hover: the border turns `border.brand` and `gradient.card-glow` fades in over 320 ms.** Optional icon chip on top, title, grey text, optional footer pushed to the bottom with `rs-card__foot` |
+| Cards grid | `rs-cards` | Auto fit columns from `layout.card-min`. **Cards in a row always share one height** (stretch). `--top` only for expandable cards. 3 up and 4 up variants, see section 14 |
+| Expandable card | `rs-bet` | A `details` card. The summary shows icon, title and "How we test it" with a chevron that turns 180 degrees. The body has a rule above it, with pass (green text) and fail (amber text) lines |
+| Segmented control | `rs-seg` | Pill buttons for filters and tab like switches. Selected is filled teal.500. Counts shown in a muted number |
+| Choice row | `rs-choice` | The left border color says the decision: green build now, blue later, magenta not doing. Always paired with text |
+| North star block | `rs-north` | Aqua tint, one metric in serif, three guardrails with an alert icon in amber |
+| Vision band | `rs-vision` | `gradient.impact-card`, once per page, dark text |
+| Level table | `rs-table`, `rs-level` | Three dots plus the word, so color never carries meaning. Own product column tinted aqua |
+| Steps | `rs-step` | Top border says free (teal) or paid (blue). A pill says the state |
+| Week selector | `rs-weeks`, `rs-week`, `rs-week-detail` | Ten buttons with a build and a discovery bar and the hours as text, a diamond marks a gate. The selected week fills the detail panel |
+| Callout | `rs-callout` | Left bar plus tint. Amber for a warning or a rule, blue for information |
+| Go deeper | `rs-deeper` | A collapsed bar at the bottom of every pane with the detail that did not fit in the two minute read: lists in cards and links to the source documents |
+| Hero flow illustration | `assets/illustrations/flow-hero.svg` | Stock units travel from one shelf to three second life channels (plays once), then the dashed lines flow lightly. Colors read tokens. Reduced motion jumps to the end state |
+
+Writing rules for a feature page: plain words a stranger understands, no solver or project jargon in the visible copy, one idea per card, detail goes under Go deeper. Every number is honest: zero is shown as zero.
 
 ### 6.3 Page map
 
@@ -242,9 +272,38 @@ Use `dist/tokens.css` for any generated HTML. README banner: `teal.600` ground, 
 
 ## 11. Open questions and notes
 
-* **Wordmark and logo**: none yet. Needed before the video and README banner.
+* **Wordmark and logo**: a proposal exists (section 12). Needs the author's review before the video and README banner. Convert the wordmark to outlines for the banner and the video.
 * **R14 in the triage**: light and dark was declined as cosmetic. It is now a decision to support both. Cost is low with tokens, but update `3_feature_triage.md` and the backlog so the docs agree.
 * **Compact banner**: recommended 80px on inner pages to give tables more room. Confirm when the first page is built.
 * **Serif nav**: keep or drop to one family. Decide on the first built page.
 * **Chart palette**: color vision check pending.
 * **Dark tile and AI colors**: derived, check on screen.
+
+## 12. Logo and wordmark *derived, proposal*
+
+* **Mark** (`assets/logo/mark.svg`, mono version `mark-mono.svg`): three shelves. The middle shelf hands a short unit (teal.300) to a second shelf. It reads as "give stock a second shelf" and works at 16 px.
+* **Wordmark**: "Reshelf" in `type.family.wordmark` (Sitka Banner, fallback Source Serif 4), weight 600, tracking tight, sentence case. Primary text color on light, white on teal.
+* **Lockup**: mark left, 8 px gap (`space.2`), wordmark right, vertically centered. Nav size is `size.mark` (28).
+* **Color use**: mark teal.500 plus teal.300 on light grounds. White or `mark-mono` on teal.600 and photos. Clear space equals one shelf height on all sides. Do not recolor, rotate or add effects.
+* **For assets that leave the web** (README banner, video, social preview): export the wordmark to outlines so Sitka does not need to be installed.
+
+## 13. Icons
+
+* Source `assets/icons.json`. 24 by 24 grid, 2 px stroke, round caps and joins, `currentColor`. Built into `dist/icons.svg` (sprite) and `dist/icons.ts`.
+* Use: `<svg class="rs-icon"><use href="#rs-i-euro"/></svg>` after inlining the sprite once per page. Sizes: `rs-icon--sm` 16, default 20, `rs-icon--lg` 24 (`size.icon-*`).
+* **Icon chip**: `rs-icon-chip`, a 40 px round chip in teal.100 with a teal.600 glyph (dark theme: `bg.subtle` and `text.brand`). The chip is a grid, so a glyph is always centered. Never style the chip's parent with a descendant `span` rule, it breaks the centering.
+* Every glyph must be optically centered on 12,12. Check new icons in `dist/preview.html` inside a chip.
+* Meaning is fixed: euro is cost or money, scale is fairness, shield is a guarantee, alert is a guardrail, why is explanation, sliders is a rule. Do not reuse an icon for a second meaning.
+* Current set: search, chart, flag, bin, leaf, euro, sliders, why, hand, wallet, reach, team, chev, alert, shield, tag, box, lock, law, scale, play, clock, sun, moon, book.
+
+## 14. Responsive layout rules
+
+Tokens: `layout.root-size`, `layout.pad`, `layout.card-min`, `layout.card-min-wide`, `layout.card-min-stat`, `layout.content-max`, breakpoints `sm` 640, `md` 1024, `lg` 1440, `xl` 1800.
+
+* **Fluid, never a centered column.** The `html` font size is `clamp(16px, 0.3vw + 12.5px, 24px)`, so every rem grows on large screens and a zoomed out view fills the screen. Side padding is `clamp(1rem, 4vw, 6rem)`. Only an ultra wide cap (`content-max` 2400) stops growth. This replaces the old 1400 cap on feature pages. Dense app tables can still set their own max.
+* **Grids auto fit** from the card minimums: `repeat(auto-fit, minmax(min(100%, card-min), 1fr))`. From `xl` the card grids lock to 4 up (3 up for the wide variant).
+* **Below 640 (phone)**: one column, tabs move to a fixed bottom bar, the hero illustration shrinks to 24rem, how it works steps stack, week buttons wrap to 5 per row, the Go deeper hint text hides.
+* **From 640**: how it works is 3 columns, weeks are 10 in a row, north star is 2 columns.
+* **From 1024 (md)**: hero is 2 columns (text and illustration), split sections are 2 columns.
+* Tables scroll sideways inside their card. Touch targets 32 px minimum, and the bottom tab bar is 60 px.
+* Test at 390, 768, 1440 and 1920 wide, and zoomed out to 50%.
