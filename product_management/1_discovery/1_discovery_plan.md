@@ -10,7 +10,7 @@
 
 ---
 
-## 1. Ideas explored (10)
+## 1. Ideas explored (13)
 
 | # | Idea | Perspective | Rationale |
 |---|---|---|---|
@@ -24,8 +24,13 @@
 | 8 | Impact and ESG report (units saved, donation records) | PM | Gives the sustainability budget owner a reason to buy |
 | 9 | ERP mapping wizard and connector library | Eng | Portability is the path from demo to product |
 | 10 | Two sided marketplace where liquidators and NGOs bid on lots | PM | Large upside, but needs liquidity on both sides |
+| 11 | AI rule drafting: describe a rule in plain language, get a validated rule change shown as a diff, approved by the planner | PM + Eng | Removes the pain of editing rules; shows agent skills with guardrails |
+| 12 | AI scenario narrative: a written summary of a compare, built only from numbers the solver produced | Designer | Helps brand, finance and sustainability readers who will not open tables |
+| 13 | AI input checks: flag inconsistent S&OP stock or forecast inputs before a run | PM | Serves the process value (late or inconsistent inputs from other teams) |
 
-## 2. Selected for validation (5)
+AI stance: the solver decides allocations, AI never does. AI drafts, explains and checks, and a human approves every change, with a log of each step. Ideas 11 to 13 follow that rule.
+
+## 2. Selected for validation (6)
 
 | Idea | Why carried forward |
 |---|---|
@@ -35,7 +40,10 @@
 | 3 Brand protection | Likely the sharpest differentiator against generic optimizers |
 | 7 Early warning | Candidate for the roadmap; tests whether the problem starts earlier |
 
+Added after round 1: **11 AI rule drafting** is carried forward as a sixth idea (tested by E7). 12 and 13 are cheap follow ups, planned only if E7 passes.
+
 Parked: 6 (already planned, second wave), 8 (needs a buyer first), 9 (after first pilot), 10 (two sided risk, too early).
+Declined: an AI that chooses allocations itself. It would remove the explainability that is the product (see `../2_strategy/1_strategy.md`, section 5).
 
 ## 3. Critical assumptions
 
@@ -54,6 +62,10 @@ Impact and uncertainty are rated H, M or L. Leap of faith = H impact and H uncer
 | A9 | HiGHS solves 2,000 SKUs in seconds; counterfactual re solve stays under 10 s | Feasibility | H | L | 5 (test in week 3) |
 | A10 | A company can map its ERP data to the canonical schema with small effort | Feasibility | M | M | 4 |
 | A11 | Existing planning suites and liquidation platforms do not offer rule level cost explanation | Value | H | M | **2 (verify by desk research)** |
+| A12 | Planners trust an AI drafted rule change if it shows a diff, the solver validates it, and they approve it | Usability | M | H | 3 |
+| A13 | AI features raise willingness to buy or interest from reviewers, rather than reading as hype | Go to market | M | H | 3 |
+| A14 | AI generated text can be kept faithful to solver numbers (no invented figures), checked automatically | Feasibility | H | M | **2** |
+| A15 | Allocation involves several teams (S&OP stock, demand forecasts, brand, finance), and a shared process with an audit trail saves real effort | Value | H | H | **1 (leap of faith, test in E2)** |
 
 Grouped tests: A1, A3, A6 go into the same interviews. A2, A7, A8 go into the same walkthrough.
 
@@ -67,6 +79,9 @@ Grouped tests: A1, A3, A6 go into the same interviews. A2, A7, A8 go into the sa
 | E4 | A4 | XYZ pretotype: landing page with the 75 s video, shared in 3 practitioner communities | At least 10% of 200 visitors leave a contact for a pilot | M | Week 8 to 9 |
 | E5 | A5 | 5 peer reviews of the repo (PMs, tech leads), 5 minutes each, think aloud | 4 of 5 state problem, user and differentiator correctly; 4 of 5 would take the call | S | Week 7 |
 | E6 | A9 | Automated benchmark in CI (already in the war plan) | 2,000 SKUs under 10 s, gap reported | S | Week 3 |
+| E7 | A12, A13 | Wizard of Oz: you play the AI. Planners type a rule in plain words, you return a diff and its euro cost from a precomputed run; compare with editing the rule in a form | 4 of 5 approve the diff without rewriting it; 3 of 5 prefer it to the form; no one reads it as hype | S | Week 5 to 6 |
+| E8 | A14 | Faithfulness eval in CI: every number in an AI narrative must match the solver output, over 50 seeded scenarios | 100% of numbers match; any mismatch fails the build | M | Only if E7 passes, week 7 |
+| E9 | A15 | Add process questions to E2: who supplies stock and forecast, how late, how many people touch one allocation, who approves | 5 of 8 name 3 or more teams involved and a recurring delay | S | Week 1 to 2 (inside E2) |
 
 ### Experiment details
 
@@ -112,6 +127,11 @@ Grouped tests: A1, A3, A6 go into the same interviews. A2, A7, A8 go into the sa
 | E4 above 10% | Draft a pilot offer and pricing hypothesis |
 | E4 below 3% | Rework the message with the value proposition and positioning skills before changing the product |
 | E5 fails | Rewrite the README top and the product_management index before adding features |
+| E7 passes | Build AI rule drafting after the hero flow; then run E8 before any AI narrative |
+| E7 fails | Keep AI out of the MVP; position it as roadmap only. The product stays stronger without a weak AI feature |
+| E8 fails | Do not ship AI narratives; fall back to templated text |
+| E9 passes | Add the process, audit trail and approvals to the pitch and to the roadmap (decision log) |
+| E9 fails | Keep the pitch on allocation quality only |
 
 ## 7. Next steps
 
