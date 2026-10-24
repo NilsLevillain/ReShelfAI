@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## State of the repo
 
-Pre code. Only planning documents exist: `docs/war_plan.md` (execution plan, source of truth for architecture and the 8 week schedule), `product_management/` (discovery, strategy, metrics), and empty scaffold folders (`apps/api`, `apps/web`, `data/*`, `infra`, `video`). Check the week table in `docs/war_plan.md` section 7 to see what is in scope now and what is explicitly "not built" yet.
+Pre code. Only planning documents exist: `docs/war_plan.md` (execution plan, source of truth for architecture and the 8 week schedule), `product_management/` (discovery, strategy, metrics), `design_system/` (tokens, spec, imagery guide), and empty scaffold folders (`apps/api`, `apps/web`, `data/*`, `infra`, `video`). Check the week table in `docs/war_plan.md` section 7 to see what is in scope now and what is explicitly "not built" yet.
 
 Commands below are **planned** in the war plan and do not exist until week 0 and 1 land: `make dev`, `make test`, `make demo-data`, `make precompute`. Python with `uv` and `pytest` (one test: `uv run pytest apps/api/tests/<file>::<test>`), web with `pnpm` and Vitest, one Playwright e2e test. Verify the Makefile exists before relying on them.
 
@@ -44,6 +44,26 @@ Source tables (SAP style CSV/Parquet/warehouse) -> SourceAdapter -> Canonical da
 * **Demo mode**: `make precompute` runs the real solver on each seeded scenario and writes `data/precomputed/*.json` (results, KPIs, traces, top counterfactuals). The frontend reads that JSON by default and switches to the live API if `VITE_API_URL` answers a health check. A banner shows "Cached results" or "Live solver".
 * TypeScript API types are generated from the FastAPI OpenAPI schema (`openapi-typescript`) and CI fails on drift. There is no shared schema package.
 * Seeds and parameters are fixed in `data/scenarios/*.yaml`. Every run, test, screenshot and video frame must be reproducible, and hero elements carry stable `data-testid` values for the Remotion and Playwright work.
+
+## Design system
+
+`design_system/` is the single visual source for the web app, the Remotion video and generated docs. Read `design_system/DESIGN_SYSTEM.md` before any UI, video or doc styling work.
+
+* `design_system/tokens/tokens.json` is the source of truth. Never hand edit `design_system/dist/`. After a token change run `node design_system/scripts/build.mjs` and commit `dist/` with it.
+* Never hard code a color, font size, radius or duration. Use `--rs-*` CSS variables, `.rs-text-*` classes, or `tokens` from `design_system/dist/tokens.ts`.
+* **Light is the default theme** for the app, the demo and the video. Dark is a switch (`data-theme` on the root, stored as `reshelf-theme`). Remotion compositions take a `theme` prop that defaults to `light` and read `tokens.video.theme[mode]` and `tokens.semantic[mode]`.
+* Fixed color pairs: greedy baseline is grey (`compare.baseline`), optimizer is teal (`compare.optimizer`), euro cost of a rule is amber (`compare.delta-cost`), AI drafted content is dashed indigo on lilac (`ai.*`). Solver content and AI content must never look alike.
+* Every screen with numbers shows a "Simulated data" badge. Every compared KPI says "against the greedy baseline".
+* Use the reserved `data-testid` names listed in section 6.4 of the spec for hero elements.
+* Images: generated banners by default, otherwise only free to use sources listed in `design_system/IMAGERY.md`, each recorded in `design_system/assets/CREDITS.md`. Never reuse a mockup image.
+* The `_private/Figma` mockups were a starting point. Adapt their patterns, do not copy screens pixel for pixel, and do not carry over any name, logo, label or text from them.
+* **Workflow**: edit `design_system/tokens/tokens.json` → run `node design_system/scripts/build.mjs` → commit both `tokens.json` and `dist/` together. Never hand edit `dist/` files.
+* **Color conventions**: brand tiers (luxury/premium/mass) use violet, blue and teal, never mixed. Chart series and channel colors use the categorical order defined in `tokens.json`. WCAG contrast checked: avoid teal.400 for small text (4.33:1 is below the 4.5:1 minimum).
+* **Remotion**: import `{ tokens } from 'design_system/dist/tokens'`. Use `tokens.video.theme[props.theme ?? 'light']` for scene colors and `tokens.semantic[props.theme ?? 'light']` for UI inside components. Default mode is `light`.
+
+## Git commits
+
+Do not add `Co-Authored-By:` attribution lines to commit messages. Sign commits with the user's own git user config only.
 
 ## Working agreements
 
