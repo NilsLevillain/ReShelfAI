@@ -1,0 +1,173 @@
+# Scenario: default
+#
+# Every value in this file is an invented illustrative default (clean room rule).
+# The seed and all parameters are fixed so every run, test, screenshot and video frame reproduces.
+# Values marked "tune" are expected to move in week 2, after the 50 neutral seeds in
+# data/scenarios/neutral_seeds.yaml were drawn. The seed list is never edited.
+#
+# How to read this file. Three blocks:
+#   generator  how the synthetic world is built (stock, sales history, channels). Not seen by the solver.
+#   rules      business rules per channel type (which brand tiers a channel accepts, brand penalty).
+#   params     scalar parameters that become ZPARAM rows and are read by the solver.
+# Terms (lot, batch, RSL, ABC, channel, tier) are explained in docs/glossary.md.
+
+name: default
+description: Kestrel Beauty Group, about 2,000 SKUs, stock at risk across 3 factories and 3 distribution centers.
+seed: 20261025            # master random seed. Same seed and same file always give the same CSV files.
+as_of: 2026-10-01         # the "today" of the demo world. Remaining shelf life is measured from here.
+
+generator:
+  n_skus: 2000            # number of materials (SKUs)
+  accents: true           # keep accents in descriptions such as "Crème" (test TS-176). false folds them to ASCII
+  new_share: 0.06         # share of SKUs that are new launches: no ABC row, no sales history
+
+  # Annual primary sales volume per SKU in units per year. It is drawn from a lognormal curve:
+  # most SKUs sell little, a few sell a lot. This produces the ABC Pareto skew.
+  volume_median: 20000    # the middle SKU sells this many units per year
+  volume_sigma: 1.7       # spread of the curve, in log units (the standard deviation of ln(volume)).
+                          # Larger means a longer tail of big sellers. 1.7 puts about 20% of SKUs
+                          # in class A at an 80% volume cut. At 1.0 it would be about 44%.
+  abc_cut_a: 0.80         # rank SKUs by volume. Class A is the top SKUs up to 80% of total volume
+  abc_cut_b: 0.95         # class B goes up to 95% of total volume. The rest is class C
+
+  # Second life channels also sell, a little. This sets how much a carrying channel sells of a SKU:
+  # annual units = SKU annual volume x second_life_share x channel demand weight x market weight.
+  second_life_share: 0.05 # tune
+  sellin_noise: [0.9, 1.2]  # units shipped to a channel per quarter, as a multiple of what it sold (min, max)
+  transit_days: 21        # a replenishment shipped less than this many days before as_of is still in transit
+
+  brands:
+    # shelf_life_months is the total life from production to expiry. unit_cost_median is euro per unit.
+    - {name: Atelier Sable, category: Fragrance, tier: luxury,  sku_share: 0.12, shelf_life_months: 36, unit_cost_median: 28.0}
+    - {name: Noctua,        category: Skincare,  tier: premium, sku_share: 0.22, shelf_life_months: 30, unit_cost_median: 11.0}
+    - {name: Velaire,       category: Makeup,    tier: premium, sku_share: 0.22, shelf_life_months: 24, unit_cost_median: 9.0}
+    - {name: Brightleaf,    category: Haircare,  tier: mass,    sku_share: 0.22, shelf_life_months: 30, unit_cost_median: 3.5}
+    - {name: Pigment Lab,   category: Makeup,    tier: mass,    sku_share: 0.22, shelf_life_months: 24, unit_cost_median: 3.0}
+  unit_cost_sigma: 0.35   # spread of unit cost inside a brand (lognormal, same meaning as volume_sigma)
+
+  # Monthly seasonality shapes, January to December. A value of 1.6 means 60% above the yearly
+  # average. The generator rescales each list to a mean of 1, so only the shape matters.
+  seasonality:
+    Fragrance: [0.8, 0.9, 0.8, 0.8, 0.9, 0.8, 0.8, 0.8, 0.9, 1.1, 1.6, 1.8]   # gift season peak
+    Skincare:  [1.2, 1.1, 1.0, 0.9, 0.9, 0.9, 0.9, 0.9, 1.0, 1.0, 1.1, 1.1]   # winter lift
+    Makeup:    [0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.3, 1.1, 1.0, 1.0, 0.9, 0.9]   # summer lift
+    Haircare:  [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]   # flat on purpose
+  seasonality_noise_sigma: 0.15   # random monthly wobble on top of the shape (lognormal spread)
+
+  # Factories make the goods. Distribution centers (DC) store them close to the markets.
+  # Both are plants in SAP, so the model treats them the same way. weight = share of lots stored there.
+  plants:
+    - {code: EU01, name: Łódź,       country: PL, region: europe,        kind: factory, weight: 0.20}
+    - {code: NA01, name: Monterrey,  country: MX, region: north_america, kind: factory, weight: 0.16}
+    - {code: AP01, name: Suzhou,     country: CN, region: asia_pacific,  kind: factory, weight: 0.16}
+    - {code: EU10, name: Rotterdam,  country: NL, region: europe,        kind: dc,      weight: 0.18}
+    - {code: NA10, name: Memphis,    country: US, region: north_america, kind: dc,      weight: 0.16}
+    - {code: AP10, name: Singapore,  country: SG, region: asia_pacific,  kind: dc,      weight: 0.14}
+
+  # A lot is one SKU in one plant with one expiry month. A batch is one production run inside it.
+  lots_per_sku: [1, 3]      # lots stocked per SKU (min, max, inclusive)
+  batches_per_lot: [1, 3]   # batches per lot (min, max, inclusive). Batch expiry dates differ by up to 20 days
+  min_lot_qty: 12           # smallest lot, in units
+  lot_qty_step: 6           # case size: every quantity is a multiple of this
+
+  # Why stock is at risk. Each lot gets exactly one reason. For each reason:
+  #   share         nominal share of lots with this reason
+  #   rsl_range     [low, high] range of the remaining shelf life (RSL), as a fraction of total life.
+  #                 0.30 means 30% of the shelf life is left.
+  #   rsl_beta      [a, b] shape of a beta curve that places lots inside rsl_range. [2, 2] is a gentle
+  #                 hill in the middle. [1.5, 2.5] leans toward the low end, so most lots sit close to
+  #                 expiry. RSL = low + (high - low) x draw from beta(a, b).
+  #   qty_factor    lot units as a multiple of the SKU annual volume. 0.05 means a lot of about
+  #                 5% of one year of sales (with a random spread). Tune.
+  #   prefer_abc    ABC classes where this reason is most likely (class explained in the glossary)
+  off_class_weight: 0.6   # outside prefer_abc a reason keeps this share of its nominal weight
+  new_reasons: {overproduction: 0.6, excess: 0.4}   # NEW SKUs have no history to age or go obsolete
+  reasons:
+    near_expiry:    {share: 0.35, rsl_range: [0.03, 0.30], rsl_beta: [1.5, 2.5], qty_factor: 0.05, prefer_abc: [A, B]}
+    excess:         {share: 0.25, rsl_range: [0.30, 0.85], rsl_beta: [2.0, 2.0], qty_factor: 0.09, prefer_abc: [A, B, C]}
+    obsolete:       {share: 0.15, rsl_range: [0.15, 0.70], rsl_beta: [2.0, 2.0], qty_factor: 0.07, prefer_abc: [C]}
+    discontinued:   {share: 0.12, rsl_range: [0.30, 0.90], rsl_beta: [2.0, 2.0], qty_factor: 0.06, prefer_abc: [B, C]}
+    overproduction: {share: 0.13, rsl_range: [0.85, 0.99], rsl_beta: [2.0, 2.0], qty_factor: 0.05, prefer_abc: [A, B, C]}
+
+  # Channels. Capacity is not typed per channel. The generator computes it as
+  #   total_capacity_ratio x total stock units x capacity_share of the type,
+  # split between channels of the same type by market_weight.
+  # 0.85 means the channels can absorb 85% of the stock, so some units are always left over.
+  total_capacity_ratio: 0.85   # tune
+  channel_types:
+    # capacity_share  share of total channel capacity held by this type (sums to 1)
+    # max_skus        most distinct SKUs the channel handles (rule sku[c])
+    # carry_prob      chance that a channel carries a given SKU (before the ABC multiplier)
+    # demand_weight   how much the type sells relative to others
+    # min_rsl_pct     shelf life the channel needs left at delivery, in percent (elimination rule RSL)
+    # recovery_factor share of unit cost the channel gives back (0.45 means 45 cents per euro of cost)
+    outlet:         {capacity_share: 0.25, max_skus: 300, carry_prob: 0.30, demand_weight: 1.0, min_rsl_pct: 50, recovery_factor: 0.45}
+    friends_family: {capacity_share: 0.12, max_skus: 250, carry_prob: 0.20, demand_weight: 0.8, min_rsl_pct: 60, recovery_factor: 0.55}
+    clearance_web:  {capacity_share: 0.30, max_skus: 600, carry_prob: 0.35, demand_weight: 1.2, min_rsl_pct: 40, recovery_factor: 0.35}
+    ngo_donation:   {capacity_share: 0.10, max_skus: 150, carry_prob: 0.12, demand_weight: 0.6, min_rsl_pct: 25, recovery_factor: 0.05}
+    liquidation:    {capacity_share: 0.23, max_skus: 800, carry_prob: 0.60, demand_weight: 1.5, min_rsl_pct: 0,  recovery_factor: 0.08}
+  # Group limits (rules asrt and asrt_units). A group is one brand in one category.
+  group_sku_share: 0.45      # one group may use this share of a channel's SKU limit
+  group_units_share: 0.40    # one group may use this share of a channel's unit capacity (decision Q8)
+  abc_carry_multiplier: {A: 1.3, B: 1.0, C: 0.8}   # A class sells in more channels than C class
+
+  # market_weight scales sales by country (1.0 is an average market).
+  channels:
+    - {code: OUT_PL, type: outlet,         country: PL, lat: 52.23,  lon: 21.01,   market_weight: 0.8}
+    - {code: OUT_DE, type: outlet,         country: DE, lat: 50.11,  lon: 8.68,    market_weight: 1.2}
+    - {code: OUT_FR, type: outlet,         country: FR, lat: 48.86,  lon: 2.35,    market_weight: 1.1}
+    - {code: OUT_US, type: outlet,         country: US, lat: 40.71,  lon: -74.01,  market_weight: 1.6}
+    - {code: OUT_MX, type: outlet,         country: MX, lat: 19.43,  lon: -99.13,  market_weight: 0.9}
+    - {code: OUT_CN, type: outlet,         country: CN, lat: 31.23,  lon: 121.47,  market_weight: 1.4}
+    - {code: FNF_GB, type: friends_family, country: GB, lat: 51.51,  lon: -0.13,   market_weight: 1.0}
+    - {code: FNF_US, type: friends_family, country: US, lat: 34.05,  lon: -118.24, market_weight: 1.3}
+    - {code: FNF_JP, type: friends_family, country: JP, lat: 35.68,  lon: 139.69,  market_weight: 1.0}
+    - {code: FNF_FR, type: friends_family, country: FR, lat: 45.76,  lon: 4.84,    market_weight: 0.9}
+    - {code: CLR_DE, type: clearance_web,  country: DE, lat: 52.52,  lon: 13.40,   market_weight: 1.2}
+    - {code: CLR_US, type: clearance_web,  country: US, lat: 41.88,  lon: -87.63,  market_weight: 1.5}
+    - {code: CLR_BR, type: clearance_web,  country: BR, lat: -23.55, lon: -46.63,  market_weight: 1.0}
+    - {code: CLR_IN, type: clearance_web,  country: IN, lat: 19.08,  lon: 72.88,   market_weight: 0.9}
+    - {code: NGO_ES, type: ngo_donation,   country: ES, lat: 40.42,  lon: -3.70,   market_weight: 1.0}
+    - {code: NGO_BR, type: ngo_donation,   country: BR, lat: -15.78, lon: -47.93,  market_weight: 1.0}
+    - {code: NGO_IN, type: ngo_donation,   country: IN, lat: 28.61,  lon: 77.21,   market_weight: 1.0}
+    - {code: LIQ_AE, type: liquidation,    country: AE, lat: 25.20,  lon: 55.27,   market_weight: 1.0}
+    - {code: LIQ_MX, type: liquidation,    country: MX, lat: 25.67,  lon: -100.31, market_weight: 1.0}
+    - {code: LIQ_PL, type: liquidation,    country: PL, lat: 51.75,  lon: 19.46,   market_weight: 1.0}
+
+# Which brand tiers each channel type accepts, and the brand penalty in euros per unit by tier.
+# A tier missing from allowed_tiers means the pair is removed before modeling (reason code TIER).
+# The brand penalty is a cost on the brand image: selling a luxury unit on a clearance site costs
+# 6 euros of brand value on top of the lower price. It is subtracted from the net value.
+rules:
+  allowed_tiers:
+    outlet:         [luxury, premium, mass]
+    friends_family: [luxury, premium, mass]
+    clearance_web:  [luxury, premium, mass]
+    ngo_donation:   [premium, mass]
+    liquidation:    [premium, mass]
+  brand_penalty:        # euro per unit
+    outlet:         {luxury: 1.5, premium: 0.4, mass: 0.0}
+    friends_family: {luxury: 2.0, premium: 0.5, mass: 0.0}
+    clearance_web:  {luxury: 6.0, premium: 1.2, mass: 0.1}
+    ngo_donation:   {luxury: 0.0, premium: 0.3, mass: 0.0}
+    liquidation:    {luxury: 0.0, premium: 0.8, mass: 0.1}
+
+# Scalar parameters written to ZPARAM. Score weights and rule values never live in code.
+params:
+  # Material score w = score_base[class] + score_rank_weight x (1 - rank / N).
+  # It says how much it matters to keep a SKU selling in a channel. Class A matters most.
+  score_base: {A: 1.00, B: 0.70, C: 0.40, NEW: 0.55}
+  score_rank_weight: 0.25    # bonus for a better sales rank inside the class (rank 1 of N gets the most)
+  # Two phase objective. Phase 1 maximizes the SKU score. Phase 2 maximizes net value, but is allowed
+  # to give up at most epsilon of the phase 1 score. 0.01 means the score may drop by 1% to gain value.
+  # It also avoids tiny rounding differences blocking phase 2.
+  epsilon: 0.01
+  # Coverage need D = daily demand x coverage_days x seasonality - stock already in the channel.
+  coverage_days: 90          # tune. How many days of sales a channel should hold
+  # A selected SKU must get at least alpha x its coverage need (rule cov_lo).
+  # 0.5 means at least half of the need. The upper bound (cov_hi) is the full need.
+  coverage_alpha: 0.50
+  push_quantity_units: 60    # units to place when a NEW SKU is pushed into a channel (rule push)
+  solver_time_limit_s: 60
+  counterfactual_time_limit_s: 10
+  planner_rules: [rsl, tier, capacity]   # rules the planner proxy applies by hand (ADR 005)
