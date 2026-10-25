@@ -37,6 +37,11 @@
 | R20 | AI input checks on S&OP stock and forecast data before a run | AI assist |
 | R21 | AI that chooses allocations itself (considered, not requested) | AI assist |
 | R22 | Decision log with owner, reason and approver per saved scenario (from the process value hypothesis) | Process and audit |
+| R23 | Stock split by reason (near expiry, excess, obsolete, discontinued, overproduction) and brand to category drill, both as filters (hypothesis H, added 2026-10-25, untested until E2) | Table first workflow |
+| R24 | Process stepper: Parameters, Run, Review, Export (H) | Table first workflow |
+| R25 | Table group by with subtotals, column group toggles, allocation share and remaining units per row (H) | Table first workflow |
+
+R23 to R25 refine R1 and are P1 as part of the table baseline (FR-10). They add no new theme. The counts below still read 17 requests in 6 groups for the original set.
 
 ## Theme summary
 

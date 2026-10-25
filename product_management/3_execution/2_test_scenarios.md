@@ -3,7 +3,7 @@
 **Date**: 2026-10-24
 **Status**: Draft
 **Source**: P0 and P1 requirements FR-01 to FR-21 in `1_backlog.md`, plus the risks from its red team and pre mortem (K1 to K5, T1 to T8).
-**Total scenarios**: 150 (149 numbered rows plus the hero flow H1)
+**Total scenarios**: 163 (162 numbered rows plus the hero flow H1). TS-198 to TS-210 cover invariants, defaults and hygiene, see section 14.
 **Coverage**: happy path, edge cases, error handling, performance, clean room and integrity checks. Security is limited to mocked roles and input validation, because v1 has no real authentication.
 
 > Evidence level: scenarios are derived from documents, not from running code. Pre code, every status is `planned`. Expected values that depend on the seed (for example the euro cost of luxury protection) are written as "recorded from the seeded run" and frozen in a snapshot once the generator exists. No value here is a real figure.
@@ -260,6 +260,24 @@ Level for all ten: `unit`. Also check that constraint names are stable.
 | TS-196 | Rollback | Redeploy the previous tag | Previous demo serves, precomputed data intact | Medium | manual |
 | TS-197 | Reproducibility of screenshots | Rerun the capture script | Images identical apart from timestamps | Medium | ci |
 
+## 14. Invariants, defaults and hygiene (FR-02, FR-04, FR-10, FR-15)
+
+| ID | Scenario | Steps | Expected | Priority | Level |
+|---|---|---|---|---|---|
+| TS-198 | Class A beats C and NEW | One scarce channel slot, one material of each class with the best possible rank in C and NEW | Class A is selected | Critical | unit |
+| TS-199 | Rank breaks ties only inside a class | Two materials of one class, different rank | Better rank wins, class order never flips | High | unit |
+| TS-200 | Tie break is deterministic | Solve the same tied input 5 times | Identical allocation each time | High | unit |
+| TS-201 | Missing rank | Remove the rank of one material | Treated as lowest rank, no crash | Medium | unit |
+| TS-202 | Unranked material class | One unranked material with channel stock, one without | `C` and `NEW` respectively | High | unit |
+| TS-203 | Missing demand row | Remove demand for one material and channel | No coverage need, documented default applies | High | unit |
+| TS-204 | NEW without push rule | Remove the push rule of a NEW material | Not allocated, reason shown in the trace | High | unit |
+| TS-205 | In transit counts as stock | Add units in transit to a channel | Coverage need drops by that amount | High | unit |
+| TS-206 | Result invariants | After every solve in the suite | No negative quantity, no line above supply, totals equal KPIs | Critical | prop |
+| TS-207 | Parameter validation | Negative capacity, negative coverage days, percent above 100, unknown class | Rejected with a field level error before any solve | Critical | unit |
+| TS-208 | Generated model doc is current | Run `make model-doc`, diff against the committed file | No diff, CI fails otherwise | High | ci |
+| TS-209 | Errors are visible | Make an endpoint return 500 | Inline error with endpoint and Retry, no blank panel, no silent catch (lint rule on empty catch) | Critical | ui |
+| TS-210 | No generated artifacts committed | Scan `git ls-files` for LP files, logs, machine suffixed copies | None found | Medium | ci |
+
 ---
 
 ## Coverage matrix
@@ -267,9 +285,9 @@ Level for all ten: `unit`. Also check that constraint names are stable.
 | Requirement | Happy path | Edge cases | Error handling | Notes |
 |---|---|---|---|---|
 | FR-01 Seeded data | TS-001, 003 to 005 | TS-002, 006, 007 | TS-012 | Seed story needs the generator tuned in week 1 |
-| FR-02 Canonical and adapter | TS-008, 018 | TS-012 | TS-009 to 011, 013 | Parquet is P1 |
+| FR-02 Canonical and adapter | TS-008, 018 | TS-012, 202, 203, 205 | TS-009 to 011, 013, 204 | Parquet is P1. TS-202 to 205 cover class derivation and missing data defaults |
 | FR-03 Elimination | TS-020, 023 | TS-022, 025, 027 | TS-021, 024, 026, 028 | Reason codes feed FR-13 |
-| FR-04 Optimizer | TS-030 to 039, 042, 043 | TS-041, 044, 048 to 050, 053 | TS-046, 047, 051, 052 | Constraint names are stable |
+| FR-04 Optimizer | TS-030 to 039, 042, 043, 198 | TS-041, 044, 048 to 050, 053, 199 to 201, 206 | TS-046, 047, 051, 052, 207 | Constraint names are stable. TS-208 keeps `docs/model.md` in sync |
 | FR-05 Baseline and uplift | TS-060, 065 | TS-061, 063, 068 | TS-062, 064, 066, 067, 069 | Needs ADR 005 accepted first (Q1) |
 | FR-06 KPIs | TS-070 to 072, 074 | TS-073 | TS-075, 076 | Brand risk index is a counter metric |
 | FR-07 Rule trace | TS-080, 083 | TS-081, 082, 084 | TS-085, 086 | |
@@ -280,7 +298,7 @@ Level for all ten: `unit`. Also check that constraint names are stable.
 | FR-12 Save and compare | TS-140, 141, 143, 144 | TS-142, 145 | none | Override test skipped (FR-22) |
 | FR-13 Why panel | H1 step 5, TS-146, 147 | TS-146 | TS-148, 149 | K1 test is TS-147 |
 | FR-14 Demo mode | TS-160, 161, 164 | TS-163, 168 | TS-162, 165, 166, 167 | K4 tests |
-| FR-15 Quality | TS-190, 191 | TS-197 | TS-192 to 196 | T4 covered by TS-014 to 017 |
+| FR-15 Quality | TS-190, 191, 208 | TS-197, 210 | TS-192 to 196, 209 | T4 covered by TS-014 to 017 |
 | FR-16 Globe (P1) | TS-170, 171 | TS-173 | TS-172 | |
 | FR-17 Export (P1) | TS-174, H1 step 7 | TS-175, 176 | TS-111 | |
 | FR-18 Deep dive (P1) | TS-181 | none | none | First to cut |

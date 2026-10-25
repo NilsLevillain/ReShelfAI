@@ -73,6 +73,11 @@ Do not add `Co-Authored-By:` attribution lines to commit messages. Sign commits 
 * Prose written for Nils avoids hyphens and dashes as punctuation. Rephrase instead. Tables and short bullets are preferred.
 * Every constraint gets a pytest (feasible and violating case). Cut order if late: deep dive page, Excel export polish, live API, 10k benchmark row. Never cut: compare, Why panel, tests, README.
 * Conventional commits, small PRs, one ADR per major choice in `docs/adr/`.
+* **Errors are shown, never swallowed.** No empty catch, no client side workaround for a failed request. The Vite dev server proxies `/api`. A failed panel shows an inline error with a retry.
+* **One source of truth per screen.** The UI never recomputes a number and never mixes sources. Results come from the API or the precomputed JSON.
+* **Docs from code where possible.** `docs/model.md` is generated from the named constraint registry (`make model-doc`) and CI fails on drift. Never commit LP files, logs or machine suffixed copies. Use `make export-lp` into `tmp/`.
+* **Tests beyond constraints.** Score hierarchy, result invariants (no negative quantity, no line above supply, totals reconcile), parameter validation and explicit defaults for missing data each have a test (`2_test_scenarios.md` section 14).
+* **Earlier prototype review.** A prior prototype outside this repo was reviewed once on 2026-10-25 for generic ideas only. Treat it like `_private/`: read for context, never copy names, data, values or code, and do not mention it in any doc.
 
 ## Product management docs
 
