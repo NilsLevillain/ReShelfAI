@@ -143,7 +143,7 @@ Segment sizes are not stated: no market sizing has been done yet.
 | Q5 | Cloud Run billing account or go straight to Render? | Nils | Week 6 |
 | Q6 | Who are the 8 interviewees, and how are they reached without any confidential data changing hands? | Nils | Week 0 |
 | Q7 | Is the illustrative minimum uplift gap 3%? Needs a neutral seed run before it is fixed. | Nils | Week 2 |
-| Q8 | Does the assortment rule need a cap on units per category in a channel? The model today caps SKUs per group and channel (`asrt`, `sku`) and total units per channel (`cap`), not units per group. Decide before the generator, because it adds a constraint and a test. | Nils | Week 1 |
+| Q8 | Resolved 2026-10-25: yes, add `asrt_units[g,c]` (units of a brand by category group in a channel). 11th named constraint, built with a feasible and a violating test in week 2. The generator already emits `ZCHANNEL_ASRT.MAXUNITS`. | Nils | Done |
 
 ### 8. Timeline and Phasing
 
@@ -175,7 +175,7 @@ Segment sizes are not stated: no market sizing has been done yet.
 | # | Key Result | Baseline | Target | Owner |
 |---|---|---|---|---|
 | KR2.1 | Peer reviewers who state problem, user and differentiator correctly (E5) | none | 4 of 5 | Nils |
-| KR2.2 | Constraints with a feasible and a violating pytest | 0 of 10 | 10 of 10 | Nils |
+| KR2.2 | Constraints with a feasible and a violating pytest | 0 of 11 | 11 of 11 (Q8 added `asrt_units`, 2026-10-25) | Nils |
 | KR2.3 | Live demo cold start to first screen | none | Under 3 s cached | Nils |
 | KR2.4 | Video published in README and watched to 75% by viewers | none | Video live week 8; 50% view through in the first 30 days | Nils |
 

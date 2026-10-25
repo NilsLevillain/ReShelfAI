@@ -1,6 +1,6 @@
 # ADR 005: Planner proxy baseline and the optimizer comparison
 
-**Status**: Proposed (draft, 2026-10-24)
+**Status**: Accepted (2026-10-25)
 **Deciders**: Nils
 **Related**: `docs/war_plan.md` sections 5.7 to 5.9, `product_management/3_execution/1_backlog.md` (FR-05, red team K2, pre mortem T1)
 
