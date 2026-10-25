@@ -188,6 +188,12 @@ Text style roles (generated as `.rs-text-<role>`): `display`, `page-title`, `pag
 | Simulated badge | Small neutral pill "Simulated data" in the nav, in the README banner and on video frames | Synthetic data rule |
 | Globe | `globe.*` tokens, points sized by value at risk, arcs after a solve. Click sets a filter chip above the table. Table fallback when WebGL is missing | R1, war plan 6.4 |
 | Scenario switcher | Select with save and load, shows overridden scenarios with a pencil icon | R7, R10 |
+| Process stepper | Four steps (Parameters, Run, Review, Export): number or check in a disc, label, a line between. Done is teal, current is filled teal.500 with `aria-current="step"`, upcoming is neutral. State always has a word or icon, never color alone. Classes `rs-stepper`, `rs-stepper__item` (`data-state="done"`), `rs-stepper__disc`, `rs-stepper__label` | War plan 6.3b |
+| Column group toggle | `rs-seg rs-seg--cols` above a table: identity, stock, allocation, value. Hides or shows a group of columns, the sticky first column stays | War plan 6.3b |
+| Group by select | `rs-groupby`, rows `rs-row--group` and `rs-row--total`. Select in the table header (brand, category, channel, plant). Group rows are collapsible and carry subtotals, the totals row stays last | War plan 6.3b |
+| Share cell | `rs-share`, `rs-share__bar`, `rs-share__fill` with `--rs-share` set inline to the percent. Number plus a thin in cell bar for allocation share or remaining units. Optimizer teal for allocated, `compare.baseline` grey for remaining. The number is always printed | War plan 6.3b |
+| Reason and hierarchy chart | Stock split by reason (bar) and brand to category drill (stacked bars with a breadcrumb). Series use the categorical order. A click writes a filter chip. Breadcrumb is `rs-crumbs` | War plan 6.3b |
+| Inline error | `rs-error`, `rs-error__endpoint`. `status.error` text and icon, the endpoint name in mono, a Retry button. Replaces the content area for that panel only. Never an empty state, never a silent fallback | War plan 6.3b |
 | AI draft card | Dashed indigo border, lilac ground, label "Drafted by AI, needs your approval", Approve and Discard buttons, the validated rule diff in a table | R18, R19 |
 | Decision log row | Owner, reason, approver, time, scenario link. Read only | R22 (pending E9) |
 | Empty and loading states | Plain sentence plus one action ("Run the optimizer to see results"). Skeleton rows for tables, never spinners alone | Voice |
