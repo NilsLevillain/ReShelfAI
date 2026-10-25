@@ -1,0 +1,12 @@
+# Scenario: luxury_protection
+# The hero trade off. Banning luxury from the clearance website lowers brand risk and costs
+# visible value. Same seed and same stock as `default`, only the rule changes.
+# Illustrative default, invented for the demo.
+
+extends: default
+name: luxury_protection
+description: Luxury is banned from the clearance website. Compare against default to see the euro cost of the rule.
+
+rules:
+  allowed_tiers:
+    clearance_web: [premium, mass]
