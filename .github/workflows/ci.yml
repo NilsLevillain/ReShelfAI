@@ -45,23 +45,66 @@ jobs:
       - run: pnpm exec vitest run --passWithNoTests
       - run: pnpm build
 
+  design-system:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Rebuild design system and recap
+        run: node design_system/scripts/build.mjs
+      - name: Fail on drift between sources and committed output
+        run: git diff --exit-code -- design_system/dist product_management/recap.html
+
   deploy:
-    needs: [python, web]
+    needs: [python, web, design-system]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     permissions:
       contents: read
       pages: write
       id-token: write
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Upload to GitHub Pages
-        uses: actions/upload-pages-artifact@v2
+      - uses: actions/setup-node@v4
         with:
-          path: product_management
+          node-version: 20
+      - name: Build recap
+        run: node design_system/scripts/build.mjs
+      - name: Stage site with recap as index
+        run: |
+          mkdir -p _site
+          cp -r product_management/. _site/
+          cp product_management/recap.html _site/index.html
+          touch _site/.nojekyll
+          test -s _site/index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
+
+  verify-deploy:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the published recap answers
+        env:
+          URL: ${{ needs.deploy.outputs.page_url }}
+        run: |
+          set -e
+          code=$(curl -s -o page.html -w '%{http_code}' --retry 5 --retry-delay 5 --retry-all-errors "$URL")
+          echo "HTTP $code for $URL"
+          test "$code" = 200
+          grep -qi '<html' page.html
