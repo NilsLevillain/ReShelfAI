@@ -61,6 +61,9 @@ Before locking: check GitHub org name, `.app` / `.dev` domain, and a basic trade
 | `EU01` | Łódź, Poland | Europe |
 | `NA01` | Monterrey, Mexico | North America |
 | `AP01` | Suzhou, China | Asia Pacific |
+| `EU10` | Rotterdam, Netherlands (distribution center) | Europe |
+| `NA10` | Memphis, United States (distribution center) | North America |
+| `AP10` | Singapore (distribution center) | Asia Pacific |
 
 Channels: outlet, friends and family sales, clearance website, NGO donation, liquidation or recycling partner. Channel nodes are spread over about 12 countries so the globe arcs look rich. Three plant dots alone look empty.
 
@@ -120,7 +123,7 @@ The solver never sees raw ERP tables.
 ### 4.2 Source tables
 
 Standard: `MARA`, `MAKT`, `MARC`, `MARD`, `MCHB` (with `VFDAT`, `HSDAT`), `MBEW`, `T001W`, `T023`.
-Custom: `ZCHANNEL`, `ZCHANNEL_RULE`, `ZSELLIN`, `ZSELLOUT`, `ZABC`, `ZPARAM`.
+Custom: `ZCHANNEL`, `ZCHANNEL_RULE`, `ZCHANNEL_ASRT` (group limits, SKUs and units per channel and brand by category), `ZSELLIN`, `ZSELLOUT`, `ZABC`, `ZPARAM`. Field level detail is in `docs/erd.md` and `docs/mapping.md`.
 
 ### 4.3 Adapter
 
@@ -173,7 +176,7 @@ Class derivation (an invented default, documented in `docs/model.md`): a materia
 | G | assortment groups (category × brand) |
 | q_l, v_l | available units and unit cost of lot l |
 | r_c, β_{c,t} | recovery factor of channel c, brand penalty per unit of tier t in c |
-| K_c, S_c, A_{g,c} | capacity units, max SKUs, max SKUs of group g in channel c |
+| K_c, S_c, A_{g,c}, U_{g,c} | capacity units, max SKUs, max SKUs of group g in channel c, max units of group g in channel c |
 | D_{m,c} | coverage need: max(0, demand × coverage days × seasonality − channel stock) |
 | P_{m,c} | push quantity for NEW materials |
 | w_m | material score |
@@ -203,6 +206,7 @@ This is faster and easier to explain than constraints. Each dropped pair keeps a
 | 8 | `cov_hi[m,c]` | Σ_{l ∈ L(m)} x_{l,c} ≤ D_{m,c} · z_{m,c} |
 | 9 | `cov_lo[m,c]` | Σ_{l ∈ L(m)} x_{l,c} ≥ α · min(D_{m,c}, Q_m) · z_{m,c} |
 | 10 | `push[m,c]` | Σ_{l ∈ L(m)} x_{l,c} ≥ min(P_{m,c}, Q_m) · z_{m,c}, for NEW m |
+| 11 | `asrt_units[g,c]` | Σ_{l: m(l) ∈ g} x_{l,c} ≤ U_{g,c} (added 2026-10-25, decision Q8) |
 
 Q_m is the total available units of material m. Constraints 8 to 10 are the tight form of the Big M formulation: the binary multiplies the smallest valid bound directly, so the coverage and push rules apply only when the SKU is selected. Where a Big M is unavoidable, M is the tightest available bound, never a generic constant. ADR 004 documents this.
 
