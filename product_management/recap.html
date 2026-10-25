@@ -1091,131 +1091,161 @@ a { color: var(--rs-text-link); }
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
-  /* Reduced motion: jump the hero animation to its end state */
-  var heroSvg = $('.rs-hero__art svg');
-  if (heroSvg && window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches && heroSvg.setCurrentTime) heroSvg.setCurrentTime(10);
+  function init() {
+    /* Reduced motion: jump the hero animation to its end state */
+    var heroSvg = $('.rs-hero__art svg');
+    if (heroSvg && window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches && heroSvg.setCurrentTime) heroSvg.setCurrentTime(10);
 
-  /* Theme */
-  var root = document.documentElement;
-  $('#theme').addEventListener('click', function () {
-    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('reshelf-theme', next); } catch (e) {}
-  });
+    /* Theme */
+    var root = document.documentElement;
+    var themeBtn = $('#theme');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', function () {
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('reshelf-theme', next); } catch (e) {}
+      });
+    }
 
-  /* Tabs */
-  var tabs = $$('.rs-tab'), names = tabs.map(function (t) { return t.dataset.pane; });
-  function show(name, focus) {
-    if (names.indexOf(name) < 0) name = 'discovery';
-    tabs.forEach(function (t) { var on = t.dataset.pane === name; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
-    $$('.rs-pane').forEach(function (p) { p.hidden = p.id !== 'p-' + name; });
-    if (location.hash !== '#' + name) history.replaceState(null, '', '#' + name);
-  }
-  tabs.forEach(function (t, i) {
-    t.addEventListener('click', function () { show(t.dataset.pane); });
-    t.addEventListener('keydown', function (e) {
-      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : e.key === 'Home' ? -i : e.key === 'End' ? names.length - 1 - i : 0;
-      if (!d) return; e.preventDefault(); show(names[(i + d + names.length) % names.length], true);
+    /* Tabs */
+    var tabs = $$('.rs-tab'), names = tabs.map(function (t) { return t.dataset.pane; });
+    function show(name, focus) {
+      if (names.indexOf(name) < 0) name = 'discovery';
+      tabs.forEach(function (t) { var on = t.dataset.pane === name; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
+      $$('.rs-pane').forEach(function (p) { p.hidden = p.id !== 'p-' + name; });
+      if (location.hash !== '#' + name) history.replaceState(null, '', '#' + name);
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { show(t.dataset.pane); });
+      t.addEventListener('keydown', function (e) {
+        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : e.key === 'Home' ? -i : e.key === 'End' ? names.length - 1 - i : 0;
+        if (!d) return; e.preventDefault(); show(names[(i + d + names.length) % names.length], true);
+      });
     });
-  });
-  window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
-  show(location.hash.slice(1));
+    window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
+    show(location.hash.slice(1));
 
-  function segmented(host, items, attr, onPick, initial) {
-    host.innerHTML = '';
-    items.forEach(function (it) {
-      var b = document.createElement('button'); b.type = 'button'; b.innerHTML = it.label;
-      b.setAttribute(attr, it.key === initial ? 'true' : 'false');
-      if (attr === 'aria-selected') b.setAttribute('role', 'tab');
-      b.addEventListener('click', function () { $$('button', host).forEach(function (x) { x.setAttribute(attr, 'false'); }); b.setAttribute(attr, 'true'); onPick(it.key); });
-      host.appendChild(b);
-    });
+    function segmented(host, items, attr, onPick, initial) {
+      if (!host) return;
+      host.innerHTML = '';
+      items.forEach(function (it) {
+        var b = document.createElement('button'); b.type = 'button'; b.innerHTML = it.label;
+        b.setAttribute(attr, it.key === initial ? 'true' : 'false');
+        if (attr === 'aria-selected') b.setAttribute('role', 'tab');
+        b.addEventListener('click', function () { $$('button', host).forEach(function (x) { x.setAttribute(attr, 'false'); }); b.setAttribute(attr, 'true'); onPick(it.key); });
+        host.appendChild(b);
+      });
+    }
+
+    /* What we chose to build */
+    var items = [
+      { g: 'build', t: 'Why each lot went where it did', w: 'In plain words, one click away.' },
+      { g: 'build', t: 'The euro cost of each rule', w: 'The signature feature.' },
+      { g: 'build', t: 'Side by side scenarios', w: 'Change a rule, compare the two outcomes.' },
+      { g: 'build', t: 'Tables first, charts second', w: 'Planners live in tables.' },
+      { g: 'later', t: 'Excel export', w: 'The hand off to the order system.' },
+      { g: 'later', t: 'Manual override', w: 'Experts must be able to overrule.' },
+      { g: 'later', t: 'AI that drafts a rule', w: 'A human approves every change.' },
+      { g: 'later', t: 'Early warning before expiry', w: 'Waits for interview proof.' },
+      { g: 'no', t: 'AI that picks the allocation', w: 'It would remove the explainability.' },
+      { g: 'no', t: 'Math duals as the explanation', w: 'Too hard for a planner to read.' },
+      { g: 'no', t: 'A data warehouse connector', w: 'No value before a first user.' }
+    ];
+    var groups = [{ key: 'all', label: 'Everything' }, { key: 'build', label: 'Build now' }, { key: 'later', label: 'Later' }, { key: 'no', label: 'Not doing' }];
+    function renderChoices(f) {
+      var triageList = $('#triage-list');
+      if (!triageList) return;
+      triageList.innerHTML = items.filter(function (x) { return f === 'all' || x.g === f; }).map(function (x) {
+        return '<div class="rs-choice rs-choice--' + x.g + '"><b>' + x.t + '</b><span>' + x.w + '</span></div>';
+      }).join('');
+    }
+    var triageFilter = $('#triage-filter');
+    if (triageFilter) {
+      segmented(triageFilter, groups.map(function (g) {
+        var n = g.key === 'all' ? items.length : items.filter(function (x) { return x.g === g.key; }).length;
+        return { key: g.key, label: g.label + '<span class="rs-seg__n">' + n + '</span>' };
+      }), 'aria-pressed', renderChoices, 'all');
+      renderChoices('all');
+    }
+
+    /* Personas */
+    var personas = {
+      planner: { label: 'Supply planner', pain: 'Places each lot by hand across spreadsheets. Rules are applied unevenly. Stock expires before the checks are done.', gain: 'A defensible plan in minutes, and an answer to "why did this go there?" in the meeting.', q: 'I want a plan I can adjust and explain to anyone.' },
+      brand: { label: 'Brand and finance', pain: 'Receives a spreadsheet with no reasoning, and approves by habit: "luxury never goes to clearance".', gain: 'A protective rule has a price in euros, so approval takes one meeting.', q: 'I want to see what a rule costs, then keep it or relax it on facts.' },
+      sustain: { label: 'Sustainability', pain: 'Waste figures are manual and hard to audit.', gain: 'A traceable destination for every unit, ready for the report. A later segment.', q: 'I want to show what was diverted, and why.' }
+    };
+    function renderPersona(k) {
+      var personaBody = $('#persona-body');
+      if (!personaBody) return;
+      var p = personas[k];
+      personaBody.innerHTML = '<div class="rs-persona__row"><dt>Today</dt><dd>' + p.pain + '</dd></div><div class="rs-persona__row"><dt>With Reshelf</dt><dd>' + p.gain + '</dd></div><blockquote>' + p.q + '</blockquote>';
+    }
+    var personaTabs = $('#persona-tabs');
+    if (personaTabs) {
+      segmented(personaTabs, Object.keys(personas).map(function (k) { return { key: k, label: personas[k].label }; }), 'aria-selected', renderPersona, 'planner');
+      renderPersona('planner');
+    }
+
+    /* Value curve */
+    var curve = [
+      ['Respects all rules at once', [1, 3, 1, 3], ['Low', 'High', 'Low', 'High']],
+      ['Shows what a rule costs in euros', [0, 1, 0, 3], ['None', 'Low', 'None', 'High']],
+      ['Treats brand tier as a hard rule', [1, 1, 1, 3], ['Manual', 'Low', 'Low', 'High']],
+      ['Easy to start', [3, 1, 2, 2], ['High', 'Low', 'Medium', 'Medium']]
+    ];
+    var curveTable = $('#curve');
+    if (curveTable) {
+      curveTable.innerHTML = curve.map(function (r) {
+        return '<tr><th scope="row">' + r[0] + '</th>' + r[1].map(function (v, i) {
+          var dots = [1, 2, 3].map(function (n) { return '<b class="' + (n <= v ? 'on' : '') + '"></b>'; }).join('');
+          return '<td' + (i === 3 ? ' class="rs-me"' : '') + '><span class="rs-level"><i aria-hidden="true">' + dots + '</i>' + r[2][i] + '</span></td>';
+        }).join('') + '</tr>';
+      }).join('');
+    }
+
+    /* Weeks */
+    var weeks = [
+      { b: 5, d: 5, goal: 'Set up the repo and book interviews', done: 'Repo public, automatic checks green', disc: 'Competitor research starts' },
+      { b: 9, d: 4, goal: 'Build a realistic fake world', done: 'Same data every run, tested', disc: 'First 4 interviews' },
+      { b: 12.5, d: 3, goal: 'Optimizer that beats the hand method on neutral test sets', done: 'Every rule has a passing test', disc: 'Last 4 interviews', note: 'The heaviest week, no buffer.' },
+      { b: 12.5, d: 1, goal: 'Explain every decision, open the API', done: 'Reasons and euro costs work, speed benchmarked', disc: 'Read the interview results', gate: 'Checkpoint 1. Fewer than 3 of 8 describe a manual process: test a nearby segment before building more. Anything not green: cut scope now.' },
+      { b: 12, d: 0, goal: 'First real version of the key screen', done: 'Dial a rule, see the euro cost, open the reason', disc: 'Click test with 3 people' },
+      { b: 10.5, d: 2.5, goal: 'The full planner flow, end to end', done: 'Parameters, run, save, compare, export', disc: 'Walkthrough with 5 planners' },
+      { b: 10, d: 2.5, goal: 'Polish the key screen, lock the video story', done: 'Automated test of the key flow passes', disc: 'Read the walkthrough, test the AI idea by hand', gate: 'Checkpoint 2. If the reason panel does not beat the table alone, scenario compare becomes the star.' },
+      { b: 11.5, d: 1.5, goal: 'Ship the live link, version 0.1', done: 'Opens fast from a cold start', disc: '5 peer reviews of the repo', gate: 'Fewer than 4 of 5 reviewers get problem, user and difference: rewrite the README top first.' },
+      { b: 9, d: 2, goal: 'Publish the 75 second video, version 1.0', done: 'Video in the README', disc: 'Build the landing page test' },
+      { b: 1.5, d: 5, goal: 'Run the landing page test and decide', done: 'Written decision on segment, hero, AI and pilot', disc: 'Share in 3 practitioner communities', gate: 'Above 10% leave a contact: draft a pilot offer. Below 3%: rework the message first.' }
+    ];
+    var MAX = 15;
+    var weeksContainer = $('#weeks');
+    if (weeksContainer) {
+      weeksContainer.innerHTML = weeks.map(function (w, i) {
+        var hb = Math.max(2, w.b / MAX * 100), hd = w.d ? Math.max(2, w.d / MAX * 100) : 0;
+        return '<button type="button" class="rs-week" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '" aria-label="Week ' + i + ', ' + w.b + ' build hours, ' + w.d + ' discovery hours' + (w.gate ? ', has a gate' : '') + '">' +
+          '<span class="rs-week__top"><span>W' + i + '</span>' + (w.gate ? '<span class="rs-gate" aria-hidden="true"></span>' : '') + '</span>' +
+          '<span class="rs-week__bars" aria-hidden="true"><i class="b" style="height:' + hb + '%"></i><i class="d" style="height:' + hd + '%"></i></span>' +
+          '<span class="rs-week__hours">' + w.b + ' / ' + w.d + ' h</span></button>';
+      }).join('');
+      function renderWeek(i) {
+        var w = weeks[i];
+        var wkDetail = $('#wk-detail');
+        if (!wkDetail) return;
+        wkDetail.innerHTML = '<h4>Week ' + i + ': ' + w.goal + '</h4>' +
+          '<dl><dt>Done when</dt><dd>' + w.done + '</dd></dl><dl><dt>Alongside</dt><dd>' + w.disc + '</dd></dl>' +
+          (w.note ? '<p class="rs-gate-note">' + w.note + '</p>' : '') + (w.gate ? '<p class="rs-gate-note"><b>Gate.</b> ' + w.gate + '</p>' : '');
+      }
+      $$('#weeks .rs-week').forEach(function (b, idx, all) {
+        b.addEventListener('click', function () { all.forEach(function (x) { x.setAttribute('aria-selected', 'false'); }); b.setAttribute('aria-selected', 'true'); renderWeek(+b.dataset.i); });
+      });
+      renderWeek(0);
+    }
   }
 
-  /* What we chose to build */
-  var items = [
-    { g: 'build', t: 'Why each lot went where it did', w: 'In plain words, one click away.' },
-    { g: 'build', t: 'The euro cost of each rule', w: 'The signature feature.' },
-    { g: 'build', t: 'Side by side scenarios', w: 'Change a rule, compare the two outcomes.' },
-    { g: 'build', t: 'Tables first, charts second', w: 'Planners live in tables.' },
-    { g: 'later', t: 'Excel export', w: 'The hand off to the order system.' },
-    { g: 'later', t: 'Manual override', w: 'Experts must be able to overrule.' },
-    { g: 'later', t: 'AI that drafts a rule', w: 'A human approves every change.' },
-    { g: 'later', t: 'Early warning before expiry', w: 'Waits for interview proof.' },
-    { g: 'no', t: 'AI that picks the allocation', w: 'It would remove the explainability.' },
-    { g: 'no', t: 'Math duals as the explanation', w: 'Too hard for a planner to read.' },
-    { g: 'no', t: 'A data warehouse connector', w: 'No value before a first user.' }
-  ];
-  var groups = [{ key: 'all', label: 'Everything' }, { key: 'build', label: 'Build now' }, { key: 'later', label: 'Later' }, { key: 'no', label: 'Not doing' }];
-  function renderChoices(f) {
-    $('#triage-list').innerHTML = items.filter(function (x) { return f === 'all' || x.g === f; }).map(function (x) {
-      return '<div class="rs-choice rs-choice--' + x.g + '"><b>' + x.t + '</b><span>' + x.w + '</span></div>';
-    }).join('');
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
-  segmented($('#triage-filter'), groups.map(function (g) {
-    var n = g.key === 'all' ? items.length : items.filter(function (x) { return x.g === g.key; }).length;
-    return { key: g.key, label: g.label + '<span class="rs-seg__n">' + n + '</span>' };
-  }), 'aria-pressed', renderChoices, 'all');
-  renderChoices('all');
-
-  /* Personas */
-  var personas = {
-    planner: { label: 'Supply planner', pain: 'Places each lot by hand across spreadsheets. Rules are applied unevenly. Stock expires before the checks are done.', gain: 'A defensible plan in minutes, and an answer to "why did this go there?" in the meeting.', q: 'I want a plan I can adjust and explain to anyone.' },
-    brand: { label: 'Brand and finance', pain: 'Receives a spreadsheet with no reasoning, and approves by habit: "luxury never goes to clearance".', gain: 'A protective rule has a price in euros, so approval takes one meeting.', q: 'I want to see what a rule costs, then keep it or relax it on facts.' },
-    sustain: { label: 'Sustainability', pain: 'Waste figures are manual and hard to audit.', gain: 'A traceable destination for every unit, ready for the report. A later segment.', q: 'I want to show what was diverted, and why.' }
-  };
-  function renderPersona(k) {
-    var p = personas[k];
-    $('#persona-body').innerHTML = '<div class="rs-persona__row"><dt>Today</dt><dd>' + p.pain + '</dd></div><div class="rs-persona__row"><dt>With Reshelf</dt><dd>' + p.gain + '</dd></div><blockquote>' + p.q + '</blockquote>';
-  }
-  segmented($('#persona-tabs'), Object.keys(personas).map(function (k) { return { key: k, label: personas[k].label }; }), 'aria-selected', renderPersona, 'planner');
-  renderPersona('planner');
-
-  /* Value curve */
-  var curve = [
-    ['Respects all rules at once', [1, 3, 1, 3], ['Low', 'High', 'Low', 'High']],
-    ['Shows what a rule costs in euros', [0, 1, 0, 3], ['None', 'Low', 'None', 'High']],
-    ['Treats brand tier as a hard rule', [1, 1, 1, 3], ['Manual', 'Low', 'Low', 'High']],
-    ['Easy to start', [3, 1, 2, 2], ['High', 'Low', 'Medium', 'Medium']]
-  ];
-  $('#curve').innerHTML = curve.map(function (r) {
-    return '<tr><th scope="row">' + r[0] + '</th>' + r[1].map(function (v, i) {
-      var dots = [1, 2, 3].map(function (n) { return '<b class="' + (n <= v ? 'on' : '') + '"></b>'; }).join('');
-      return '<td' + (i === 3 ? ' class="rs-me"' : '') + '><span class="rs-level"><i aria-hidden="true">' + dots + '</i>' + r[2][i] + '</span></td>';
-    }).join('') + '</tr>';
-  }).join('');
-
-  /* Weeks */
-  var weeks = [
-    { b: 5, d: 5, goal: 'Set up the repo and book interviews', done: 'Repo public, automatic checks green', disc: 'Competitor research starts' },
-    { b: 9, d: 4, goal: 'Build a realistic fake world', done: 'Same data every run, tested', disc: 'First 4 interviews' },
-    { b: 12.5, d: 3, goal: 'Optimizer that beats the hand method on neutral test sets', done: 'Every rule has a passing test', disc: 'Last 4 interviews', note: 'The heaviest week, no buffer.' },
-    { b: 12.5, d: 1, goal: 'Explain every decision, open the API', done: 'Reasons and euro costs work, speed benchmarked', disc: 'Read the interview results', gate: 'Checkpoint 1. Fewer than 3 of 8 describe a manual process: test a nearby segment before building more. Anything not green: cut scope now.' },
-    { b: 12, d: 0, goal: 'First real version of the key screen', done: 'Dial a rule, see the euro cost, open the reason', disc: 'Click test with 3 people' },
-    { b: 10.5, d: 2.5, goal: 'The full planner flow, end to end', done: 'Parameters, run, save, compare, export', disc: 'Walkthrough with 5 planners' },
-    { b: 10, d: 2.5, goal: 'Polish the key screen, lock the video story', done: 'Automated test of the key flow passes', disc: 'Read the walkthrough, test the AI idea by hand', gate: 'Checkpoint 2. If the reason panel does not beat the table alone, scenario compare becomes the star.' },
-    { b: 11.5, d: 1.5, goal: 'Ship the live link, version 0.1', done: 'Opens fast from a cold start', disc: '5 peer reviews of the repo', gate: 'Fewer than 4 of 5 reviewers get problem, user and difference: rewrite the README top first.' },
-    { b: 9, d: 2, goal: 'Publish the 75 second video, version 1.0', done: 'Video in the README', disc: 'Build the landing page test' },
-    { b: 1.5, d: 5, goal: 'Run the landing page test and decide', done: 'Written decision on segment, hero, AI and pilot', disc: 'Share in 3 practitioner communities', gate: 'Above 10% leave a contact: draft a pilot offer. Below 3%: rework the message first.' }
-  ];
-  var MAX = 15;
-  $('#weeks').innerHTML = weeks.map(function (w, i) {
-    var hb = Math.max(2, w.b / MAX * 100), hd = w.d ? Math.max(2, w.d / MAX * 100) : 0;
-    return '<button type="button" class="rs-week" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '" aria-label="Week ' + i + ', ' + w.b + ' build hours, ' + w.d + ' discovery hours' + (w.gate ? ', has a gate' : '') + '">' +
-      '<span class="rs-week__top"><span>W' + i + '</span>' + (w.gate ? '<span class="rs-gate" aria-hidden="true"></span>' : '') + '</span>' +
-      '<span class="rs-week__bars" aria-hidden="true"><i class="b" style="height:' + hb + '%"></i><i class="d" style="height:' + hd + '%"></i></span>' +
-      '<span class="rs-week__hours">' + w.b + ' / ' + w.d + ' h</span></button>';
-  }).join('');
-  function renderWeek(i) {
-    var w = weeks[i];
-    $('#wk-detail').innerHTML = '<h4>Week ' + i + ': ' + w.goal + '</h4>' +
-      '<dl><dt>Done when</dt><dd>' + w.done + '</dd></dl><dl><dt>Alongside</dt><dd>' + w.disc + '</dd></dl>' +
-      (w.note ? '<p class="rs-gate-note">' + w.note + '</p>' : '') + (w.gate ? '<p class="rs-gate-note"><b>Gate.</b> ' + w.gate + '</p>' : '');
-  }
-  $$('#weeks .rs-week').forEach(function (b, idx, all) {
-    b.addEventListener('click', function () { all.forEach(function (x) { x.setAttribute('aria-selected', 'false'); }); b.setAttribute('aria-selected', 'true'); renderWeek(+b.dataset.i); });
-  });
-  renderWeek(0);
 })();
 </script>
 </body>
