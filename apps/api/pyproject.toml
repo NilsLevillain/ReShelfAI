@@ -15,6 +15,8 @@ dependencies = [
     "pulp>=2.7.0",
     "uvicorn>=0.24.0",
     "python-multipart>=0.0.6",
+    "numpy>=1.26.0",
+    "pyyaml>=6.0",
 ]
 
 [project.optional-dependencies]
@@ -25,6 +27,7 @@ dev = [
     "ruff>=0.1.0",
     "mypy>=1.7.0",
     "types-setuptools>=69.0.0",
+    "types-pyyaml>=6.0",
 ]
 
 [tool.ruff]
@@ -36,6 +39,7 @@ select = ["E", "F", "I", "UP", "B", "A", "RUF"]
 ignore = ["E501"]
 
 [tool.mypy]
+mypy_path = "../../data/generator"
 python_version = "3.11"
 strict = true
 warn_unused_configs = true
@@ -45,5 +49,6 @@ module = "pulp.*"
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "../../data/generator/tests"]
+pythonpath = ["../../data/generator"]
 asyncio_mode = "auto"

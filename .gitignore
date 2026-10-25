@@ -16,3 +16,5 @@ tmp/
 *.lp
 *.log
 _site/
+
+data/generated/
