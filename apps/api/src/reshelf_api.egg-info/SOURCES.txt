@@ -1,7 +1,0 @@
-pyproject.toml
-src/reshelf_api.egg-info/PKG-INFO
-src/reshelf_api.egg-info/SOURCES.txt
-src/reshelf_api.egg-info/dependency_links.txt
-src/reshelf_api.egg-info/requires.txt
-src/reshelf_api.egg-info/top_level.txt
-tests/test_health.py

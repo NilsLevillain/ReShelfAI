@@ -1,2 +1,17 @@
 _private/
 .obsidian/
+
+# dependencies and build output
+node_modules/
+dist/
+!design_system/dist/
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+tmp/
+*.lp
+*.log

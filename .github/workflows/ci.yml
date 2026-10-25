@@ -12,32 +12,37 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.11', '3.12']
+    defaults:
+      run:
+        working-directory: apps/api
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-      - run: uv sync
-      - run: uv run ruff check apps/api
-      - run: uv run ruff format --check apps/api
-      - run: uv run mypy apps/api
-      - run: uv run pytest apps/api/tests -v
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --extra dev --python ${{ matrix.python-version }}
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy .
+      - run: uv run pytest -v
 
   web:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: pnpm
-      - run: pnpm install
+          cache-dependency-path: apps/web/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm type-check
-      - run: pnpm test --run
+      - run: pnpm exec vitest run --passWithNoTests
       - run: pnpm build
 
   deploy:
