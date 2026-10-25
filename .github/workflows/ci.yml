@@ -19,9 +19,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
       - run: uv sync --extra dev --python ${{ matrix.python-version }}
-      - run: uv run ruff check .
-      - run: uv run ruff format --check .
-      - run: uv run mypy .
+      - run: uv run ruff check . ../../data/generator
+      - run: uv run ruff format --check . ../../data/generator
+      - run: uv run mypy . ../../data/generator
       - run: uv run pytest -v
 
   web:
