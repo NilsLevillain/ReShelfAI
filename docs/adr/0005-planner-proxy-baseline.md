@@ -76,3 +76,11 @@ The README and compare view show the median, minimum and maximum uplift over the
 * No claim of time saved is made. Time and error rate would need a pilot measurement.
 * Open: which rules planners really apply by hand, and in what order. Check in E2 and update `planner_rules` defaults.
 * Open: the repair order (lowest net value per unit first) is a choice. Document the alternative of dropping whole lots.
+
+### Implementation notes (2026-10-27, week 2 slice 4)
+
+* Urgency is `1 / max(days to expiry at as_of, 1)`, so value at risk is `units x unit cost / days`.
+* A planner also uses pairs that were dropped only by a rule it does not apply (for example `NO_PUSH`, or `TIER` when `tier` is not in `planner_rules`). The audit then reports those units under the reason code.
+* Repair trims units, it does not always drop whole lines. Units above `cov_hi`, `asrt_units` or `cap` are cut from the lines with the lowest net value per unit. A SKU (material, channel) that ends under its lower bound (`cov_lo`, `push`), or that breaks `sku` or `asrt`, is dropped whole, lowest net value per unit first. Every change removes units, so the loop ends. Code: `baseline.py`.
+* Audit `excess` is in the unit of the constraint: units, or SKUs for `sku` and `asrt`.
+* The property test runs on worlds of 20 SKUs with channel SKU limits scaled to the world, because the limits are absolute in the scenario and never bind on a small world.

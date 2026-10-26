@@ -1,6 +1,6 @@
 # Progress
 
-Last updated: 2026-10-26. Source of truth for the schedule is `docs/war_plan.md` section 7.
+Last updated: 2026-10-27. Source of truth for the schedule is `docs/war_plan.md` section 7.
 
 ## Status at a glance
 
@@ -12,10 +12,10 @@ Last updated: 2026-10-26. Source of truth for the schedule is `docs/war_plan.md`
 | 2, slice 1 | Canonical schema, CsvAdapter | Done (`5b0e297`) |
 | 2, slice 2 | Elimination, solver input, constraint registry and checker, ADR 003 and 004 | Done (`4bf9ea8`) |
 | 2, slice 3 | Solver core, ADR 006 | Done |
-| 2, slice 4 | Baseline, KPIs, seed property test, tuning, Parquet adapter | To do |
+| 2, slice 4 | Baseline, KPIs, seed property test, Parquet adapter | Done (tuning skipped, see below). `baseline_expert` not built |
 | 3 to 8 | Rule trace, API, web app, Docker, video | Not started |
 
-Test state after slice 3: 174 tests green, ruff and mypy strict clean. Commits are local, not pushed.
+Test state after slice 4: 246 tests green (about 3.5 min, the 50 seed test is marked `slow`), ruff and mypy strict clean. Commits are local, not pushed.
 
 ## Done
 
@@ -45,6 +45,13 @@ Test state after slice 3: 174 tests green, ruff and mypy strict clean. Commits a
 * Tests: TS-030 to 039, 040 to 054, 206 (hypothesis, 40 random worlds). The checker audits every plan.
 * Measured once: 300 SKUs, 4 channels, 1,200 admissible pairs, HiGHS optimal in about 8 s.
 
+### Week 2, slice 4: baseline, KPIs, seeds, Parquet
+* `kpis.py`: value recovered, units allocated and destroyed, brand risk index, SKUs per channel, fill rate, score. Same function for the optimizer plan, the raw baseline and the compliant baseline.
+* `baseline.py`: `plan_by_hand` (value at risk order, best recovery channel with capacity), `audit` (count and excess per named constraint), `repair` (deterministic, trims units, drops whole SKUs under a lower bound), `baseline_planner`. ADR 005 has implementation notes.
+* `test_baseline_property.py`: ADR 005 on the 50 neutral seeds, 20 SKU worlds with channel SKU limits scaled to the world. All 50 pass, all solves optimal.
+* `adapters/parquet.py`, `adapters/folder.py` (shared loader), `pyarrow` added. TS-018 parity test with string and integer typed Parquet.
+* Measured on the 50 seeds (20 SKUs): value uplift against the compliant baseline, median 2.6 times, minimum 1.56 times, maximum 68 times. Solves take 2 to 20 s at 20 to 40 SKUs.
+
 ### Decisions taken with Nils
 * Push quantity depends on product category.
 * Class A, B, C, NEW is per (material, channel) and driven by sellout in that channel. Score weight is per (material, channel).
@@ -61,13 +68,9 @@ Test state after slice 3: 174 tests green, ruff and mypy strict clean. Commits a
 
 ## To do
 
-### Week 2, slice 4: baseline, KPIs, seeds
-* `baseline_planner` (rules from `planner_rules`, default rsl, tier, capacity), audited by the checker.
-* Deterministic repair to a compliant plan. KPIs: value recovered, units destroyed, brand risk index, SKUs per channel, fill rate, raw value, violations, compliant value.
-* ADR 005 property test on the 50 neutral seeds (reduced `n_skus`), minimum gap assertion.
-* Tune the scenario parameters marked "tune" (`coverage_days`, `second_life_share`, `total_capacity_ratio`). Never edit the neutral seeds. Rerun generator tests after any change.
-* Parquet adapter (P1). `baseline_expert` sensitivity check if time allows.
-* Week 2 done when: tests green and the optimizer beats the greedy baseline on the seeds.
+### Left from week 2
+* `baseline_expert` sensitivity check (TS-068) and a minimum gap assertion (TS-065). The gap is recorded, not asserted.
+* Tuning of `coverage_days`, `second_life_share`, `total_capacity_ratio`: skipped, since the optimizer wins on all 50 seeds. Decide with Nils whether the gap is too large to be credible (see open points).
 
 ### Weeks 3 to 8 (from the war plan)
 | Week | Build |
@@ -86,6 +89,10 @@ Test state after slice 3: 174 tests green, ruff and mypy strict clean. Commits a
 * HiGHS solve time at 2,000 SKUs is unproven. The benchmark is week 3. Property tests use fewer SKUs.
 * ADR 005 open point: which rules planners really apply by hand (interview experiment E2).
 * `docs/model.md` generation and its CI drift check are week 3. The registry is ready for it.
+
+* The gap against the compliant baseline is large (median 2.6 times in value). The repair removes much of the raw plan, since lots are far bigger than channel coverage needs. A reviewer may call this a strawman. Options in week 3: tune `second_life_share` up, or build `baseline_expert` to show the gap against a stronger opponent.
+* Score and value at 150 SKUs and 20 channels hit the 60 s time limit (status feasible), so property tests stay at 20 SKUs. The benchmark in week 3 must cover this.
+* Channel `max_skus` is absolute in the scenario. It only binds near 2,000 SKUs, so small test worlds scale it (`test_baseline_property.py`).
 
 ## Working notes
 * On this machine run uv with `UV_LINK_MODE=copy` (OneDrive blocks hardlinks).

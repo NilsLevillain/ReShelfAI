@@ -4,10 +4,13 @@ from pathlib import Path
 
 import pandas as pd
 
-from reshelf.adapters.base import DatasetError
-from reshelf.adapters.sap import build_dataset
-from reshelf.adapters.source_schemas import SOURCE_SCHEMAS
+from reshelf.adapters.folder import load_folder
 from reshelf.schema import CanonicalDataset
+
+
+def _read(path: Path) -> pd.DataFrame:
+    # Strings only, so identifiers such as material numbers keep their leading zeros.
+    return pd.read_csv(path, dtype=str, keep_default_na=False, encoding="utf-8")
 
 
 class CsvAdapter:
@@ -17,13 +20,4 @@ class CsvAdapter:
         self.folder = Path(folder)
 
     def load(self) -> CanonicalDataset:
-        if not self.folder.is_dir():
-            raise DatasetError(f"source folder {self.folder} does not exist")
-        frames: dict[str, pd.DataFrame] = {}
-        for table in SOURCE_SCHEMAS:
-            path = self.folder / f"{table}.csv"
-            if not path.is_file():
-                raise DatasetError(f"source table {table} is missing: {path}")
-            # Strings only, so identifiers such as material numbers keep their leading zeros.
-            frames[table] = pd.read_csv(path, dtype=str, keep_default_na=False, encoding="utf-8")
-        return build_dataset(frames)
+        return load_folder(self.folder, ".csv", _read)
