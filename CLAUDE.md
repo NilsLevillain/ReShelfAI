@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Pre code. Only planning documents exist: `docs/war_plan.md` (execution plan, source of truth for architecture and the 8 week schedule), `product_management/` (discovery, strategy, metrics), `design_system/` (tokens, spec, imagery guide), and empty scaffold folders (`apps/api`, `apps/web`, `data/*`, `infra`, `video`). Check the week table in `docs/war_plan.md` section 7 to see what is in scope now and what is explicitly "not built" yet.
 
-Commands below are **planned** in the war plan and do not exist until week 0 and 1 land. Python tasks run from `apps/api`:
+Commands below are **planned** in the war plan and do not exist until week 0 and 1 land. Python tasks run from `apps/api` after `uv sync --all-extras`:
 - `uv run pytest -q` — run tests
 - `uv run ruff check . ../../data/generator && uv run ruff format --check . ../../data/generator && uv run mypy . ../../data/generator` — lint and type check
 - `PYTHONPATH=../../data/generator uv run python -m reshelf_datagen --scenario ../../data/scenarios/default.yaml --out ../../data/generated/default` — generate demo data
