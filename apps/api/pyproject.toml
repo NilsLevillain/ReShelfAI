@@ -17,6 +17,9 @@ dependencies = [
     "python-multipart>=0.0.6",
     "numpy>=1.26.0",
     "pyyaml>=6.0",
+    "pandas>=2.1.0",
+    "pandera>=0.20.0",
+    "highspy>=1.7.0",
 ]
 
 [project.optional-dependencies]
@@ -28,7 +31,12 @@ dev = [
     "mypy>=1.7.0",
     "types-setuptools>=69.0.0",
     "types-pyyaml>=6.0",
+    "pandas-stubs>=2.1.0",
+    "hypothesis>=6.100.0",
 ]
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.ruff]
 line-length = 100
@@ -45,10 +53,14 @@ strict = true
 warn_unused_configs = true
 
 [[tool.mypy.overrides]]
-module = "pulp.*"
+module = ["pulp.*", "highspy.*"]
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "reshelf.adapters.source_schemas"
+disallow_untyped_calls = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests", "../../data/generator/tests"]
-pythonpath = ["../../data/generator"]
+pythonpath = ["src", "../../data/generator"]
 asyncio_mode = "auto"

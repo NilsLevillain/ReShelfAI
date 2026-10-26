@@ -298,3 +298,23 @@ def test_luxury_protection_changes_only_the_rule(cfg: dict[str, Any]) -> None:
     ]
     assert changed
     assert all(channel.startswith("CLR") and tier == "luxury" for channel, tier in changed)
+
+
+def test_every_channel_has_a_transit_time(tables: Tables) -> None:
+    assert all(r["TRANSITD"] >= 0 for r in tables["ZCHANNEL"])
+    assert len({r["TRANSITD"] for r in tables["ZCHANNEL"]}) > 1
+
+
+def test_push_quantity_is_set_per_category(tables: Tables) -> None:
+    push = {
+        r["PARAM"]: int(r["VALUE"])
+        for r in tables["ZPARAM"]
+        if r["PARAM"].startswith("PUSH_QUANTITY_UNITS_")
+    }
+    assert push["PUSH_QUANTITY_UNITS_FRAGRANCE"] < push["PUSH_QUANTITY_UNITS_HAIRCARE"]
+    assert set(push) == {
+        "PUSH_QUANTITY_UNITS_FRAGRANCE",
+        "PUSH_QUANTITY_UNITS_SKINCARE",
+        "PUSH_QUANTITY_UNITS_MAKEUP",
+        "PUSH_QUANTITY_UNITS_HAIRCARE",
+    }

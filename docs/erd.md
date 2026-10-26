@@ -89,6 +89,7 @@ erDiagram
         int MAXSKU
         float MINRSL "percent"
         float RECFACT
+        int TRANSITD "days from plant to channel"
     }
     ZCHANNEL_RULE {
         string CHANNEL PK
@@ -128,7 +129,8 @@ Notes on the custom pieces:
 
 * `ZCHANNEL_ASRT` is new compared with `docs/war_plan.md` section 4.2. It holds the group limits `A_{g,c}` (SKUs) and `U_{g,c}` (units, the Q8 decision, 2026-10-25) per channel and group, where a group is brand by category.
 * A plant is either a factory or a distribution center. Distribution centers are plants of their own (`ZZPTYPE = dc`), which is how SAP models them, so the decision index stays material by plant by expiry month.
-* `ZPARAM` holds scalar parameters and score weights. It has no foreign key.
+* `ZCHANNEL.TRANSITD` is the transit time per channel. The delivery date of a lot in a channel is `as_of + TRANSITD`, and the remaining shelf life rule (RSL) is checked at that date.
+* `ZPARAM` holds scalar parameters and score weights. The NEW SKU push quantity is one row per product category (`PUSH_QUANTITY_UNITS_FRAGRANCE`, ...). It has no foreign key.
 
 ## 2. Canonical layer
 
@@ -174,6 +176,7 @@ erDiagram
         float lon
         int capacity_units
         int max_skus
+        int transit_days "RSL is measured at as_of plus this"
     }
     ChannelRule {
         string channel FK

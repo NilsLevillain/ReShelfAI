@@ -1,6 +1,6 @@
 # Field mapping: source tables to canonical dataset
 
-Evidence level: design, no code yet. Source names are standard SAP names or custom `Z` and `ZZ` names, all synthetic. Every default below is an invented illustrative default, stored in `ZPARAM` or the scenario yaml, never in code.
+Evidence level: design, code in progress (week 2). Source names are standard SAP names or custom `Z` and `ZZ` names, all synthetic. Every default below is an invented illustrative default, stored in `ZPARAM` or the scenario yaml, never in code.
 
 Format: source table.field, canonical field, transformation.
 
@@ -45,6 +45,7 @@ Format: source table.field, canonical field, transformation.
 | `ZCHANNEL.CHANNEL`, `CTYPE`, `LAND1`, `LAT`, `LON` | `Channel.*` | As is. `CTYPE` enum: `outlet`, `friends_family`, `clearance_web`, `ngo_donation`, `liquidation` |
 | `ZCHANNEL.CAPUNITS` | `Channel.capacity_units` | Integer, not negative |
 | `ZCHANNEL.MAXSKU` | `Channel.max_skus` | Integer, not negative |
+| `ZCHANNEL.TRANSITD` | `Channel.transit_days` | Integer, not negative. Delivery date is `as_of` plus this value |
 | `ZCHANNEL.MINRSL` | `ChannelRule.min_rsl_pct` | Percent from 0 to 100 |
 | `ZCHANNEL.RECFACT` | `ChannelRule.recovery_factor` | Share of unit cost recovered, from 0 to 1 |
 | `ZCHANNEL_RULE.TIER` where `ALLOWED = X` | `ChannelRule.allowed_tiers` | Set of tiers per channel |
@@ -57,9 +58,10 @@ Format: source table.field, canonical field, transformation.
 |---|---|---|
 | `ZSELLOUT.QTY` over the last 12 closed periods | `Demand.daily_demand` | Sum divided by 365, per material and channel |
 | `ZSELLOUT.QTY` by calendar month | `Demand.seasonality` | Month total divided by the monthly mean. Twelve indexes with a mean of 1 |
-| `ZSELLIN.QTY` minus `ZSELLOUT.QTY` since the first sell in | `Demand.channel_stock` | Cumulative sell in minus cumulative sell out, floored at 0 |
+| `ZSELLIN.QTY` minus `ZSELLOUT.QTY` since the first sell in | `Demand.channel_stock` | Delivered sell in (`QTY` minus `QTYTRANSIT`) minus cumulative sell out, floored at 0. In transit units are counted once, in `in_transit` |
 | `ZSELLIN.QTYTRANSIT` | `Demand.in_transit` | Sum per material and channel. Coverage need counts on hand plus in transit |
-| `ZABC.ABCCLASS`, `ZABC.RANK` | `Abc.abc_class`, `Abc.rank` | A material without a row is `NEW` when the channel holds no stock of it, otherwise `C`. A missing rank defaults to the lowest |
+| `ZABC.ABCCLASS`, `ZABC.RANK` | `Abc.abc_class`, `Abc.rank` | The class is derived per material and channel. A pair with sellout history in the channel keeps the `ZABC` class (`C` if the material has no row). A pair with no sellout history in the channel is `NEW`, because past sales cannot forecast it. A missing rank counts as the lowest, rank N, where N is the number of ranked materials |
+| `ZPARAM.PUSH_QUANTITY_UNITS_<CATEGORY>` | push quantity per category | Units placed when a `NEW` SKU is pushed into a channel, one row per product category |
 | `ZPARAM` | scenario parameters | Typed and validated by Pydantic (negative capacity, percent above 100, unknown class are rejected before any solve) |
 
 ## Defaults for missing data (each has a test)
@@ -67,7 +69,7 @@ Format: source table.field, canonical field, transformation.
 | Case | Default |
 |---|---|
 | No demand row for a material and channel | No coverage need |
-| `NEW` material without a push rule | Not allocated to that channel |
+| `NEW` material whose category has no push quantity | Not allocated to that channel, reason shown in the trace |
 | No `ZCHANNEL_ASRT` row | No group limit |
 | No rank | Lowest rank in the class |
 

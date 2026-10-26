@@ -101,11 +101,13 @@ generator:
     # demand_weight   how much the type sells relative to others
     # min_rsl_pct     shelf life the channel needs left at delivery, in percent (elimination rule RSL)
     # recovery_factor share of unit cost the channel gives back (0.45 means 45 cents per euro of cost)
-    outlet:         {capacity_share: 0.25, max_skus: 300, carry_prob: 0.30, demand_weight: 1.0, min_rsl_pct: 50, recovery_factor: 0.45}
-    friends_family: {capacity_share: 0.12, max_skus: 250, carry_prob: 0.20, demand_weight: 0.8, min_rsl_pct: 60, recovery_factor: 0.55}
-    clearance_web:  {capacity_share: 0.30, max_skus: 600, carry_prob: 0.35, demand_weight: 1.2, min_rsl_pct: 40, recovery_factor: 0.35}
-    ngo_donation:   {capacity_share: 0.10, max_skus: 150, carry_prob: 0.12, demand_weight: 0.6, min_rsl_pct: 25, recovery_factor: 0.05}
-    liquidation:    {capacity_share: 0.23, max_skus: 800, carry_prob: 0.60, demand_weight: 1.5, min_rsl_pct: 0,  recovery_factor: 0.08}
+    # transit_days   days between shipping from a plant and delivery in the channel. Remaining shelf life is
+    #                 measured at delivery (as_of plus transit_days). Illustrative, same for every plant
+    outlet:         {capacity_share: 0.25, max_skus: 300, carry_prob: 0.30, demand_weight: 1.0, min_rsl_pct: 50, recovery_factor: 0.45, transit_days: 10}
+    friends_family: {capacity_share: 0.12, max_skus: 250, carry_prob: 0.20, demand_weight: 0.8, min_rsl_pct: 60, recovery_factor: 0.55, transit_days: 12}
+    clearance_web:  {capacity_share: 0.30, max_skus: 600, carry_prob: 0.35, demand_weight: 1.2, min_rsl_pct: 40, recovery_factor: 0.35, transit_days: 7}
+    ngo_donation:   {capacity_share: 0.10, max_skus: 150, carry_prob: 0.12, demand_weight: 0.6, min_rsl_pct: 25, recovery_factor: 0.05, transit_days: 28}
+    liquidation:    {capacity_share: 0.23, max_skus: 800, carry_prob: 0.60, demand_weight: 1.5, min_rsl_pct: 0,  recovery_factor: 0.08, transit_days: 35}
   # Group limits (rules asrt and asrt_units). A group is one brand in one category.
   group_sku_share: 0.45      # one group may use this share of a channel's SKU limit
   group_units_share: 0.40    # one group may use this share of a channel's unit capacity (decision Q8)
@@ -167,7 +169,10 @@ params:
   # A selected SKU must get at least alpha x its coverage need (rule cov_lo).
   # 0.5 means at least half of the need. The upper bound (cov_hi) is the full need.
   coverage_alpha: 0.50
-  push_quantity_units: 60    # units to place when a NEW SKU is pushed into a channel (rule push)
+  # Units to place when a NEW SKU is pushed into a channel (rule push), by product category.
+  # A small fragrance push is enough to test the market, haircare and makeup need more units.
+  # A NEW SKU whose category has no entry here is not pushed and gets no allocation (reason in the trace).
+  push_quantity_units: {Fragrance: 5, Skincare: 30, Makeup: 30, Haircare: 50}
   solver_time_limit_s: 60
   counterfactual_time_limit_s: 10
   planner_rules: [rsl, tier, capacity]   # rules the planner proxy applies by hand (ADR 005)

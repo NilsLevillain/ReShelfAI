@@ -40,6 +40,7 @@ TABLE_COLUMNS: dict[str, list[str]] = {
         "MAXSKU",
         "MINRSL",
         "RECFACT",
+        "TRANSITD",
     ],
     "ZCHANNEL_RULE": ["CHANNEL", "TIER", "ALLOWED", "BRANDPEN"],
     "ZCHANNEL_ASRT": ["CHANNEL", "ZZBRAND", "MATKL", "MAXSKU", "MAXUNITS"],
@@ -364,6 +365,7 @@ def generate(cfg: dict[str, Any]) -> Tables:
                 "MAXSKU": spec["max_skus"],
                 "MINRSL": spec["min_rsl_pct"],
                 "RECFACT": spec["recovery_factor"],
+                "TRANSITD": spec["transit_days"],
             }
         )
 
@@ -411,6 +413,16 @@ def generate(cfg: dict[str, Any]) -> Tables:
     ]
     for row in param_rows:
         row["PARAM"] = row["PARAM"].lstrip("_")
+    # The key date of the demo world. Remaining shelf life and delivery dates are measured from it.
+    param_rows.insert(
+        0,
+        {
+            "PARAM": "AS_OF",
+            "VALUE": cfg["as_of"].isoformat(),
+            "UNIT": "",
+            "NOTE": "illustrative default",
+        },
+    )
 
     return {
         "MARA": [
