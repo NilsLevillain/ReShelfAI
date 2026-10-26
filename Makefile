@@ -4,7 +4,10 @@
 API := apps/api
 SCENARIOS := default luxury_protection
 
-.PHONY: demo-data test lint
+.PHONY: demo-data test lint model-doc
+
+model-doc:
+	cd $(API) && uv run python -m reshelf.model_doc
 
 demo-data:
 	@for s in $(SCENARIOS); do \

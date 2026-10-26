@@ -22,6 +22,8 @@ jobs:
       - run: uv run ruff check . ../../data/generator
       - run: uv run ruff format --check . ../../data/generator
       - run: uv run mypy . ../../data/generator
+      - name: Fail when docs/model.md drifts from the constraint registry
+        run: uv run python -m reshelf.model_doc --check
       - run: uv run pytest -v
 
   web:

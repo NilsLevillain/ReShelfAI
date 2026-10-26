@@ -32,6 +32,7 @@ class ConstraintSpec:
     sense: Sense
     description: str
     planner_rule: PlannerRule | None = None
+    reads: str = ""  # source tables and parameters the bounds come from, for docs/model.md
 
     @property
     def label(self) -> str:
@@ -40,7 +41,12 @@ class ConstraintSpec:
 
 CONSTRAINTS: tuple[ConstraintSpec, ...] = (
     ConstraintSpec(
-        "supply", "l", "sum_c x[l,c] <= q[l]", "<=", "A lot cannot ship more than it holds"
+        "supply",
+        "l",
+        "sum_c x[l,c] <= q[l]",
+        "<=",
+        "A lot cannot ship more than it holds",
+        reads="MCHB.CLABS",
     ),
     ConstraintSpec(
         "link_xy",
@@ -67,15 +73,29 @@ CONSTRAINTS: tuple[ConstraintSpec, ...] = (
         "A selected SKU uses at least one lot",
     ),
     ConstraintSpec(
-        "cap", "c", "sum_l x[l,c] <= K[c]", "<=", "Channel capacity in units", "capacity"
+        "cap",
+        "c",
+        "sum_l x[l,c] <= K[c]",
+        "<=",
+        "Channel capacity in units",
+        "capacity",
+        reads="ZCHANNEL.CAPUNITS",
     ),
-    ConstraintSpec("sku", "c", "sum_m z[m,c] <= S[c]", "<=", "Channel limit on distinct SKUs"),
+    ConstraintSpec(
+        "sku",
+        "c",
+        "sum_m z[m,c] <= S[c]",
+        "<=",
+        "Channel limit on distinct SKUs",
+        reads="ZCHANNEL.MAXSKU",
+    ),
     ConstraintSpec(
         "asrt",
         "g,c",
         "sum_{m in g} z[m,c] <= A[g,c]",
         "<=",
         "Assortment limit: SKUs of a brand and category in a channel",
+        reads="ZCHANNEL_ASRT.MAXSKU",
     ),
     ConstraintSpec(
         "cov_hi",
@@ -83,6 +103,7 @@ CONSTRAINTS: tuple[ConstraintSpec, ...] = (
         "sum_{l in L(m)} x[l,c] <= U[m,c] * z[m,c]",
         "<=",
         "Do not exceed the coverage need (push quantity for NEW)",
+        reads="ZPARAM.COVERAGE_DAYS, ZSELLOUT, ZCHSTOCK, ZPARAM.PUSH_QUANTITY_UNITS_*",
     ),
     ConstraintSpec(
         "cov_lo",
@@ -90,6 +111,7 @@ CONSTRAINTS: tuple[ConstraintSpec, ...] = (
         "sum_{l in L(m)} x[l,c] >= B[m,c] * z[m,c]",
         ">=",
         "A selected SKU covers at least alpha of its need",
+        reads="ZPARAM.COVERAGE_ALPHA, ZPARAM.COVERAGE_DAYS",
     ),
     ConstraintSpec(
         "push",
@@ -97,6 +119,7 @@ CONSTRAINTS: tuple[ConstraintSpec, ...] = (
         "sum_{l in L(m)} x[l,c] >= B[m,c] * z[m,c]",
         ">=",
         "A selected NEW SKU gets its push quantity",
+        reads="ZPARAM.PUSH_QUANTITY_UNITS_*",
     ),
     ConstraintSpec(
         "asrt_units",
@@ -104,6 +127,7 @@ CONSTRAINTS: tuple[ConstraintSpec, ...] = (
         "sum_{l: m(l) in g} x[l,c] <= V[g,c]",
         "<=",
         "Assortment limit: units of a brand and category in a channel",
+        reads="ZCHANNEL_ASRT.MAXUNITS",
     ),
 )
 
