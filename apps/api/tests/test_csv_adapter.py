@@ -109,13 +109,11 @@ def test_daily_demand_is_a_year_of_sellout_over_365(
     assert demand.daily_demand == pytest.approx(year / 365)
 
 
-def test_in_transit_is_not_counted_as_channel_stock(
-    dataset: CanonicalDataset, source_dir: Path
-) -> None:
-    _, sellin = read_table(source_dir, "ZSELLIN")
-    transit = sum(int(r["QTYTRANSIT"]) for r in sellin)
-    assert transit > 0
-    assert sum(d.in_transit for d in dataset.demand) == transit
+def test_channel_stock_is_read_as_is(dataset: CanonicalDataset, source_dir: Path) -> None:
+    _, stock = read_table(source_dir, "ZCHSTOCK")
+    assert sum(int(r["QTYTRANSIT"]) for r in stock) > 0
+    assert sum(d.in_transit for d in dataset.demand) == sum(int(r["QTYTRANSIT"]) for r in stock)
+    assert sum(d.channel_stock for d in dataset.demand) == sum(int(r["QTYONHAND"]) for r in stock)
 
 
 # TS-009 to TS-012 rejections
@@ -197,7 +195,7 @@ def test_unknown_push_category_is_rejected(edit_source: Edit) -> None:
 
 def test_header_only_tables_give_an_empty_dataset(edit_source: Edit) -> None:
     folder = edit_source()
-    for table in ("MCHB", "MARD", "MBEW", "ZSELLIN", "ZSELLOUT"):
+    for table in ("MCHB", "MARD", "MBEW", "ZCHSTOCK", "ZSELLOUT"):
         header, _ = read_table(folder, table)
         (folder / f"{table}.csv").write_text(",".join(header) + "\n", encoding="utf-8")
     loaded = CsvAdapter(folder).load()

@@ -123,7 +123,7 @@ The solver never sees raw ERP tables.
 ### 4.2 Source tables
 
 Standard: `MARA`, `MAKT`, `MARC`, `MARD`, `MCHB` (with `VFDAT`, `HSDAT`), `MBEW`, `T001W`, `T023`.
-Custom: `ZCHANNEL`, `ZCHANNEL_RULE`, `ZCHANNEL_ASRT` (group limits, SKUs and units per channel and brand by category), `ZSELLIN`, `ZSELLOUT`, `ZABC`, `ZPARAM`. Field level detail is in `docs/erd.md` and `docs/mapping.md`.
+Custom: `ZCHANNEL`, `ZCHANNEL_RULE`, `ZCHANNEL_ASRT` (group limits, SKUs and units per channel and brand by category), `ZCHSTOCK`, `ZSELLOUT`, `ZABC`, `ZPARAM`. Field level detail is in `docs/erd.md` and `docs/mapping.md`.
 
 ### 4.3 Adapter
 
@@ -188,7 +188,10 @@ Variables: x_{l,c} ∈ ℤ≥0, y_{l,c} ∈ {0,1}, z_{m,c} ∈ {0,1}, defined on
 A pair (l,c) is dropped from A when:
 
 * remaining shelf life at delivery < `min_rsl_pct` of channel c, or
-* tier t(l) is not in `allowed_tiers` of channel c (for example luxury and premium are not allowed in donation or clearance).
+* tier t(l) is not in `allowed_tiers` of channel c (for example luxury and premium are not allowed in donation or clearance), or
+* the pair is NEW in channel c (never sold there) and the category of the material has no push quantity (reason `NO_PUSH`).
+
+Remaining shelf life is measured at delivery, `as_of` plus the transit days of channel c. A lot that expires on or before its delivery day is dropped whatever the threshold.
 
 This is faster and easier to explain than constraints. Each dropped pair keeps a reason code for the Why panel.
 
@@ -207,8 +210,9 @@ This is faster and easier to explain than constraints. Each dropped pair keeps a
 | 9 | `cov_lo[m,c]` | Σ_{l ∈ L(m)} x_{l,c} ≥ α · min(D_{m,c}, Q_m) · z_{m,c} |
 | 10 | `push[m,c]` | Σ_{l ∈ L(m)} x_{l,c} ≥ min(P_{m,c}, Q_m) · z_{m,c}, for NEW m |
 | 11 | `asrt_units[g,c]` | Σ_{l: m(l) ∈ g} x_{l,c} ≤ U_{g,c} (added 2026-10-25, decision Q8) |
+| 12 | `link_yx[l,c]` | y_{l,c} ≤ x_{l,c} (added 2026-10-26, a selected SKU must receive at least one unit) |
 
-Q_m is the total available units of material m. Constraints 8 to 10 are the tight form of the Big M formulation: the binary multiplies the smallest valid bound directly, so the coverage and push rules apply only when the SKU is selected. Where a Big M is unavoidable, M is the tightest available bound, never a generic constant. ADR 004 documents this.
+Q_m is the available units of material m in lots admissible for channel c. For a NEW pair, D is 0 because the pair never sold, so the upper bound of `cov_hi` is the push quantity P and the lower bound of `push` is min(P, Q_m). Constraints 8 to 10 are the tight form of the Big M formulation: the binary multiplies the smallest valid bound directly, so the coverage and push rules apply only when the SKU is selected. Where a Big M is unavoidable, M is the tightest available bound, never a generic constant. ADR 004 documents this.
 
 ### 5.5 Objective (two phase lexicographic)
 

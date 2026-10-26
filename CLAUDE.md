@@ -38,7 +38,7 @@ Data flows through three layers, and the solver only sees the last one:
 Source tables (SAP style CSV/Parquet/warehouse) -> SourceAdapter -> Canonical dataset (Pydantic + pandera) -> Solver input
 ```
 
-* `SourceAdapter` is a Python `Protocol`. v1 has CSV and Parquet adapters; BigQuery is a documented stub only. Source tables use standard SAP names (`MARA`, `MCHB` with `VFDAT` and `HSDAT`, `MBEW`, ...) plus custom `Z` tables (`ZCHANNEL`, `ZCHANNEL_RULE`, `ZSELLIN`, `ZSELLOUT`, `ZABC`, `ZPARAM`). Never let the solver read raw ERP tables.
+* `SourceAdapter` is a Python `Protocol`. v1 has CSV and Parquet adapters; BigQuery is a documented stub only. Source tables use standard SAP names (`MARA`, `MCHB` with `VFDAT` and `HSDAT`, `MBEW`, ...) plus custom `Z` tables (`ZCHANNEL`, `ZCHANNEL_RULE`, `ZCHSTOCK`, `ZSELLOUT`, `ZABC`, `ZPARAM`). Never let the solver read raw ERP tables.
 * **Decision index is the lot** (material x plant x expiry bucket, bucketed by month), not material x plant. This keeps remaining shelf life rules exact without per batch variables (ADR 003).
 * **Elimination before modeling**: pairs that fail remaining shelf life or brand tier rules are dropped from the admissible set, and each drop keeps a reason code. The Why panel reads these codes.
 * **Solver** sits behind a `Solver` protocol (PuLP with HiGHS default, CBC fallback). `SolveResult` always carries status, objective, MIP gap, time and time limit, and the API returns them unchanged.

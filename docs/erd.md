@@ -16,9 +16,9 @@ erDiagram
     MARD ||--|{ MCHB : "batch stock"
     T001W ||--|{ MARC : "plant"
     MARA ||--o| ZABC : "ABC class"
-    MARA ||--o{ ZSELLIN : "shipped to channel"
+    MARA ||--o{ ZCHSTOCK : "held by channel"
     MARA ||--o{ ZSELLOUT : "sold by channel"
-    ZCHANNEL ||--|{ ZSELLIN : "receives"
+    ZCHANNEL ||--|{ ZCHSTOCK : "holds"
     ZCHANNEL ||--|{ ZSELLOUT : "sells"
     ZCHANNEL ||--|{ ZCHANNEL_RULE : "tier rule"
     ZCHANNEL ||--|{ ZCHANNEL_ASRT : "group limit"
@@ -104,12 +104,11 @@ erDiagram
         int MAXSKU
         float MAXUNITS
     }
-    ZSELLIN {
+    ZCHSTOCK {
         string MATNR PK
         string CHANNEL PK
-        date SHIPDATE PK
-        float QTY
-        float QTYTRANSIT "still in transit"
+        float QTYONHAND "stock at the second life channel"
+        float QTYTRANSIT "shipped, not yet delivered"
     }
     ZSELLOUT {
         string MATNR PK

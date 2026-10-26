@@ -183,10 +183,13 @@ def test_sell_out_covers_twelve_closed_periods(tables: Tables) -> None:
     assert len(periods) == 12
 
 
-def test_some_sell_in_is_in_transit(tables: Tables) -> None:
-    in_transit = [r for r in tables["ZSELLIN"] if r["QTYTRANSIT"] > 0]
-    assert 0 < len(in_transit) < 0.2 * len(tables["ZSELLIN"])
-    assert all(r["QTYTRANSIT"] == r["QTY"] for r in in_transit)
+def test_channels_hold_stock_and_some_is_in_transit(tables: Tables) -> None:
+    stock = tables["ZCHSTOCK"]
+    assert stock
+    assert all(r["QTYONHAND"] >= 0 and r["QTYTRANSIT"] >= 0 for r in stock)
+    in_transit = [r for r in stock if r["QTYTRANSIT"] > 0]
+    assert 0 < len(in_transit) < 0.2 * len(stock)
+    assert all(r["QTYONHAND"] + r["QTYTRANSIT"] > 0 for r in stock)
 
 
 # Plants and stock integrity
@@ -212,7 +215,7 @@ def test_referential_integrity(tables: Tables, cfg: dict[str, Any]) -> None:
     assert {(r["MATNR"], r["WERKS"]) for r in tables["MARC"]} == {
         (r["MATNR"], r["BWKEY"]) for r in tables["MBEW"]
     }
-    assert {r["CHANNEL"] for r in tables["ZSELLIN"]} <= {r["CHANNEL"] for r in tables["ZCHANNEL"]}
+    assert {r["CHANNEL"] for r in tables["ZCHSTOCK"]} <= {r["CHANNEL"] for r in tables["ZCHANNEL"]}
     assert all(r["STPRS"] > 0 for r in tables["MBEW"])
 
 
@@ -285,7 +288,7 @@ def test_luxury_protection_changes_only_the_rule(cfg: dict[str, Any]) -> None:
         "MCHB",
         "MBEW",
         "ZSELLOUT",
-        "ZSELLIN",
+        "ZCHSTOCK",
         "ZCHANNEL",
         "ZCHANNEL_ASRT",
         "ZPARAM",

@@ -58,8 +58,8 @@ Format: source table.field, canonical field, transformation.
 |---|---|---|
 | `ZSELLOUT.QTY` over the last 12 closed periods | `Demand.daily_demand` | Sum divided by 365, per material and channel |
 | `ZSELLOUT.QTY` by calendar month | `Demand.seasonality` | Month total divided by the monthly mean. Twelve indexes with a mean of 1 |
-| `ZSELLIN.QTY` minus `ZSELLOUT.QTY` since the first sell in | `Demand.channel_stock` | Delivered sell in (`QTY` minus `QTYTRANSIT`) minus cumulative sell out, floored at 0. In transit units are counted once, in `in_transit` |
-| `ZSELLIN.QTYTRANSIT` | `Demand.in_transit` | Sum per material and channel. Coverage need counts on hand plus in transit |
+| `ZCHSTOCK.QTYONHAND` | `Demand.channel_stock` | Stock held by the second life channel, read as is. Not derived from sell in and sell out |
+| `ZCHSTOCK.QTYTRANSIT` | `Demand.in_transit` | Shipped, not yet delivered. Coverage need counts on hand plus in transit. A pair without a row has no stock |
 | `ZABC.ABCCLASS`, `ZABC.RANK` | `Abc.abc_class`, `Abc.rank` | The class is derived per material and channel. A pair with sellout history in the channel keeps the `ZABC` class (`C` if the material has no row). A pair with no sellout history in the channel is `NEW`, because past sales cannot forecast it. A missing rank counts as the lowest, rank N, where N is the number of ranked materials |
 | `ZPARAM.PUSH_QUANTITY_UNITS_<CATEGORY>` | push quantity per category | Units placed when a `NEW` SKU is pushed into a channel, one row per product category |
 | `ZPARAM` | scenario parameters | Typed and validated by Pydantic (negative capacity, percent above 100, unknown class are rejected before any solve) |

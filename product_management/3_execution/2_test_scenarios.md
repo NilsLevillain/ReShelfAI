@@ -74,7 +74,10 @@ Each constraint needs a feasible and a violating case. A violating case means a 
 | TS-038 | `cov_lo[m,c]` | Quantity at the lower bound | Selected SKU below `alpha * min(D, Q)` | Critical |
 | TS-039 | `push[m,c]` | NEW material at the push quantity | NEW material below `min(P, Q_m)` when selected | Critical |
 
-Level for all ten: `unit`. Also check that constraint names are stable.
+| TS-211 | `asrt_units[g,c]` | Units of the group at `U_{g,c}` | One unit above `U_{g,c}` | Critical |
+| TS-212 | `link_yx[l,c]` (added in week 2) | y = 1 with x of at least 1 | y = 1 with x = 0 | Critical |
+
+Level for all twelve: `unit`. Also check that constraint names are stable.
 
 | ID | Scenario | Steps | Expected | Priority | Level |
 |---|---|---|---|---|---|

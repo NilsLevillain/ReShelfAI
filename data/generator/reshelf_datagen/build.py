@@ -44,7 +44,7 @@ TABLE_COLUMNS: dict[str, list[str]] = {
     ],
     "ZCHANNEL_RULE": ["CHANNEL", "TIER", "ALLOWED", "BRANDPEN"],
     "ZCHANNEL_ASRT": ["CHANNEL", "ZZBRAND", "MATKL", "MAXSKU", "MAXUNITS"],
-    "ZSELLIN": ["MATNR", "CHANNEL", "SHIPDATE", "QTY", "QTYTRANSIT"],
+    "ZCHSTOCK": ["MATNR", "CHANNEL", "QTYONHAND", "QTYTRANSIT"],
     "ZSELLOUT": ["MATNR", "CHANNEL", "PERIOD", "QTY"],
     "ZPARAM": ["PARAM", "VALUE", "UNIT", "NOTE"],
 }
@@ -309,6 +309,33 @@ def _sell_history(
     return sellout, sellin
 
 
+def _channel_stock(sellout: list[Row], sellin: list[Row]) -> list[Row]:
+    """Stock held by each second life channel: delivered shipments minus what it sold."""
+    delivered: dict[tuple[str, str], int] = {}
+    transit: dict[tuple[str, str], int] = {}
+    for s in sellin:
+        key = (s["matnr"], s["channel"])
+        delivered[key] = delivered.get(key, 0) + s["qty"] - s["qtytransit"]
+        transit[key] = transit.get(key, 0) + s["qtytransit"]
+    sold: dict[tuple[str, str], int] = {}
+    for s in sellout:
+        key = (s["matnr"], s["channel"])
+        sold[key] = sold.get(key, 0) + s["qty"]
+    rows: list[Row] = []
+    for key in sorted(delivered):
+        on_hand = max(0, delivered[key] - sold.get(key, 0))
+        if on_hand > 0 or transit[key] > 0:
+            rows.append(
+                {
+                    "MATNR": key[0],
+                    "CHANNEL": key[1],
+                    "QTYONHAND": on_hand,
+                    "QTYTRANSIT": transit[key],
+                }
+            )
+    return rows
+
+
 def _flatten(prefix: str, value: Any) -> list[tuple[str, str]]:
     if isinstance(value, dict):
         out: list[tuple[str, str]] = []
@@ -491,16 +518,7 @@ def generate(cfg: dict[str, Any]) -> Tables:
         "ZCHANNEL": channel_rows,
         "ZCHANNEL_RULE": rule_rows,
         "ZCHANNEL_ASRT": asrt_rows,
-        "ZSELLIN": [
-            {
-                "MATNR": s["matnr"],
-                "CHANNEL": s["channel"],
-                "SHIPDATE": s["shipdate"],
-                "QTY": s["qty"],
-                "QTYTRANSIT": s["qtytransit"],
-            }
-            for s in sellin
-        ],
+        "ZCHSTOCK": _channel_stock(sellout, sellin),
         "ZSELLOUT": [
             {"MATNR": s["matnr"], "CHANNEL": s["channel"], "PERIOD": s["period"], "QTY": s["qty"]}
             for s in sellout

@@ -146,7 +146,7 @@ def _lots(mchb: pd.DataFrame, mbew: pd.DataFrame, mard: pd.DataFrame) -> list[Lo
     return lots
 
 
-def _demand(sellin: pd.DataFrame, sellout: pd.DataFrame, as_of: date) -> list[Demand]:
+def _demand(stock: pd.DataFrame, sellout: pd.DataFrame, as_of: date) -> list[Demand]:
     periods = set(_last_closed_periods(as_of))
 
     history: set[tuple[str, str]] = set()
@@ -162,17 +162,15 @@ def _demand(sellin: pd.DataFrame, sellout: pd.DataFrame, as_of: date) -> list[De
         if period in periods:
             recent[key][int(period[4:]) - 1] += float(qty)
 
-    delivered: dict[tuple[str, str], int] = defaultdict(int)
+    on_hand: dict[tuple[str, str], int] = defaultdict(int)
     transit: dict[tuple[str, str], int] = defaultdict(int)
-    for m, c, qty, in_transit in zip(
-        sellin["MATNR"], sellin["CHANNEL"], sellin["QTY"], sellin["QTYTRANSIT"], strict=True
-    ):
-        key = (_material_id(m), c)
-        delivered[key] += int(qty) - int(in_transit)
-        transit[key] += int(in_transit)
+    for r in _rows(stock):
+        key = (_material_id(r["MATNR"]), r["CHANNEL"])
+        on_hand[key] += int(r["QTYONHAND"])
+        transit[key] += int(r["QTYTRANSIT"])
 
     out: list[Demand] = []
-    for key in sorted(set(sold_total) | set(delivered)):
+    for key in sorted(set(sold_total) | set(on_hand) | set(transit)):
         months = recent[key] if key in recent else [0.0] * 12
         total = sum(months)
         seasonality = [m / (total / 12) for m in months] if total > 0 else [1.0] * 12
@@ -182,7 +180,7 @@ def _demand(sellin: pd.DataFrame, sellout: pd.DataFrame, as_of: date) -> list[De
                 channel=key[1],
                 daily_demand=total / DAYS_PER_YEAR,
                 seasonality=seasonality,
-                channel_stock=max(0, delivered[key] - sold_total[key]),
+                channel_stock=on_hand[key],
                 in_transit=transit[key],
                 has_history=key in history,
             )
@@ -264,7 +262,7 @@ def build_dataset(raw_frames: dict[str, pd.DataFrame]) -> CanonicalDataset:
                 }
                 for r in _rows(f["ZCHANNEL_ASRT"])
             ],
-            "demand": _demand(f["ZSELLIN"], f["ZSELLOUT"], as_of),
+            "demand": _demand(f["ZCHSTOCK"], f["ZSELLOUT"], as_of),
             "abc": [
                 {
                     "material": _material_id(r["MATNR"]),

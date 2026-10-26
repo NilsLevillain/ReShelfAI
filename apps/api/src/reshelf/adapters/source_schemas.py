@@ -97,12 +97,11 @@ SOURCE_SCHEMAS: dict[str, DataFrameSchema] = {
             "MAXUNITS": _int(),
         }
     ),
-    "ZSELLIN": DataFrameSchema(
+    "ZCHSTOCK": DataFrameSchema(
         {
             "MATNR": _str(),
             "CHANNEL": _str(),
-            "SHIPDATE": Column(str, Check.str_matches(_DATE)),
-            "QTY": _int(),
+            "QTYONHAND": _int(),
             "QTYTRANSIT": _int(),
         }
     ),
