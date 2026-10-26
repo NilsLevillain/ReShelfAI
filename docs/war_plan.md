@@ -314,7 +314,7 @@ Home → Stock overview (globe + stock health table) → Parameters → Results 
 
 ### 6.5 Demo mode
 
-* `uv run precompute` (or a direct solver command, once it exists) runs the real solver on each seeded scenario and writes `data/precomputed/*.json` (results, KPIs, rule traces, top counterfactuals). CI runs it on each release.
+* A precompute command (built in week 3) runs the real solver on each seeded scenario and writes `data/precomputed/*.json` (results, KPIs, rule traces, top counterfactuals). CI runs it on each release.
 * The frontend reads precomputed JSON by default (Vercel or GitHub Pages).
 * If `VITE_API_URL` answers a health check, it switches to live mode.
 * A banner always shows "Cached results" or "Live solver".
@@ -334,8 +334,8 @@ Each week is a vertical slice that ends with tests green and something runnable.
 | Week | Build | Not built | Done when |
 |---|---|---|---|
 | 0 | Repo, name lock, tooling, ADR 001 (stack), empty CI | Any feature | Repo public, CI green |
-| 1 | `docs/erd.md`, `docs/mapping.md`, rule defaults, generator | Solver | `uv run demo-data` reproducible, distribution tests pass |
-| 2 | Canonical schema, adapters, solver core, greedy baseline, constraint tests | API | `uv run test` green, optimizer beats greedy on seed |
+| 1 | `docs/erd.md`, `docs/mapping.md`, rule defaults, generator | Solver | Demo data reproducible, distribution tests pass |
+| 2 | Canonical schema, adapters, solver core, greedy baseline, constraint tests | API | Tests green, optimizer beats greedy on seed |
 | 3 | Rule trace, counterfactual, benchmark, FastAPI endpoints, persistence, generated `docs/model.md` | UI | Endpoints in OpenAPI, benchmark table written |
 | 4 | Web shell, stepper and table patterns (section 6.3b, CSS already in the design system), stock overview, stock table, thin hero slice (results, compare, Why panel) | Parameter editor, globe | Hero slice runs on precomputed JSON |
 | 5 | Parameter editor, run, results charts, scenario save and load, Excel export | Globe, deep dive | Full planner flow runs end to end locally |

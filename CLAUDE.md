@@ -6,7 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Pre code. Only planning documents exist: `docs/war_plan.md` (execution plan, source of truth for architecture and the 8 week schedule), `product_management/` (discovery, strategy, metrics), `design_system/` (tokens, spec, imagery guide), and empty scaffold folders (`apps/api`, `apps/web`, `data/*`, `infra`, `video`). Check the week table in `docs/war_plan.md` section 7 to see what is in scope now and what is explicitly "not built" yet.
 
-Commands below are **planned** in the war plan and do not exist until week 0 and 1 land. Python tasks run from `apps/api` with `uv run` scripts (e.g., `uv run test`, `uv run lint`, `uv run demo-data`), or call underlying commands directly (e.g., `uv run pytest` or `PYTHONPATH=../../data/generator uv run python -m reshelf_datagen ...`). Web tasks use `pnpm` and Vitest, one Playwright e2e test. No `make` needed; the Makefile is optional.
+Commands below are **planned** in the war plan and do not exist until week 0 and 1 land. Python tasks run from `apps/api`:
+- `uv run pytest -q` — run tests
+- `uv run ruff check . ../../data/generator && uv run ruff format --check . ../../data/generator && uv run mypy . ../../data/generator` — lint and type check
+- `PYTHONPATH=../../data/generator uv run python -m reshelf_datagen --scenario ../../data/scenarios/default.yaml --out ../../data/generated/default` — generate demo data
+
+Web tasks use `pnpm` and Vitest, one Playwright e2e test. No `make` needed; the Makefile is optional.
 
 ## What Reshelf is
 
@@ -41,7 +46,7 @@ Source tables (SAP style CSV/Parquet/warehouse) -> SourceAdapter -> Canonical da
 * Coverage and push constraints use the tight form (binary times the smallest valid bound), never a generic Big M (ADR 004). Score weights and all rule values live in `ZPARAM` and scenario yaml, never in code.
 * **Explainability** is rule trace plus on demand counterfactual re solve (warm start, 10 s limit), not MILP duals. Rule trace reads the slack of every named constraint, so keep constraint names stable and meaningful.
 * The **baseline** is a planner proxy, not a strawman and not an expert solver: it applies a short list of rules by hand (shelf life, brand tier, channel capacity) and ignores the rest (assortment, coverage, push). The full constraint checker audits it and lists violations per named constraint. KPIs show its raw value, its violations and its compliant value. A property test asserts the ADR 005 statement on 50 neutral seeds: optimizer score is at least the compliant baseline score, and when the baseline score is within epsilon of the optimizer's, optimizer net value is at least the baseline's. See `docs/adr/0005-planner-proxy-baseline.md`.
-* **Demo mode**: `uv run precompute` (or a direct solver call once it exists) runs the real solver on each seeded scenario and writes `data/precomputed/*.json` (results, KPIs, traces, top counterfactuals). The frontend reads that JSON by default and switches to the live API if `VITE_API_URL` answers a health check. A banner shows "Cached results" or "Live solver".
+* **Demo mode**: the precompute command (built in week 3) runs the real solver on each seeded scenario and writes `data/precomputed/*.json` (results, KPIs, traces, top counterfactuals). The frontend reads that JSON by default and switches to the live API if `VITE_API_URL` answers a health check. A banner shows "Cached results" or "Live solver".
 * TypeScript API types are generated from the FastAPI OpenAPI schema (`openapi-typescript`) and CI fails on drift. There is no shared schema package.
 * Seeds and parameters are fixed in `data/scenarios/*.yaml`. Every run, test, screenshot and video frame must be reproducible, and hero elements carry stable `data-testid` values for the Remotion and Playwright work.
 

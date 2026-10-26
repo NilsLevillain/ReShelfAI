@@ -52,8 +52,3 @@ ignore_missing_imports = true
 testpaths = ["tests", "../../data/generator/tests"]
 pythonpath = ["../../data/generator"]
 asyncio_mode = "auto"
-
-[tool.uv.scripts]
-test = "pytest -q"
-lint = "bash -c 'ruff check . ../../data/generator && ruff format --check . ../../data/generator && mypy . ../../data/generator'"
-demo-data = "bash -c 'PYTHONPATH=../../data/generator python -m reshelf_datagen --scenario ../../data/scenarios/default.yaml --out ../../data/generated/default && PYTHONPATH=../../data/generator python -m reshelf_datagen --scenario ../../data/scenarios/luxury_protection.yaml --out ../../data/generated/luxury_protection'"
