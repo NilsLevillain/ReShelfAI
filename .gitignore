@@ -1,5 +1,6 @@
 _private/
 .obsidian/
+.mcp.json
 
 # dependencies and build output
 node_modules/
