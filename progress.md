@@ -1,6 +1,6 @@
 # Progress
 
-Last updated: 2026-10-27. Source of truth for the schedule is `docs/war_plan.md` section 7.
+Last updated: 2026-10-27 (week 3, slice 2). Source of truth for the schedule is `docs/war_plan.md` section 7.
 
 ## Status at a glance
 
@@ -13,9 +13,12 @@ Last updated: 2026-10-27. Source of truth for the schedule is `docs/war_plan.md`
 | 2, slice 2 | Elimination, solver input, constraint registry and checker, ADR 003 and 004 | Done (`4bf9ea8`) |
 | 2, slice 3 | Solver core, ADR 006 | Done (`04946d9`) |
 | 2, slice 4 | KPIs, baseline, seed property test, Parquet adapter | Done (`0171d6d`, `e470b6b`). Tuning skipped and `baseline_expert` not built, see "Left from week 2" |
-| 3 to 8 | Rule trace, API, web app, Docker, video | Not started |
+| 3, slice 1 | Rule trace, generated `docs/model.md` and CI drift check | Done (`c3ad521`, `7e00215`) |
+| 3, slice 2 | Counterfactual re solve, ADR 007 | Done (`a049078`) |
+| 3, slices 3 and 4 | Benchmark, API with persistence and precompute | Not started |
+| 4 to 8 | Web app, Docker, video | Not started |
 
-Test state after slice 4: 246 tests green in about 3.5 minutes, ruff and mypy strict clean. The 50 seed test is marked `slow` (`-m "not slow"` skips it, CI runs everything). Commits are local, not pushed.
+Test state after week 3 slice 2: 236 fast tests green in about 25 s (`-m "not slow"`), ruff and mypy strict clean. The slow 50 seed test was not rerun since slice 4 (the solver change is a refactor, `solve` behavior is unchanged and `test_solver.py` passes). Earlier, slice 4: 246 tests in about 3.5 minutes. The 50 seed test is marked `slow` (`-m "not slow"` skips it, CI runs everything). Commits are local, not pushed.
 
 ## Done
 
@@ -77,6 +80,21 @@ Measured (throwaway script in `tmp/`, not committed):
 
 Raw baseline plans break many rules: about 60 to 80 violated instances per world at 40 SKUs.
 
+### Week 3, slice 1: rule trace and model doc
+* `trace.py`: `build_trace(data, solution, tolerance=1e-6)` returns a `RuleTrace`. Per allocation line: binding instances with slack, and channels blocked by elimination with their reason codes. Works on any plan, optimizer or baseline. Line id is `lot label,channel`.
+* The four link constraints are not traced. They are tight by construction and carry no planner meaning (my call).
+* `ConstraintSpec.reads` names the source table or parameter of each bound. `model_doc.py` renders `docs/model.md` from the registry. `make model-doc` writes it, `python -m reshelf.model_doc --check` fails on drift and runs in CI (python job).
+* Tests: `test_trace.py` (one binding case per traced constraint, tolerance, blocked reasons, solved plan), `test_model_doc.py`. 217 fast tests green, ruff and mypy clean. The 50 seed test was not rerun.
+
+### Week 3, slice 2: counterfactual
+* `PulpSolver.improve(data, start, time_limit_s)`: phase 2 only, warm started from a plan, score floor is the original S*. The result builder moved out of `solve` into `_result`, shared by both.
+* `counterfactual.py`:
+  * `relax(data, instance, mode)` edits the `SolverInput` bound of one instance (`cap`, `sku`, `asrt`, `asrt_units`, `cov_hi`, `cov_lo`, `push`). Modes `plus_10pct` and `off`. `supply` and link rules raise a `ValueError`.
+  * `counterfactual(...)` returns `CounterfactualResult`: euro cost, units destroyed by the rule, base and relaxed objective, status, MIP gap, time and limit, plain message, the plan.
+  * `rank_binding_rules(trace)` and `top_counterfactuals(...)` for the precompute (slice 4).
+* ADR 007 records the choices. `tests/test_counterfactual.py`: 19 tests with exact euro and unit answers per rule, input not mutated, relaxed and original plan pass the checker, limit hit under the original plan, re solve without a plan, determinism, ranking.
+* Measured once (throwaway `tmp/cf_smoke.py`, 30 SKUs, scaled SKU limits, seed 0): base solve 3.8 s optimal. Top four binding rules were all `sku[...]` of liquidation and clearance channels. Re solves took 1 to 5 s, all optimal. Costs: `plus_10pct` about 1,200 to 1,750 euro, `off` about 3,500 to 4,300 euro, on a plan worth about 201,000 euro.
+
 ### Decisions taken with Nils
 * Push quantity depends on product category.
 * Class A, B, C, NEW is per (material, channel) and driven by sellout in that channel. Score weight is per (material, channel).
@@ -110,6 +128,14 @@ Raw baseline plans break many rules: about 60 to 80 violated instances per world
 * Tuning of the generator was skipped on purpose. The optimizer wins on all 50 seeds, and changing the generator risks the distribution tests.
 * `pyarrow` is a required dependency, not an optional extra. Parquet adapter is P1 but the cost is one wheel.
 
+### From week 3 slice 2 (my calls, not yet confirmed by Nils)
+* The counterfactual keeps the original S* as score floor and runs phase 2 only. It does not redo phase 1, so a relaxation that would raise the best SKU score shows no score gain.
+* `units_destroyed_by_rule` can be negative (seen: `sku[LIQ_AE]` off, minus 147). The value maximizer may send fewer but better units once a rule is relaxed. The UI has to lead with the euro figure.
+* `plus_10pct` on an upper bound is at least one unit more. On a zero bound it changes nothing. On a lower bound it is 10 percent less, rounded down.
+* A re solve that ends under the original plan keeps the original and reports cost 0 and status `feasible`.
+* Ranking for the precompute is by lines touched, not by measured cost.
+* The trace and the counterfactual skip `supply` and the link rules.
+
 ## To do
 
 ### Left from week 2
@@ -122,7 +148,7 @@ Raw baseline plans break many rules: about 60 to 80 violated instances per world
 ### Weeks 3 to 8 (from the war plan)
 | Week | Build |
 |---|---|
-| 3 | Rule trace, counterfactual, benchmark, FastAPI endpoints, persistence, generated `docs/model.md` |
+| 3 | Slices 1 and 2 done. Left: benchmark (`docs/benchmark.md`, 300 / 2,000 / 10,000 SKUs by 5 / 20 channels, HiGHS and CBC), FastAPI endpoints with OpenAPI types, persistence, precompute command writing `data/precomputed/*.json` |
 | 4 | Web shell, stock overview and table, thin hero slice on precomputed JSON |
 | 5 | Parameter editor, run, charts, scenario save and load, Excel export |
 | 6 | Why panel full, compare polish, globe, Playwright e2e |
@@ -145,11 +171,12 @@ Solver scale:
 Tests and docs:
 * TS-046 as written (infeasible status for a push above capacity) cannot happen: z = 0 switches every coverage and push row off, so the empty plan is always feasible. The solver returns a valid plan with all units destroyed. Test scenario wording to update (ADR 006).
 * Channel `max_skus` is absolute in the scenario and only binds near 2,000 SKUs. Any other test on small worlds has to scale it the same way.
-* `docs/model.md` generation and its CI drift check are week 3. The registry is ready for it.
+* `docs/model.md` generation and its CI drift check are done (week 3 slice 1). Run `make model-doc` after any registry change.
 * The uplift figures come from a throwaway script. No test or file records them yet (TS-068 would).
 
 ## Working notes
 * On this machine run uv with `UV_LINK_MODE=copy` (OneDrive blocks hardlinks).
 * Run from `apps/api`: `uv run pytest -q`, `uv run ruff check . ../../data/generator`, `uv run ruff format --check . ../../data/generator`, `uv run mypy . ../../data/generator`.
-* Commits: conventional, no `Co-Authored-By` lines (CLAUDE.md). Your `.gitignore` edit is still uncommitted and has never been staged by me.
+* Commits: conventional, no `Co-Authored-By` lines (CLAUDE.md). Your `.gitignore` edit (`.mcp.json`) is still uncommitted and has never been staged by me.
+* Run the throwaway scripts in `tmp/` with `PYTHONPATH=../../data/generator uv run python ../../tmp/<file>.py` from `apps/api`.
 * `tmp/` is gitignored. It holds `measure.py`, the throwaway script that prints score and value per seed.
