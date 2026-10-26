@@ -133,43 +133,89 @@ class PulpSolver:
             return _read_highs(problem)
         return _read_cbc(problem)
 
+    def _result(
+        self,
+        data: SolverInput,
+        backend: str,
+        limit: float,
+        started: float,
+        status: SolveStatus,
+        model: Model | None,
+        best: float,
+        gap: float | None,
+    ) -> SolveResult:
+        supply = sum(lot.qty for lot in data.lots.values())
+        x: dict[Pair, int] = {}
+        y: dict[Pair, bool] = {}
+        z: dict[MatChan, bool] = {}
+        if model is not None and status in ("optimal", "feasible"):
+            x = {p: round(v.value() or 0) for p, v in model.x.items()}
+            x = {p: q for p, q in x.items() if q > 0}
+            y = {p: p in x for p in model.x}
+            z = {mc: any((lot, mc[1]) in x for lot in data.lots_of[mc]) for mc in model.z}
+        allocated = sum(x.values())
+        return SolveResult(
+            status=status,
+            objective=sum(data.net_value[p] * q for p, q in x.items()),
+            score=sum(data.score[mc] for mc, on in z.items() if on),
+            best_score=best,
+            mip_gap=gap,
+            time_s=time.perf_counter() - started,
+            time_limit_s=limit,
+            solver=backend,
+            message=explain(status, limit),
+            x=x,
+            y=y,
+            z=z,
+            units_allocated=allocated,
+            units_destroyed=supply - allocated,
+        )
+
+    def improve(
+        self, data: SolverInput, start: SolveResult, time_limit_s: float | None = None
+    ) -> SolveResult:
+        """Phase 2 only, warm started from `start`, which must be feasible for `data`.
+
+        Used by the counterfactual: `data` is the input with one rule relaxed, so the plan of the
+        original solve stays feasible. The score floor is the phase 1 optimum `start.best_score`.
+        """
+        limit = (
+            time_limit_s if time_limit_s is not None else data.params.counterfactual_time_limit_s
+        )
+        backend = self._backend_name()
+        started = time.perf_counter()
+        if not data.admissible or not start.has_plan:
+            return self._result(data, backend, limit, started, "optimal", None, 0.0, 0.0)
+        model = build_model(data)
+        for pair, var in model.x.items():
+            qty = start.x.get(pair, 0)
+            var.setInitialValue(qty, check=False)
+            model.y[pair].setInitialValue(1 if qty > 0 else 0, check=False)
+        for mc, var in model.z.items():
+            var.setInitialValue(1 if start.z.get(mc, False) else 0, check=False)
+        model.problem.setObjective(model.value_expr())
+        model.problem += (
+            model.score_expr() >= (1 - data.params.epsilon) * start.best_score - SCORE_SLACK,
+            "phase1_score",
+        )
+        phase = self._run(model, backend, limit, warm=True, phase_gap=1e-4)
+        best = start.best_score
+        if not phase.has_solution:
+            return self._result(data, backend, limit, started, phase.status, None, best, None)
+        return self._result(data, backend, limit, started, phase.status, model, best, phase.gap)
+
     def solve(self, data: SolverInput, time_limit_s: float | None = None) -> SolveResult:
         limit = time_limit_s if time_limit_s is not None else data.params.solver_time_limit_s
         backend = self._backend_name()
         started = time.perf_counter()
-        supply = sum(lot.qty for lot in data.lots.values())
-
-        def elapsed() -> float:
-            return time.perf_counter() - started
 
         def result(
             status: SolveStatus, model: Model | None, best: float, gap: float | None
         ) -> SolveResult:
-            x: dict[Pair, int] = {}
-            y: dict[Pair, bool] = {}
-            z: dict[MatChan, bool] = {}
-            if model is not None and status in ("optimal", "feasible"):
-                x = {p: round(v.value() or 0) for p, v in model.x.items()}
-                x = {p: q for p, q in x.items() if q > 0}
-                y = {p: p in x for p in model.x}
-                z = {mc: any((lot, mc[1]) in x for lot in data.lots_of[mc]) for mc in model.z}
-            allocated = sum(x.values())
-            return SolveResult(
-                status=status,
-                objective=sum(data.net_value[p] * q for p, q in x.items()),
-                score=sum(data.score[mc] for mc, on in z.items() if on),
-                best_score=best,
-                mip_gap=gap,
-                time_s=elapsed(),
-                time_limit_s=limit,
-                solver=backend,
-                message=explain(status, limit),
-                x=x,
-                y=y,
-                z=z,
-                units_allocated=allocated,
-                units_destroyed=supply - allocated,
-            )
+            return self._result(data, backend, limit, started, status, model, best, gap)
+
+        def elapsed() -> float:
+            return time.perf_counter() - started
 
         if not data.admissible:
             return result("optimal", None, 0.0, 0.0)
