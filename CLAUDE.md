@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Pre code. Only planning documents exist: `docs/war_plan.md` (execution plan, source of truth for architecture and the 8 week schedule), `product_management/` (discovery, strategy, metrics), `design_system/` (tokens, spec, imagery guide), and empty scaffold folders (`apps/api`, `apps/web`, `data/*`, `infra`, `video`). Check the week table in `docs/war_plan.md` section 7 to see what is in scope now and what is explicitly "not built" yet.
 
-Commands below are **planned** in the war plan and do not exist until week 0 and 1 land: `make dev`, `make test`, `make demo-data`, `make precompute`. Python with `uv` and `pytest` (one test: `uv run pytest apps/api/tests/<file>::<test>`), web with `pnpm` and Vitest, one Playwright e2e test. Verify the Makefile exists before relying on them.
+Commands below are **planned** in the war plan and do not exist until week 0 and 1 land. Python tasks run from `apps/api` with `uv run` scripts (e.g., `uv run test`, `uv run lint`, `uv run demo-data`), or call underlying commands directly (e.g., `uv run pytest` or `PYTHONPATH=../../data/generator uv run python -m reshelf_datagen ...`). Web tasks use `pnpm` and Vitest, one Playwright e2e test. No `make` needed; the Makefile is optional.
 
 ## What Reshelf is
 
@@ -41,7 +41,7 @@ Source tables (SAP style CSV/Parquet/warehouse) -> SourceAdapter -> Canonical da
 * Coverage and push constraints use the tight form (binary times the smallest valid bound), never a generic Big M (ADR 004). Score weights and all rule values live in `ZPARAM` and scenario yaml, never in code.
 * **Explainability** is rule trace plus on demand counterfactual re solve (warm start, 10 s limit), not MILP duals. Rule trace reads the slack of every named constraint, so keep constraint names stable and meaningful.
 * The **baseline** is a planner proxy, not a strawman and not an expert solver: it applies a short list of rules by hand (shelf life, brand tier, channel capacity) and ignores the rest (assortment, coverage, push). The full constraint checker audits it and lists violations per named constraint. KPIs show its raw value, its violations and its compliant value. A property test asserts the ADR 005 statement on 50 neutral seeds: optimizer score is at least the compliant baseline score, and when the baseline score is within epsilon of the optimizer's, optimizer net value is at least the baseline's. See `docs/adr/0005-planner-proxy-baseline.md`.
-* **Demo mode**: `make precompute` runs the real solver on each seeded scenario and writes `data/precomputed/*.json` (results, KPIs, traces, top counterfactuals). The frontend reads that JSON by default and switches to the live API if `VITE_API_URL` answers a health check. A banner shows "Cached results" or "Live solver".
+* **Demo mode**: `uv run precompute` (or a direct solver call once it exists) runs the real solver on each seeded scenario and writes `data/precomputed/*.json` (results, KPIs, traces, top counterfactuals). The frontend reads that JSON by default and switches to the live API if `VITE_API_URL` answers a health check. A banner shows "Cached results" or "Live solver".
 * TypeScript API types are generated from the FastAPI OpenAPI schema (`openapi-typescript`) and CI fails on drift. There is no shared schema package.
 * Seeds and parameters are fixed in `data/scenarios/*.yaml`. Every run, test, screenshot and video frame must be reproducible, and hero elements carry stable `data-testid` values for the Remotion and Playwright work.
 
@@ -75,7 +75,7 @@ Do not add `Co-Authored-By:` attribution lines to commit messages. Sign commits 
 * Conventional commits, small PRs, one ADR per major choice in `docs/adr/`.
 * **Errors are shown, never swallowed.** No empty catch, no client side workaround for a failed request. The Vite dev server proxies `/api`. A failed panel shows an inline error with a retry.
 * **One source of truth per screen.** The UI never recomputes a number and never mixes sources. Results come from the API or the precomputed JSON.
-* **Docs from code where possible.** `docs/model.md` is generated from the named constraint registry (`make model-doc`) and CI fails on drift. Never commit LP files, logs or machine suffixed copies. Use `make export-lp` into `tmp/`.
+* **Docs from code where possible.** `docs/model.md` is generated from the named constraint registry and CI fails on drift. Never commit LP files, logs or machine suffixed copies.
 * **Tests beyond constraints.** Score hierarchy, result invariants (no negative quantity, no line above supply, totals reconcile), parameter validation and explicit defaults for missing data each have a test (`2_test_scenarios.md` section 14).
 * **Earlier prototype review.** A prior prototype outside this repo was reviewed once on 2026-10-25 for generic ideas only. Treat it like `_private/`: read for context, never copy names, data, values or code, and do not mention it in any doc.
 
