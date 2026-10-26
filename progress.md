@@ -11,11 +11,11 @@ Last updated: 2026-10-26. Source of truth for the schedule is `docs/war_plan.md`
 | Design system and product management | Tokens, spec, discovery, strategy, metrics | Done |
 | 2, slice 1 | Canonical schema, CsvAdapter | Done (`5b0e297`) |
 | 2, slice 2 | Elimination, solver input, constraint registry and checker, ADR 003 and 004 | Done (`4bf9ea8`) |
-| 2, slice 3 | Solver core | To do |
+| 2, slice 3 | Solver core, ADR 006 | Done |
 | 2, slice 4 | Baseline, KPIs, seed property test, tuning, Parquet adapter | To do |
 | 3 to 8 | Rule trace, API, web app, Docker, video | Not started |
 
-Test state after slice 2: 138 tests green, ruff and mypy strict clean. Commits are local, not pushed.
+Test state after slice 3: 174 tests green, ruff and mypy strict clean. Commits are local, not pushed.
 
 ## Done
 
@@ -38,6 +38,13 @@ Test state after slice 2: 138 tests green, ruff and mypy strict clean. Commits a
 * `constraints.py`: registry of 12 named constraints (the 11 of the war plan plus `link_yx`), `evaluate` with slack per instance, `violations`, planner rule filter.
 * ADR 003 (lot decision index), ADR 004 (tight form). War plan sections 5.3 and 5.4 and the test scenario table updated.
 
+### Week 2, slice 3: solver core
+* `model.py`: MILP built from the registry, one builder per constraint name, rows kept by registry label.
+* `solver.py`: `Solver` Protocol, `SolveResult`, `PulpSolver` (HiGHS default, CBC fallback), two phase objective, plain sentences for results that are not optimal.
+* PuLP pinned to `>=3.3,<4`: the lock held 3.3.2 and 4.2.0 with different APIs (ADR 006).
+* Tests: TS-030 to 039, 040 to 054, 206 (hypothesis, 40 random worlds). The checker audits every plan.
+* Measured once: 300 SKUs, 4 channels, 1,200 admissible pairs, HiGHS optimal in about 8 s.
+
 ### Decisions taken with Nils
 * Push quantity depends on product category.
 * Class A, B, C, NEW is per (material, channel) and driven by sellout in that channel. Score weight is per (material, channel).
@@ -53,14 +60,6 @@ Test state after slice 2: 138 tests green, ruff and mypy strict clean. Commits a
 * With default weights a NEW pair at the worst rank can score below a class C pair at the best rank.
 
 ## To do
-
-### Week 2, slice 3: solver core
-* `Solver` Protocol, PuLP model built from the constraint registry, HiGHS default, CBC fallback.
-* Two phase lexicographic objective (score first, then net value within epsilon). Unallocated units count as destroyed.
-* `SolveResult` with status, objective, MIP gap, time and time limit. Plain sentence for infeasible or non optimal results.
-* Solver side of constraint tests TS-030 to TS-039, TS-042 to TS-054 (phases, epsilon edge cases, infeasible, empty input, single channel, all lots eliminated, time limit, CBC fallback, zero or negative net value lines, score weights from params).
-* Result invariants as a hypothesis property (TS-206): no negative quantity, no line above supply, totals reconcile.
-* A check that the solver result passes the checker with no violation.
 
 ### Week 2, slice 4: baseline, KPIs, seeds
 * `baseline_planner` (rules from `planner_rules`, default rsl, tier, capacity), audited by the checker.
@@ -81,6 +80,8 @@ Test state after slice 2: 138 tests green, ruff and mypy strict clean. Commits a
 | 8 | Remotion video |
 
 ## Open points and risks
+* TS-046 as written (infeasible status for a push above capacity) cannot happen: z = 0 switches every coverage and push row off, so the empty plan is always feasible. The solver returns a valid plan with all units destroyed. Test scenario wording to update (ADR 006).
+* A solve that hits the time limit with only the phase 1 plan reports no MIP gap, since no value gap exists.
 * 72% of selectable pairs in the default scenario are NEW (20,650 of 28,826). Push quantities will drive much of the result. Review in slice 4 tuning, possibly adjust generator carry probabilities.
 * HiGHS solve time at 2,000 SKUs is unproven. The benchmark is week 3. Property tests use fewer SKUs.
 * ADR 005 open point: which rules planners really apply by hand (interview experiment E2).
