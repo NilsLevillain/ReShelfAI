@@ -18,3 +18,4 @@ tmp/
 _site/
 
 data/generated/
+.mcp.json
