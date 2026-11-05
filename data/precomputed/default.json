@@ -1,0 +1,2050 @@
+{
+  "scenario": "default",
+  "seed": 20261025,
+  "n_skus": 30,
+  "n_channels": 5,
+  "label": "Simulated data",
+  "solve": {
+    "status": "optimal",
+    "objective": 34993.5715,
+    "score": 29.810714285714287,
+    "best_score": 30.09464285714286,
+    "mip_gap": 0.00005701047119476272,
+    "time_s": 0.224316900013946,
+    "time_limit_s": 60.0,
+    "solver": "highs",
+    "message": ""
+  },
+  "optimizer": {
+    "value_recovered": 34993.5715,
+    "units_allocated": 14715,
+    "units_destroyed": 240249,
+    "brand_risk_index": 0.0712706203138367,
+    "skus_per_channel": {
+      "OUT_PL": 5,
+      "FNF_GB": 4,
+      "CLR_DE": 9,
+      "NGO_ES": 3,
+      "LIQ_AE": 12
+    },
+    "fill_rate": {
+      "OUT_PL": 0.055278700627537834,
+      "FNF_GB": 0.037029916173190805,
+      "CLR_DE": 0.08459456133874739,
+      "NGO_ES": 0.020025839793281652,
+      "LIQ_AE": 0.09675995586317584
+    },
+    "score": 29.810714285714287
+  },
+  "lines": [
+    {
+      "line": "100003/AP10/2028-08,CLR_DE",
+      "lot": "100003/AP10/2028-08",
+      "channel": "CLR_DE",
+      "quantity": 30,
+      "lot_supply": 14688,
+      "net_value_eur": 21.36
+    },
+    {
+      "line": "100003/AP10/2028-08,FNF_GB",
+      "lot": "100003/AP10/2028-08",
+      "channel": "FNF_GB",
+      "quantity": 30,
+      "lot_supply": 14688,
+      "net_value_eur": 38.28
+    },
+    {
+      "line": "100003/AP10/2028-08,NGO_ES",
+      "lot": "100003/AP10/2028-08",
+      "channel": "NGO_ES",
+      "quantity": 30,
+      "lot_supply": 14688,
+      "net_value_eur": 3.4799999999999995
+    },
+    {
+      "line": "100003/AP10/2028-08,OUT_PL",
+      "lot": "100003/AP10/2028-08",
+      "channel": "OUT_PL",
+      "quantity": 460,
+      "lot_supply": 14688,
+      "net_value_eur": 480.24
+    },
+    {
+      "line": "100003/NA01/2027-02,LIQ_AE",
+      "lot": "100003/NA01/2027-02",
+      "channel": "LIQ_AE",
+      "quantity": 631,
+      "lot_supply": 3774,
+      "net_value_eur": 60.071200000000005
+    },
+    {
+      "line": "100005/AP10/2028-03,CLR_DE",
+      "lot": "100005/AP10/2028-03",
+      "channel": "CLR_DE",
+      "quantity": 30,
+      "lot_supply": 13542,
+      "net_value_eur": 149.43
+    },
+    {
+      "line": "100005/AP10/2028-03,LIQ_AE",
+      "lot": "100005/AP10/2028-03",
+      "channel": "LIQ_AE",
+      "quantity": 30,
+      "lot_supply": 13542,
+      "net_value_eur": 18.384
+    },
+    {
+      "line": "100005/NA10/2028-06,FNF_GB",
+      "lot": "100005/NA10/2028-06",
+      "channel": "FNF_GB",
+      "quantity": 873,
+      "lot_supply": 4944,
+      "net_value_eur": 7956.522000000001
+    },
+    {
+      "line": "100008/EU01/2027-12,LIQ_AE",
+      "lot": "100008/EU01/2027-12",
+      "channel": "LIQ_AE",
+      "quantity": 432,
+      "lot_supply": 1866,
+      "net_value_eur": 251.5968
+    },
+    {
+      "line": "100011/AP10/2026-11,LIQ_AE",
+      "lot": "100011/AP10/2026-11",
+      "channel": "LIQ_AE",
+      "quantity": 154,
+      "lot_supply": 894,
+      "net_value_eur": -51.251200000000004
+    },
+    {
+      "line": "100012/AP10/2027-11,CLR_DE",
+      "lot": "100012/AP10/2027-11",
+      "channel": "CLR_DE",
+      "quantity": 507,
+      "lot_supply": 5652,
+      "net_value_eur": 1086.2475
+    },
+    {
+      "line": "100012/AP10/2027-11,LIQ_AE",
+      "lot": "100012/AP10/2027-11",
+      "channel": "LIQ_AE",
+      "quantity": 241,
+      "lot_supply": 5652,
+      "net_value_eur": -8.67599999999998
+    },
+    {
+      "line": "100013/EU01/2028-06,OUT_PL",
+      "lot": "100013/EU01/2028-06",
+      "channel": "OUT_PL",
+      "quantity": 79,
+      "lot_supply": 576,
+      "net_value_eur": 1137.4815
+    },
+    {
+      "line": "100014/EU10/2027-02,LIQ_AE",
+      "lot": "100014/EU10/2027-02",
+      "channel": "LIQ_AE",
+      "quantity": 50,
+      "lot_supply": 8358,
+      "net_value_eur": 11.120000000000001
+    },
+    {
+      "line": "100018/NA10/2027-10,CLR_DE",
+      "lot": "100018/NA10/2027-10",
+      "channel": "CLR_DE",
+      "quantity": 710,
+      "lot_supply": 1866,
+      "net_value_eur": 1707.5500000000002
+    },
+    {
+      "line": "100018/NA10/2027-10,LIQ_AE",
+      "lot": "100018/NA10/2027-10",
+      "channel": "LIQ_AE",
+      "quantity": 659,
+      "lot_supply": 1866,
+      "net_value_eur": 15.816000000000013
+    },
+    {
+      "line": "100019/EU10/2027-04,LIQ_AE",
+      "lot": "100019/EU10/2027-04",
+      "channel": "LIQ_AE",
+      "quantity": 30,
+      "lot_supply": 11232,
+      "net_value_eur": 0.1200000000000001
+    },
+    {
+      "line": "100019/EU10/2027-12,CLR_DE",
+      "lot": "100019/EU10/2027-12",
+      "channel": "CLR_DE",
+      "quantity": 748,
+      "lot_supply": 2808,
+      "net_value_eur": 1733.49
+    },
+    {
+      "line": "100019/EU10/2027-12,FNF_GB",
+      "lot": "100019/EU10/2027-12",
+      "channel": "FNF_GB",
+      "quantity": 30,
+      "lot_supply": 2808,
+      "net_value_eur": 150.82500000000002
+    },
+    {
+      "line": "100022/AP01/2028-07,FNF_GB",
+      "lot": "100022/AP01/2028-07",
+      "channel": "FNF_GB",
+      "quantity": 30,
+      "lot_supply": 7482,
+      "net_value_eur": 209.4
+    },
+    {
+      "line": "100022/NA01/2027-10,CLR_DE",
+      "lot": "100022/NA01/2027-10",
+      "channel": "CLR_DE",
+      "quantity": 30,
+      "lot_supply": 24456,
+      "net_value_eur": 109.95
+    },
+    {
+      "line": "100022/NA01/2027-10,LIQ_AE",
+      "lot": "100022/NA01/2027-10",
+      "channel": "LIQ_AE",
+      "quantity": 589,
+      "lot_supply": 24456,
+      "net_value_eur": 183.76800000000003
+    },
+    {
+      "line": "100022/NA01/2027-10,NGO_ES",
+      "lot": "100022/NA01/2027-10",
+      "channel": "NGO_ES",
+      "quantity": 374,
+      "lot_supply": 24456,
+      "net_value_eur": 147.73000000000002
+    },
+    {
+      "line": "100022/NA01/2027-10,OUT_PL",
+      "lot": "100022/NA01/2027-10",
+      "channel": "OUT_PL",
+      "quantity": 1951,
+      "lot_supply": 24456,
+      "net_value_eur": 11423.105
+    },
+    {
+      "line": "100023/EU10/2029-02,OUT_PL",
+      "lot": "100023/EU10/2029-02",
+      "channel": "OUT_PL",
+      "quantity": 75,
+      "lot_supply": 1278,
+      "net_value_eur": 199.5
+    },
+    {
+      "line": "100026/NA01/2027-11,CLR_DE",
+      "lot": "100026/NA01/2027-11",
+      "channel": "CLR_DE",
+      "quantity": 30,
+      "lot_supply": 14736,
+      "net_value_eur": 35.324999999999996
+    },
+    {
+      "line": "100026/NA01/2027-11,LIQ_AE",
+      "lot": "100026/NA01/2027-11",
+      "channel": "LIQ_AE",
+      "quantity": 30,
+      "lot_supply": 14736,
+      "net_value_eur": 5.759999999999999
+    },
+    {
+      "line": "100028/NA10/2027-12,CLR_DE",
+      "lot": "100028/NA10/2027-12",
+      "channel": "CLR_DE",
+      "quantity": 1020,
+      "lot_supply": 1020,
+      "net_value_eur": 2299.5899999999992
+    },
+    {
+      "line": "100028/NA10/2028-01,CLR_DE",
+      "lot": "100028/NA10/2028-01",
+      "channel": "CLR_DE",
+      "quantity": 2085,
+      "lot_supply": 9546,
+      "net_value_eur": 4700.632499999999
+    },
+    {
+      "line": "100028/NA10/2028-01,LIQ_AE",
+      "lot": "100028/NA10/2028-01",
+      "channel": "LIQ_AE",
+      "quantity": 1927,
+      "lot_supply": 9546,
+      "net_value_eur": -20.040800000000146
+    },
+    {
+      "line": "100028/NA10/2028-01,NGO_ES",
+      "lot": "100028/NA10/2028-01",
+      "channel": "NGO_ES",
+      "quantity": 30,
+      "lot_supply": 9546,
+      "net_value_eur": 5.805
+    },
+    {
+      "line": "100030/NA10/2029-03,CLR_DE",
+      "lot": "100030/NA10/2029-03",
+      "channel": "CLR_DE",
+      "quantity": 310,
+      "lot_supply": 1644,
+      "net_value_eur": 311.85999999999996
+    },
+    {
+      "line": "100030/NA10/2029-03,LIQ_AE",
+      "lot": "100030/NA10/2029-03",
+      "channel": "LIQ_AE",
+      "quantity": 50,
+      "lot_supply": 1644,
+      "net_value_eur": 7.640000000000001
+    },
+    {
+      "line": "100030/NA10/2029-03,OUT_PL",
+      "lot": "100030/NA10/2029-03",
+      "channel": "OUT_PL",
+      "quantity": 430,
+      "lot_supply": 1644,
+      "net_value_eur": 611.46
+    }
+  ],
+  "baseline": {
+    "raw": {
+      "value_recovered": 676962.3821999999,
+      "units_allocated": 216719,
+      "units_destroyed": 38245,
+      "brand_risk_index": 0.05137799758002191,
+      "skus_per_channel": {
+        "OUT_PL": 3,
+        "FNF_GB": 2,
+        "CLR_DE": 7,
+        "NGO_ES": 4,
+        "LIQ_AE": 11
+      },
+      "fill_rate": {
+        "OUT_PL": 1.0,
+        "FNF_GB": 1.0,
+        "CLR_DE": 1.0,
+        "NGO_ES": 1.0,
+        "LIQ_AE": 1.0
+      },
+      "score": 22.364285714285714
+    },
+    "audit": {
+      "asrt_units": {
+        "count": 4,
+        "excess": 41977
+      },
+      "cov_hi": {
+        "count": 27,
+        "excess": 207298
+      },
+      "sku": {
+        "count": 1,
+        "excess": 1
+      }
+    },
+    "compliant": {
+      "value_recovered": 22655.044999999995,
+      "units_allocated": 9391,
+      "units_destroyed": 245573,
+      "brand_risk_index": 0.07995791076043803,
+      "skus_per_channel": {
+        "OUT_PL": 3,
+        "FNF_GB": 2,
+        "CLR_DE": 7,
+        "NGO_ES": 3,
+        "LIQ_AE": 11
+      },
+      "fill_rate": {
+        "OUT_PL": 0.03711701734957549,
+        "FNF_GB": 0.0023071598861801124,
+        "CLR_DE": 0.06921373200442968,
+        "NGO_ES": 0.0050756736803248435,
+        "LIQ_AE": 0.05436854248169325
+      },
+      "score": 21.59107142857143
+    },
+    "compliant_lines": [
+      {
+        "line": "100003/NA01/2027-03,LIQ_AE",
+        "lot": "100003/NA01/2027-03",
+        "channel": "LIQ_AE",
+        "quantity": 631,
+        "lot_supply": 4176,
+        "net_value_eur": 60.071200000000005
+      },
+      {
+        "line": "100004/AP01/2028-03,LIQ_AE",
+        "lot": "100004/AP01/2028-03",
+        "channel": "LIQ_AE",
+        "quantity": 30,
+        "lot_supply": 2190,
+        "net_value_eur": 25.44
+      },
+      {
+        "line": "100005/AP10/2028-03,OUT_PL",
+        "lot": "100005/AP10/2028-03",
+        "channel": "OUT_PL",
+        "quantity": 30,
+        "lot_supply": 13542,
+        "net_value_eur": 226.41
+      },
+      {
+        "line": "100005/EU01/2028-12,LIQ_AE",
+        "lot": "100005/EU01/2028-12",
+        "channel": "LIQ_AE",
+        "quantity": 30,
+        "lot_supply": 5040,
+        "net_value_eur": 16.679999999999996
+      },
+      {
+        "line": "100005/NA10/2028-07,CLR_DE",
+        "lot": "100005/NA10/2028-07",
+        "channel": "CLR_DE",
+        "quantity": 30,
+        "lot_supply": 7632,
+        "net_value_eur": 147.53999999999996
+      },
+      {
+        "line": "100008/EU10/2027-11,CLR_DE",
+        "lot": "100008/EU10/2027-11",
+        "channel": "CLR_DE",
+        "quantity": 50,
+        "lot_supply": 5346,
+        "net_value_eur": 143.05
+      },
+      {
+        "line": "100008/EU10/2027-12,NGO_ES",
+        "lot": "100008/EU10/2027-12",
+        "channel": "NGO_ES",
+        "quantity": 50,
+        "lot_supply": 2202,
+        "net_value_eur": 21.150000000000002
+      },
+      {
+        "line": "100008/NA10/2027-01,LIQ_AE",
+        "lot": "100008/NA10/2027-01",
+        "channel": "LIQ_AE",
+        "quantity": 432,
+        "lot_supply": 2610,
+        "net_value_eur": 248.1408
+      },
+      {
+        "line": "100011/AP10/2026-11,LIQ_AE",
+        "lot": "100011/AP10/2026-11",
+        "channel": "LIQ_AE",
+        "quantity": 307,
+        "lot_supply": 894,
+        "net_value_eur": -102.16960000000002
+      },
+      {
+        "line": "100012/AP10/2027-11,CLR_DE",
+        "lot": "100012/AP10/2027-11",
+        "channel": "CLR_DE",
+        "quantity": 507,
+        "lot_supply": 5652,
+        "net_value_eur": 1086.2475
+      },
+      {
+        "line": "100012/NA10/2027-12,LIQ_AE",
+        "lot": "100012/NA10/2027-12",
+        "channel": "LIQ_AE",
+        "quantity": 481,
+        "lot_supply": 4296,
+        "net_value_eur": -27.320800000000034
+      },
+      {
+        "line": "100014/EU10/2027-02,LIQ_AE",
+        "lot": "100014/EU10/2027-02",
+        "channel": "LIQ_AE",
+        "quantity": 50,
+        "lot_supply": 8358,
+        "net_value_eur": 11.120000000000001
+      },
+      {
+        "line": "100016/AP01/2027-01,LIQ_AE",
+        "lot": "100016/AP01/2027-01",
+        "channel": "LIQ_AE",
+        "quantity": 30,
+        "lot_supply": 942,
+        "net_value_eur": -0.8400000000000007
+      },
+      {
+        "line": "100018/EU01/2027-08,LIQ_AE",
+        "lot": "100018/EU01/2027-08",
+        "channel": "LIQ_AE",
+        "quantity": 659,
+        "lot_supply": 2058,
+        "net_value_eur": 11.598400000000039
+      },
+      {
+        "line": "100018/NA10/2027-10,NGO_ES",
+        "lot": "100018/NA10/2027-10",
+        "channel": "NGO_ES",
+        "quantity": 30,
+        "lot_supply": 1866,
+        "net_value_eur": 6.450000000000001
+      },
+      {
+        "line": "100019/EU10/2027-04,LIQ_AE",
+        "lot": "100019/EU10/2027-04",
+        "channel": "LIQ_AE",
+        "quantity": 30,
+        "lot_supply": 11232,
+        "net_value_eur": 0.1200000000000001
+      },
+      {
+        "line": "100019/EU10/2027-12,NGO_ES",
+        "lot": "100019/EU10/2027-12",
+        "channel": "NGO_ES",
+        "quantity": 30,
+        "lot_supply": 2808,
+        "net_value_eur": 6.075000000000002
+      },
+      {
+        "line": "100019/EU10/2028-01,CLR_DE",
+        "lot": "100019/EU10/2028-01",
+        "channel": "CLR_DE",
+        "quantity": 748,
+        "lot_supply": 8136,
+        "net_value_eur": 1733.49
+      },
+      {
+        "line": "100019/EU10/2028-03,FNF_GB",
+        "lot": "100019/EU10/2028-03",
+        "channel": "FNF_GB",
+        "quantity": 30,
+        "lot_supply": 21888,
+        "net_value_eur": 150.82500000000002
+      },
+      {
+        "line": "100019/EU10/2028-03,OUT_PL",
+        "lot": "100019/EU10/2028-03",
+        "channel": "OUT_PL",
+        "quantity": 30,
+        "lot_supply": 21888,
+        "net_value_eur": 123.67500000000001
+      },
+      {
+        "line": "100022/AP01/2028-02,FNF_GB",
+        "lot": "100022/AP01/2028-02",
+        "channel": "FNF_GB",
+        "quantity": 30,
+        "lot_supply": 18378,
+        "net_value_eur": 209.4
+      },
+      {
+        "line": "100022/AP01/2028-07,CLR_DE",
+        "lot": "100022/AP01/2028-07",
+        "channel": "CLR_DE",
+        "quantity": 30,
+        "lot_supply": 7482,
+        "net_value_eur": 106.79999999999998
+      },
+      {
+        "line": "100022/NA01/2027-10,OUT_PL",
+        "lot": "100022/NA01/2027-10",
+        "channel": "OUT_PL",
+        "quantity": 1951,
+        "lot_supply": 24456,
+        "net_value_eur": 11423.105
+      },
+      {
+        "line": "100023/NA10/2026-12,LIQ_AE",
+        "lot": "100023/NA10/2026-12",
+        "channel": "LIQ_AE",
+        "quantity": 30,
+        "lot_supply": 1890,
+        "net_value_eur": -7.560000000000003
+      },
+      {
+        "line": "100026/NA01/2027-11,CLR_DE",
+        "lot": "100026/NA01/2027-11",
+        "channel": "CLR_DE",
+        "quantity": 30,
+        "lot_supply": 14736,
+        "net_value_eur": 35.324999999999996
+      },
+      {
+        "line": "100028/NA10/2028-01,CLR_DE",
+        "lot": "100028/NA10/2028-01",
+        "channel": "CLR_DE",
+        "quantity": 3105,
+        "lot_supply": 9546,
+        "net_value_eur": 7000.222499999998
+      }
+    ]
+  },
+  "trace": {
+    "lines": [
+      {
+        "line": "100003/AP10/2028-08,CLR_DE",
+        "lot": "100003/AP10/2028-08",
+        "channel": "CLR_DE",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100003,CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100003,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100003/AP10/2028-08,FNF_GB",
+        "lot": "100003/AP10/2028-08",
+        "channel": "FNF_GB",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100003,FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100003,FNF_GB]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100003/AP10/2028-08,NGO_ES",
+        "lot": "100003/AP10/2028-08",
+        "channel": "NGO_ES",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[NGO_ES]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100003,NGO_ES]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100003,NGO_ES]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100003/AP10/2028-08,OUT_PL",
+        "lot": "100003/AP10/2028-08",
+        "channel": "OUT_PL",
+        "quantity": 460,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[OUT_PL]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100003,OUT_PL]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100003/NA01/2027-02,LIQ_AE",
+        "lot": "100003/NA01/2027-02",
+        "channel": "LIQ_AE",
+        "quantity": 631,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100003,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "CLR_DE",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "NGO_ES",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100005/AP10/2028-03,CLR_DE",
+        "lot": "100005/AP10/2028-03",
+        "channel": "CLR_DE",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100005,CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100005,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100005/AP10/2028-03,LIQ_AE",
+        "lot": "100005/AP10/2028-03",
+        "channel": "LIQ_AE",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100005,LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100005,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100005/NA10/2028-06,FNF_GB",
+        "lot": "100005/NA10/2028-06",
+        "channel": "FNF_GB",
+        "quantity": 873,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100005,FNF_GB]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100008/EU01/2027-12,LIQ_AE",
+        "lot": "100008/EU01/2027-12",
+        "channel": "LIQ_AE",
+        "quantity": 432,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100008,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100011/AP10/2026-11,LIQ_AE",
+        "lot": "100011/AP10/2026-11",
+        "channel": "LIQ_AE",
+        "quantity": 154,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_lo",
+            "instance": "cov_lo[100011,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "CLR_DE",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "NGO_ES",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100012/AP10/2027-11,CLR_DE",
+        "lot": "100012/AP10/2027-11",
+        "channel": "CLR_DE",
+        "quantity": 507,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100012,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100012/AP10/2027-11,LIQ_AE",
+        "lot": "100012/AP10/2027-11",
+        "channel": "LIQ_AE",
+        "quantity": 241,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_lo",
+            "instance": "cov_lo[100012,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100013/EU01/2028-06,OUT_PL",
+        "lot": "100013/EU01/2028-06",
+        "channel": "OUT_PL",
+        "quantity": 79,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[OUT_PL]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100013,OUT_PL]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "LIQ_AE",
+            "reasons": [
+              "TIER"
+            ]
+          },
+          {
+            "channel": "NGO_ES",
+            "reasons": [
+              "TIER"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100014/EU10/2027-02,LIQ_AE",
+        "lot": "100014/EU10/2027-02",
+        "channel": "LIQ_AE",
+        "quantity": 50,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100014,LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100014,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "CLR_DE",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "NGO_ES",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100018/NA10/2027-10,CLR_DE",
+        "lot": "100018/NA10/2027-10",
+        "channel": "CLR_DE",
+        "quantity": 710,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100018,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100018/NA10/2027-10,LIQ_AE",
+        "lot": "100018/NA10/2027-10",
+        "channel": "LIQ_AE",
+        "quantity": 659,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100018,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100019/EU10/2027-04,LIQ_AE",
+        "lot": "100019/EU10/2027-04",
+        "channel": "LIQ_AE",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100019,LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100019,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "CLR_DE",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "NGO_ES",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100019/EU10/2027-12,CLR_DE",
+        "lot": "100019/EU10/2027-12",
+        "channel": "CLR_DE",
+        "quantity": 748,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100019,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100019/EU10/2027-12,FNF_GB",
+        "lot": "100019/EU10/2027-12",
+        "channel": "FNF_GB",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100019,FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100019,FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "asrt",
+            "instance": "asrt[Velaire/Makeup,FNF_GB]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100022/AP01/2028-07,FNF_GB",
+        "lot": "100022/AP01/2028-07",
+        "channel": "FNF_GB",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100022,FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100022,FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "asrt",
+            "instance": "asrt[Velaire/Makeup,FNF_GB]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100022/NA01/2027-10,CLR_DE",
+        "lot": "100022/NA01/2027-10",
+        "channel": "CLR_DE",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100022,CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100022,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100022/NA01/2027-10,LIQ_AE",
+        "lot": "100022/NA01/2027-10",
+        "channel": "LIQ_AE",
+        "quantity": 589,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100022,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100022/NA01/2027-10,NGO_ES",
+        "lot": "100022/NA01/2027-10",
+        "channel": "NGO_ES",
+        "quantity": 374,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[NGO_ES]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100022,NGO_ES]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100022/NA01/2027-10,OUT_PL",
+        "lot": "100022/NA01/2027-10",
+        "channel": "OUT_PL",
+        "quantity": 1951,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[OUT_PL]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100022,OUT_PL]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100023/EU10/2029-02,OUT_PL",
+        "lot": "100023/EU10/2029-02",
+        "channel": "OUT_PL",
+        "quantity": 75,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[OUT_PL]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100023,OUT_PL]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100026/NA01/2027-11,CLR_DE",
+        "lot": "100026/NA01/2027-11",
+        "channel": "CLR_DE",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100026,CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100026,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100026/NA01/2027-11,LIQ_AE",
+        "lot": "100026/NA01/2027-11",
+        "channel": "LIQ_AE",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100026,LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100026,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100028/NA10/2027-12,CLR_DE",
+        "lot": "100028/NA10/2027-12",
+        "channel": "CLR_DE",
+        "quantity": 1020,
+        "binding": [
+          {
+            "constraint": "supply",
+            "instance": "supply[100028/NA10/2027-12]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100028,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100028/NA10/2028-01,CLR_DE",
+        "lot": "100028/NA10/2028-01",
+        "channel": "CLR_DE",
+        "quantity": 2085,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100028,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100028/NA10/2028-01,LIQ_AE",
+        "lot": "100028/NA10/2028-01",
+        "channel": "LIQ_AE",
+        "quantity": 1927,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_lo",
+            "instance": "cov_lo[100028,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100028/NA10/2028-01,NGO_ES",
+        "lot": "100028/NA10/2028-01",
+        "channel": "NGO_ES",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[NGO_ES]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100028,NGO_ES]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100028,NGO_ES]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100030/NA10/2029-03,CLR_DE",
+        "lot": "100030/NA10/2029-03",
+        "channel": "CLR_DE",
+        "quantity": 310,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100030,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100030/NA10/2029-03,LIQ_AE",
+        "lot": "100030/NA10/2029-03",
+        "channel": "LIQ_AE",
+        "quantity": 50,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100030,LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100030,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100030/NA10/2029-03,OUT_PL",
+        "lot": "100030/NA10/2029-03",
+        "channel": "OUT_PL",
+        "quantity": 430,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[OUT_PL]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100030,OUT_PL]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      }
+    ],
+    "binding": [
+      {
+        "constraint": "asrt",
+        "instance": "asrt[Velaire/Makeup,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100003,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100003,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100003,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100003,NGO_ES]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100003,OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100005,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100005,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100005,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100008,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100012,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100013,OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100014,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100018,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100018,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100019,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100019,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100019,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100022,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100022,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100022,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100022,NGO_ES]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100022,OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100023,OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100026,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100026,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100028,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100028,NGO_ES]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100030,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100030,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100030,OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_lo",
+        "instance": "cov_lo[100011,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_lo",
+        "instance": "cov_lo[100012,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_lo",
+        "instance": "cov_lo[100028,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100003,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100003,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100003,NGO_ES]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100005,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100005,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100014,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100019,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100019,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100022,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100022,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100026,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100026,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100028,NGO_ES]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100030,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "sku",
+        "instance": "sku[CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "sku",
+        "instance": "sku[FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "sku",
+        "instance": "sku[LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "sku",
+        "instance": "sku[NGO_ES]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "sku",
+        "instance": "sku[OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "supply",
+        "instance": "supply[100028/NA10/2027-12]",
+        "slack": 0.0
+      }
+    ],
+    "lines_per_rule": {
+      "asrt": 2,
+      "cov_hi": 31,
+      "cov_lo": 3,
+      "push": 14,
+      "sku": 34,
+      "supply": 1
+    }
+  },
+  "counterfactuals": [
+    {
+      "constraint": "sku",
+      "instance": "sku[LIQ_AE]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 1442.641499999998,
+      "units_destroyed_by_rule": 180,
+      "base_objective": 34993.5715,
+      "relaxed_objective": 36436.212999999996,
+      "base_destroyed": 240249,
+      "relaxed_destroyed": 240069,
+      "mip_gap": 0.00002933704492327956,
+      "time_s": 0.12351099995430559,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[LIQ_AE]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 1509.2723000000042,
+      "units_destroyed_by_rule": -1792,
+      "base_objective": 34993.5715,
+      "relaxed_objective": 36502.8438,
+      "base_destroyed": 240249,
+      "relaxed_destroyed": 242041,
+      "mip_gap": 0.0,
+      "time_s": 0.19272890000138432,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[CLR_DE]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 1226.9455000000016,
+      "units_destroyed_by_rule": 57,
+      "base_objective": 34993.5715,
+      "relaxed_objective": 36220.517,
+      "base_destroyed": 240249,
+      "relaxed_destroyed": 240192,
+      "mip_gap": 0.0,
+      "time_s": 1.2241447999840602,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[CLR_DE]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 1995.9403999999995,
+      "units_destroyed_by_rule": -1637,
+      "base_objective": 34993.5715,
+      "relaxed_objective": 36989.5119,
+      "base_destroyed": 240249,
+      "relaxed_destroyed": 241886,
+      "mip_gap": 4.498572472427946e-6,
+      "time_s": 0.1432488999562338,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[OUT_PL]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 1510.2454999999973,
+      "units_destroyed_by_rule": 142,
+      "base_objective": 34993.5715,
+      "relaxed_objective": 36503.816999999995,
+      "base_destroyed": 240249,
+      "relaxed_destroyed": 240107,
+      "mip_gap": 0.0,
+      "time_s": 0.30917959997896105,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[OUT_PL]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 2756.272300000004,
+      "units_destroyed_by_rule": -1588,
+      "base_objective": 34993.5715,
+      "relaxed_objective": 37749.8438,
+      "base_destroyed": 240249,
+      "relaxed_destroyed": 241837,
+      "mip_gap": 0.0,
+      "time_s": 0.2580755000235513,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[FNF_GB]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 1260.720500000003,
+      "units_destroyed_by_rule": 97,
+      "base_objective": 34993.5715,
+      "relaxed_objective": 36254.292,
+      "base_destroyed": 240249,
+      "relaxed_destroyed": 240152,
+      "mip_gap": 0.0,
+      "time_s": 0.3606652000453323,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[FNF_GB]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 1918.1538999999975,
+      "units_destroyed_by_rule": -1771,
+      "base_objective": 34993.5715,
+      "relaxed_objective": 36911.725399999996,
+      "base_destroyed": 240249,
+      "relaxed_destroyed": 242020,
+      "mip_gap": 4.50805260926345e-6,
+      "time_s": 0.18516729993280023,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[NGO_ES]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 1205.2755000000034,
+      "units_destroyed_by_rule": 77,
+      "base_objective": 34993.5715,
+      "relaxed_objective": 36198.847,
+      "base_destroyed": 240249,
+      "relaxed_destroyed": 240172,
+      "mip_gap": 0.00007168736617498242,
+      "time_s": 0.3502570999553427,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[NGO_ES]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 1530.7013000000006,
+      "units_destroyed_by_rule": -1778,
+      "base_objective": 34993.5715,
+      "relaxed_objective": 36524.2728,
+      "base_destroyed": 240249,
+      "relaxed_destroyed": 242027,
+      "mip_gap": 0.0,
+      "time_s": 0.17321209993679076,
+      "time_limit_s": 10.0,
+      "message": ""
+    }
+  ]
+}
