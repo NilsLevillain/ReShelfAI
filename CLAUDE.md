@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## State of the repo
 
-Pre code. Only planning documents exist: `docs/war_plan.md` (execution plan, source of truth for architecture and the 8 week schedule), `product_management/` (discovery, strategy, metrics), `design_system/` (tokens, spec, imagery guide), and empty scaffold folders (`apps/api`, `apps/web`, `data/*`, `infra`, `video`). Check the week table in `docs/war_plan.md` section 7 to see what is in scope now and what is explicitly "not built" yet.
+Backend in progress: weeks 0 to 3 slice 3 are built in `apps/api` (schema, adapters, elimination, solver, baseline, KPIs, trace, counterfactual, benchmark code) and `data/generator`. See `progress.md` for the current slice and open points. The web app, API endpoints and precompute are not built yet. The planning documents are: `docs/war_plan.md` (execution plan, source of truth for architecture and the 8 week schedule), `product_management/` (discovery, strategy, metrics), `design_system/` (tokens, spec, imagery guide), and empty scaffold folders (`apps/api`, `apps/web`, `data/*`, `infra`, `video`). Check the week table in `docs/war_plan.md` section 7 to see what is in scope now and what is explicitly "not built" yet.
 
-Commands below are **planned** in the war plan and do not exist until week 0 and 1 land. Python tasks run from `apps/api` after `uv sync --all-extras`:
+Python commands below work today. On this machine set `UV_LINK_MODE=copy` (OneDrive blocks hardlinks). Do not run the full benchmark (`python -m reshelf.benchmark`) in a low memory session: 10,000 SKU rows got the process killed. Python tasks run from `apps/api` after `uv sync --all-extras`:
 - `uv run pytest -q` — run tests
 - `uv run ruff check . ../../data/generator && uv run ruff format --check . ../../data/generator && uv run mypy . ../../data/generator` — lint and type check
 - `PYTHONPATH=../../data/generator uv run python -m reshelf_datagen --scenario ../../data/scenarios/default.yaml --out ../../data/generated/default` — generate demo data

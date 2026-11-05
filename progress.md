@@ -1,6 +1,6 @@
 # Progress
 
-Last updated: 2026-10-27 (week 3, slice 2). Source of truth for the schedule is `docs/war_plan.md` section 7.
+Last updated: 2026-11-05 (week 3, slice 3). Source of truth for the schedule is `docs/war_plan.md` section 7.
 
 ## Status at a glance
 
@@ -15,7 +15,8 @@ Last updated: 2026-10-27 (week 3, slice 2). Source of truth for the schedule is 
 | 2, slice 4 | KPIs, baseline, seed property test, Parquet adapter | Done (`0171d6d`, `e470b6b`). Tuning skipped and `baseline_expert` not built, see "Left from week 2" |
 | 3, slice 1 | Rule trace, generated `docs/model.md` and CI drift check | Done (`c3ad521`, `7e00215`) |
 | 3, slice 2 | Counterfactual re solve, ADR 007 | Done (`a049078`) |
-| 3, slices 3 and 4 | Benchmark, API with persistence and precompute | Not started |
+| 3, slice 3 | Benchmark | Code and tests done (`3ec266d`). Full run skipped on purpose (see "Week 3, slice 3"), `docs/benchmark.md` not written |
+| 3, slice 4 | API with persistence and precompute | Not started |
 | 4 to 8 | Web app, Docker, video | Not started |
 
 Test state after week 3 slice 2: 236 fast tests green in about 25 s (`-m "not slow"`), ruff and mypy strict clean. The slow 50 seed test was not rerun since slice 4 (the solver change is a refactor, `solve` behavior is unchanged and `test_solver.py` passes). Earlier, slice 4: 246 tests in about 3.5 minutes. The 50 seed test is marked `slow` (`-m "not slow"` skips it, CI runs everything). Commits are local, not pushed.
@@ -95,6 +96,13 @@ Raw baseline plans break many rules: about 60 to 80 violated instances per world
 * ADR 007 records the choices. `tests/test_counterfactual.py`: 19 tests with exact euro and unit answers per rule, input not mutated, relaxed and original plan pass the checker, limit hit under the original plan, re solve without a plan, determinism, ranking.
 * Measured once (throwaway `tmp/cf_smoke.py`, 30 SKUs, scaled SKU limits, seed 0): base solve 3.8 s optimal. Top four binding rules were all `sku[...]` of liquidation and clearance channels. Re solves took 1 to 5 s, all optimal. Costs: `plus_10pct` about 1,200 to 1,750 euro, `off` about 3,500 to 4,300 euro, on a plan worth about 201,000 euro.
 
+### Week 3, slice 3: benchmark
+* `benchmark.py`: `python -m reshelf.benchmark` solves the default scenario at chosen SKU and channel counts with HiGHS and CBC, audits each plan with the full checker, writes `docs/benchmark.md`. Rows are appended to `tmp/benchmark_rows.jsonl` (checkpoint), so a killed run resumes.
+* `tests/test_benchmark.py`: channel picking, scaling of `max_skus`, render, scale smoke test (30 SKUs, both backends), checkpoint resume. 7 tests green.
+* Partial results in the checkpoint (60 s limit, one thread): 300 SKUs x 5 channels HiGHS optimal in 18 s, CBC optimal in 2.4 s. 300 x 20 HiGHS optimal in 40 s. All with 0 violations.
+* The full run was stopped by the system for low memory on the first new row (300 x 20 CBC). Nils decided on 2026-11-05 to skip the benchmark for now. `docs/benchmark.md` does not exist. The war plan names it in the README, so write it before week 7. Cut order puts the 10k row first.
+* CBC was faster than HiGHS on both 300 SKU worlds. Worth a look before the demo picks a default backend.
+
 ### Decisions taken with Nils
 * Push quantity depends on product category.
 * Class A, B, C, NEW is per (material, channel) and driven by sellout in that channel. Score weight is per (material, channel).
@@ -148,7 +156,7 @@ Raw baseline plans break many rules: about 60 to 80 violated instances per world
 ### Weeks 3 to 8 (from the war plan)
 | Week | Build |
 |---|---|
-| 3 | Slices 1 and 2 done. Left: benchmark (`docs/benchmark.md`, 300 / 2,000 / 10,000 SKUs by 5 / 20 channels, HiGHS and CBC), FastAPI endpoints with OpenAPI types, persistence, precompute command writing `data/precomputed/*.json` |
+| 3 | Slices 1 to 3 done (benchmark run deferred, `docs/benchmark.md` still to write). Left: FastAPI endpoints with OpenAPI types, persistence, precompute command writing `data/precomputed/*.json` |
 | 4 | Web shell, stock overview and table, thin hero slice on precomputed JSON |
 | 5 | Parameter editor, run, charts, scenario save and load, Excel export |
 | 6 | Why panel full, compare polish, globe, Playwright e2e |
