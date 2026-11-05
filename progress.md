@@ -16,7 +16,7 @@ Last updated: 2026-11-05 (week 3, slice 3). Source of truth for the schedule is 
 | 3, slice 1 | Rule trace, generated `docs/model.md` and CI drift check | Done (`c3ad521`, `7e00215`) |
 | 3, slice 2 | Counterfactual re solve, ADR 007 | Done (`a049078`) |
 | 3, slice 3 | Benchmark | Code and tests done (`3ec266d`). Full run skipped on purpose (see "Week 3, slice 3"), `docs/benchmark.md` not written |
-| 3, slice 4 | API with persistence and precompute | Not started |
+| 3, slice 4 | Response models, precompute, scenario and results API, ADR 008 | Done (commits after `5973d55`). Stock endpoints go to week 4, Excel export to week 5 |
 | 4 to 8 | Web app, Docker, video | Not started |
 
 Test state after week 3 slice 2: 236 fast tests green in about 25 s (`-m "not slow"`), ruff and mypy strict clean. The slow 50 seed test was not rerun since slice 4 (the solver change is a refactor, `solve` behavior is unchanged and `test_solver.py` passes). Earlier, slice 4: 246 tests in about 3.5 minutes. The 50 seed test is marked `slow` (`-m "not slow"` skips it, CI runs everything). Commits are local, not pushed.
@@ -103,7 +103,15 @@ Raw baseline plans break many rules: about 60 to 80 violated instances per world
 * The full run was stopped by the system for low memory on the first new row (300 x 20 CBC). Nils decided on 2026-11-05 to skip the benchmark for now. `docs/benchmark.md` does not exist. The war plan names it in the README, so write it before week 7. Cut order puts the 10k row first.
 * CBC was faster than HiGHS on both 300 SKU worlds. Worth a look before the demo picks a default backend.
 
+### Week 3, slice 4: contract, precompute, API
+* `api_models.py`: Pydantic `ScenarioResult` (solve, optimizer KPIs, lines, baseline raw, audit and compliant, trace, counterfactuals) with converters from the solver dataclasses. `pipeline.py`: `run_scenario`, shared by precompute and API.
+* `precompute.py` (`make precompute`): writes `data/precomputed/default.json` and `luxury_protection.json` on a 30 SKU, 5 channel world. Both solved to optimal in under a second, with 10 counterfactuals each (5 rules, 2 modes). Rerun gives identical output apart from `time_s`.
+* `db.py` and `api.py`: SQLite persistence, endpoints `POST /scenarios`, `POST /scenarios/{id}/solve`, `GET /scenarios/{id}/results`, `GET /scenarios/compare?ids=`, `GET /results/{id}/lines/{line}/explain`, `POST /results/{id}/lines/{line}/counterfactual`. Errors are plain sentences. `apps/api/main.py` now builds the app with `create_app()`.
+* `openapi.json` is checked in, `scripts/dump_openapi.py` regenerates it, `tests/test_openapi.py` fails on drift.
+* ADR 008. Tests: `test_api_models.py`, `test_precompute.py`, `test_api.py`, `test_openapi.py`. 269 fast tests green in about 33 s, ruff and mypy clean. The slow 50 seed test was not rerun.
+
 ### Decisions taken with Nils
+* Demo world is 30 SKUs by 5 channels (2026-11-05). Slice 4 scope is precompute plus scenario and results API (2026-11-05). The benchmark run is skipped for now.
 * Push quantity depends on product category.
 * Class A, B, C, NEW is per (material, channel) and driven by sellout in that channel. Score weight is per (material, channel).
 * Transit time is per channel. Delivery date is `as_of` plus transit days.
@@ -144,6 +152,13 @@ Raw baseline plans break many rules: about 60 to 80 violated instances per world
 * Ranking for the precompute is by lines touched, not by measured cost.
 * The trace and the counterfactual skip `supply` and the link rules.
 
+### From week 3 slice 4 (my calls, not yet confirmed by Nils)
+* Tables come from `create_all`, not an Alembic migration (plan said Alembic). Add a migration before any deployed database.
+* The counterfactual endpoint repeats the base solve instead of storing solver state. Fine at 30 SKUs, too slow at scale.
+* `POST /scenarios` accepts `params` edits of the scenario `params` block and rejects unknown keys. Stock endpoints and the rule dial grid are not built.
+* The 30 SKU demo world solves in under a second, so the 60 s limit and the earlier slow measures (scaled limits at 30 to 150 SKUs) do not apply to it. A bigger demo world is still open.
+* `reshelf.db` is gitignored and created in the working directory unless `RESHELF_DB` is set.
+
 ## To do
 
 ### Left from week 2
@@ -156,7 +171,7 @@ Raw baseline plans break many rules: about 60 to 80 violated instances per world
 ### Weeks 3 to 8 (from the war plan)
 | Week | Build |
 |---|---|
-| 3 | Slices 1 to 3 done (benchmark run deferred, `docs/benchmark.md` still to write). Left: FastAPI endpoints with OpenAPI types, persistence, precompute command writing `data/precomputed/*.json` |
+| 3 | All four slices done. Still open: benchmark run and `docs/benchmark.md`, Alembic migration |
 | 4 | Web shell, stock overview and table, thin hero slice on precomputed JSON |
 | 5 | Parameter editor, run, charts, scenario save and load, Excel export |
 | 6 | Why panel full, compare polish, globe, Playwright e2e |

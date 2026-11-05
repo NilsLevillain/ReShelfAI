@@ -4,7 +4,10 @@
 API := apps/api
 SCENARIOS := default luxury_protection
 
-.PHONY: demo-data test lint model-doc
+.PHONY: demo-data test lint model-doc precompute
+
+precompute:
+	cd $(API) && PYTHONPATH=../../data/generator uv run python -m reshelf.precompute
 
 model-doc:
 	cd $(API) && uv run python -m reshelf.model_doc

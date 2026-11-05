@@ -1,8 +1,3 @@
-from fastapi import FastAPI
+from reshelf.api import create_app
 
-app = FastAPI(title="Reshelf API", version="0.1.0")
-
-
-@app.get("/health")
-def health() -> dict[str, str]:
-    return {"status": "ok"}
+app = create_app()
