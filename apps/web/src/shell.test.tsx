@@ -30,6 +30,12 @@ describe('shell', () => {
     expect(screen.getByTestId('data-source-banner')).toHaveTextContent('Live solver');
   });
 
+  it('shows the home page with the four steps', () => {
+    renderAt('/');
+    expect(screen.getByTestId('home-head')).toHaveTextContent('Tighten a rule. See what it costs. See why.');
+    expect(screen.getAllByTestId('home-step')).toHaveLength(4);
+  });
+
   it('switches theme and stores it', async () => {
     renderAt('/');
     await userEvent.click(screen.getByRole('button', { name: 'Switch theme' }));

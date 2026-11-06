@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Shell } from './components/Shell';
 import { RunProvider } from './data/run';
 import { Compare } from './pages/Compare';
+import { Home } from './pages/Home';
 import { Parameters } from './pages/Parameters';
 import { Placeholder } from './pages/Placeholder';
 import { Results } from './pages/Results';
@@ -12,10 +13,7 @@ export function App() {
     <RunProvider>
       <Routes>
         <Route element={<Shell />}>
-          <Route
-            index
-            element={<Placeholder title="Tighten a rule. See what it costs. See why." lede="Give sleeping stock a second shelf." />}
-          />
+          <Route index element={<Home />} />
           <Route path="stock" element={<Stock />} />
           <Route path="parameters" element={<Parameters />} />
           <Route path="results" element={<Results />} />
