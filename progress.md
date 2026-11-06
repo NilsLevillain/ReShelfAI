@@ -1,6 +1,6 @@
 # Progress
 
-Last updated: 2026-11-06 (week 6 built). Source of truth for the schedule is `docs/war_plan.md` section 7.
+Last updated: 2026-11-06 (week 7 built). Source of truth for the schedule is `docs/war_plan.md` section 7.
 
 ## Status at a glance
 
@@ -20,7 +20,8 @@ Last updated: 2026-11-06 (week 6 built). Source of truth for the schedule is `do
 | 4 | Web shell, stock endpoints and overview, hero slice on precomputed JSON | Done (`edf98b8`, `55258af`, `7eac9eb`). Not checked in a browser, see "Week 4 built" |
 | 5 | Done: parameter editor, run, charts, save and load, Excel export | Done (two commits, see "Week 5 built"). Editor only works on the live API. Not checked in a browser |
 | 6 | Why panel live cost, globe, Playwright e2e | Done, see "Week 6 built". Deep dive page skipped (stretch) |
-| 7 to 8 | Docker, deploy, README, ADRs, screenshots, video | Not started |
+| 7 | Docker, compose, CI image build, README, home page, ADR 009, partial `docs/benchmark.md` | Done, see "Week 7 built". No deploy, no screenshots, images never built locally |
+| 8 | Remotion video | Not started |
 
 Test state after week 3 slice 2: 236 fast tests green in about 25 s (`-m "not slow"`), ruff and mypy strict clean. The slow 50 seed test was not rerun since slice 4 (the solver change is a refactor, `solve` behavior is unchanged and `test_solver.py` passes). Earlier, slice 4: 246 tests in about 3.5 minutes. The 50 seed test is marked `slow` (`-m "not slow"` skips it, CI runs everything). Commits are local, not pushed.
 
@@ -183,6 +184,19 @@ Not done in week 6:
 * Click on a globe point was not tested in a browser (the plant table is tested).
 * Storyboard lock for the video (war plan, end of week 6) not written.
 
+### Week 7 built (2026-11-06)
+* `infra/`: `api.Dockerfile` (uv, uvicorn, SQLite on `/data`), `web.Dockerfile` (pnpm build with `VITE_API_URL=/api`, nginx), `nginx.conf` (proxies `/api/` to the `api` service), `docker-compose.yml` (web 8080, API 8000), root `.dockerignore`. ADR 009 records the shape.
+* CI: new `docker` job builds both images, no push, no deploy.
+* Home page (`pages/Home.tsx`): headline, simulated data statement, four step cards. One new Vitest test.
+* `README.md` written. `docs/benchmark.md` written from the partial checkpoint, marked partial.
+* Checks: 290 fast API tests, ruff, model doc check green. Web: 39 Vitest tests, type check, lint, build green. Playwright e2e passed on Edge.
+
+Not done in week 7:
+* Docker is not installed on this machine, so neither image nor the compose file was built or run. CI is the first build. Fix whatever it reports.
+* No deploy (Cloud Run and static host not wired, no credentials). No screenshots or GIF in `docs/`, so the README has none.
+* ADR 002 does not exist in the sequence, with no record of why.
+* The web image copies only `design_system`, `data/precomputed` and `apps/web`. If a build needs more, CI will show it.
+
 ### Decisions taken with Nils
 * Demo world is 30 SKUs by 5 channels (2026-11-05). Slice 4 scope is precompute plus scenario and results API (2026-11-05). The benchmark run is skipped for now.
 * Push quantity depends on product category.
@@ -255,8 +269,8 @@ Not done in week 6:
 | 4 | Done: web shell, stock overview and table, hero slice on precomputed JSON |
 | 5 | Parameter editor, run, charts, scenario save and load, Excel export |
 | 6 | Done: Why panel live cost, globe, Playwright e2e. Open: deep dive, storyboard, home page |
-| 7 | Docker, CI/CD, deploy, demo mode, README, ADRs, screenshots |
-| 8 | Remotion video |
+| 7 | Done: Docker files, CI image build, README, home page, ADR 009. Open: deploy, screenshots, first real image build |
+| 8 | Remotion video (not started) |
 
 ## Open points and risks
 
