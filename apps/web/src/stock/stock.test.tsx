@@ -87,7 +87,7 @@ describe('stock page', () => {
     await userEvent.selectOptions(screen.getByLabelText('Group by'), 'brand');
     expect(screen.getAllByTestId('group-row').length).toBeGreaterThan(1);
     await userEvent.click(screen.getByRole('button', { name: 'Value' }));
-    expect(screen.queryByRole('columnheader', { name: 'Value at risk' })).toBeNull();
+    expect(within(screen.getByTestId('stock-table')).queryByRole('columnheader', { name: 'Value at risk' })).toBeNull();
   });
 
   it('shows an inline error with the endpoint and retries', async () => {

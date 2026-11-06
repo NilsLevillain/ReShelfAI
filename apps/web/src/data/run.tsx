@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import type { ScenarioResult } from './source';
 
-export type Run = { scenarioId: number; name: string; result: ScenarioResult };
+export type Run = { scenarioId: number; resultId: number; name: string; result: ScenarioResult };
 type RunCtx = { run: Run | null; setRun: (r: Run | null) => void };
 
 const Ctx = createContext<RunCtx>({ run: null, setRun: () => undefined });

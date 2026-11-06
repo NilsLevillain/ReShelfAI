@@ -3,6 +3,7 @@ import { HBars } from '../components/HBars';
 import { InlineError } from '../components/InlineError';
 import { useScenarioResult } from '../data/useScenarioResult';
 import { REASON_LABEL, applyFilters, eur, int, totalsOf, type Filters, type StockLot } from '../stock/model';
+import { GlobePanel } from '../stock/GlobePanel';
 import { StockTable } from '../stock/StockTable';
 
 function bucketBy(lots: StockLot[], key: 'brand' | 'category' | 'reason') {
@@ -56,6 +57,8 @@ export function Stock() {
           <span>Units left unplaced</span>
         </div>
       </div>
+
+      <GlobePanel geo={state.result.geo} selected={filters.plant} onSelect={(plant) => set({ plant })} />
 
       <div className="rs-cards">
         <div className="rs-card">

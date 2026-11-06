@@ -358,6 +358,58 @@ export interface components {
             /** Units Destroyed By Rule */
             units_destroyed_by_rule: number;
         };
+        /** GeoArc */
+        GeoArc: {
+            /** Channel */
+            channel: string;
+            /** Plant */
+            plant: string;
+            /** Units */
+            units: number;
+        };
+        /** GeoChannel */
+        GeoChannel: {
+            /** Allocated Units */
+            allocated_units: number;
+            /** Channel */
+            channel: string;
+            /** Country */
+            country: string;
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** Type */
+            type: string;
+        };
+        /** GeoOut */
+        GeoOut: {
+            /** Arcs */
+            arcs: components["schemas"]["GeoArc"][];
+            /** Channels */
+            channels: components["schemas"]["GeoChannel"][];
+            /** Plants */
+            plants: components["schemas"]["GeoPlant"][];
+        };
+        /** GeoPlant */
+        GeoPlant: {
+            /** Allocated Units */
+            allocated_units: number;
+            /** Country */
+            country: string;
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** Name */
+            name: string;
+            /** Plant */
+            plant: string;
+            /** Units */
+            units: number;
+            /** Value At Risk */
+            value_at_risk: number;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -413,6 +465,7 @@ export interface components {
             baseline: components["schemas"]["BaselineOut"];
             /** Counterfactuals */
             counterfactuals: components["schemas"]["CounterfactualOut"][];
+            geo: components["schemas"]["GeoOut"];
             /**
              * Label
              * @default Simulated data

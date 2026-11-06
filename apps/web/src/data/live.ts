@@ -4,6 +4,7 @@ import { apiUrl, getJson, type StoredResult } from './source';
 export type BaseParams = components['schemas']['BaseParams'];
 export type ScenarioSpec = components['schemas']['ScenarioSpec'];
 export type ScenarioOut = components['schemas']['ScenarioOut'];
+export type CounterfactualOut = components['schemas']['CounterfactualOut'];
 export type ScenarioSummary = components['schemas']['ScenarioSummary'];
 
 const json = { 'Content-Type': 'application/json' };
@@ -20,5 +21,11 @@ export const liveApi = {
     const res = await fetch(url, { method: 'DELETE' });
     if (!res.ok) throw new Error(`The server answered ${res.status} when deleting scenario ${id}.`);
   },
+  counterfactual: (resultId: number, line: string, instance: string, mode: string) =>
+    getJson<CounterfactualOut>(`${apiUrl()}/results/${resultId}/lines/${encodeURI(line)}/counterfactual`, {
+      method: 'POST',
+      headers: json,
+      body: JSON.stringify({ instance, mode }),
+    }),
   exportUrl: (id: number) => `${apiUrl()}/scenarios/${id}/export.xlsx`,
 };

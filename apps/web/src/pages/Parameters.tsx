@@ -117,7 +117,7 @@ function Editor() {
     if (id !== null) {
       try {
         const stored = await liveApi.solve(id);
-        setRun({ scenarioId: id, name, result: stored.result });
+        setRun({ scenarioId: id, resultId: stored.result_id, name, result: stored.result });
         navigate('/results');
       } catch (e) {
         fail(e, () => void onRun());

@@ -122,7 +122,15 @@ export function Results() {
         </div>
       </section>
 
-      {line && <WhyPanel key={line.line} result={r} line={line} onClose={() => setLineId(null)} />}
+      {line && (
+        <WhyPanel
+          key={line.line}
+          result={r}
+          line={line}
+          liveResultId={scenario === 'run' ? run?.resultId : undefined}
+          onClose={() => setLineId(null)}
+        />
+      )}
     </>
   );
 }

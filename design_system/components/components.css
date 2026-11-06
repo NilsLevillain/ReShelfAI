@@ -321,3 +321,6 @@ button.rs-hbar:hover .rs-hbar__label { text-decoration: underline; }
 .rs-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
 .rs-hbar__fill[data-series="baseline"] { background: var(--rs-compare-baseline); }
 .rs-hbar__fill[data-series="optimizer"] { background: var(--rs-compare-optimizer); }
+
+/* Globe panel: the canvas sits in the middle of its card. */
+.rs-globe { display: flex; justify-content: center; }

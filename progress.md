@@ -1,6 +1,6 @@
 # Progress
 
-Last updated: 2026-11-06 (week 5 built). Source of truth for the schedule is `docs/war_plan.md` section 7.
+Last updated: 2026-11-06 (week 6 built). Source of truth for the schedule is `docs/war_plan.md` section 7.
 
 ## Status at a glance
 
@@ -19,7 +19,8 @@ Last updated: 2026-11-06 (week 5 built). Source of truth for the schedule is `do
 | 3, slice 4 | Response models, precompute, scenario and results API, ADR 008 | Done (commits after `5973d55`). Stock endpoints go to week 4, Excel export to week 5 |
 | 4 | Web shell, stock endpoints and overview, hero slice on precomputed JSON | Done (`edf98b8`, `55258af`, `7eac9eb`). Not checked in a browser, see "Week 4 built" |
 | 5 | Done: parameter editor, run, charts, save and load, Excel export | Done (two commits, see "Week 5 built"). Editor only works on the live API. Not checked in a browser |
-| 6 to 8 | Why panel full, globe, e2e, Docker, video | Not started |
+| 6 | Why panel live cost, globe, Playwright e2e | Done, see "Week 6 built". Deep dive page skipped (stretch) |
+| 7 to 8 | Docker, deploy, README, ADRs, screenshots, video | Not started |
 
 Test state after week 3 slice 2: 236 fast tests green in about 25 s (`-m "not slow"`), ruff and mypy strict clean. The slow 50 seed test was not rerun since slice 4 (the solver change is a refactor, `solve` behavior is unchanged and `test_solver.py` passes). Earlier, slice 4: 246 tests in about 3.5 minutes. The 50 seed test is marked `slow` (`-m "not slow"` skips it, CI runs everything). Commits are local, not pushed.
 
@@ -133,9 +134,9 @@ Slice 3, hero (`7eac9eb`):
 
 Not done in week 4:
 * Nothing was opened in a browser. Tests run in jsdom, so layout, theme colors and the sprite icons are unchecked. Run `pnpm dev` and look.
-* The home page and Parameters page are placeholders. Live mode runs create and solve, but the Why panel does not call the counterfactual endpoint, it shows a sentence when a cost is not cached.
+* The home page and Parameters page are placeholders. Live mode runs create and solve, but the Why panel did not call the counterfactual endpoint (it does since week 6).
 * The precomputed counterfactuals cover `sku[...]` rules only, so Why panels of lines bound by other rules say the cost is not cached.
-* No Playwright e2e yet (week 6).
+* No Playwright e2e yet (added in week 6).
 
 ### Week 5 built (2026-11-06)
 API (`ef61495`):
@@ -159,6 +160,28 @@ Not done in week 5:
 * Charts are bar lists (`HBars`), no chart library. Recharts stays unused.
 * The editor has no client side range checks on purpose (server sentences are the single source). The Run step of the stepper is not shown separately.
 * Excel export of cached scenarios is not offered.
+
+### Week 6 built (2026-11-06)
+API:
+* `geo.py`: `ScenarioResult.geo` has plant points (value at risk, units placed), channel points and plant to channel arcs from the plan. `SolverInput.plants` added so the geo block reads one source. Plants carry a country only, so they sit at an approximate country centre (table in `geo.py`). A plant in an unlisted country is left off the globe.
+* `tests/test_geo.py` (4 tests): valid positions, plant risk and arcs reconcile with stock and plan, arcs join known points. 290 fast tests green, ruff, mypy, model doc check clean. `openapi.json`, `schema.d.ts` and `data/precomputed/*.json` regenerated.
+
+Web:
+* Globe (`stock/GlobePanel.tsx`, `GlobeCanvas.tsx`, `react-globe.gl`, lazy chunk of about 1.9 MB, 540 kB gzip). Points sized by value at risk, arcs from the plan, colors read from design system variables, plain light surface (no continent map, no external image). A plant table sits under it as filter and as the fallback when WebGL is missing. Plant filter added to the stock table (`plant` in `Filters`).
+* Why panel: in a live run, a binding rule without a cached cost shows two buttons (relax by 10 percent, switch off) that call the counterfactual endpoint. Errors are inline with Retry. Cached mode keeps the sentence. `Run` now carries `resultId`.
+* Playwright: `e2e/hero.spec.ts` runs stock, plant filter, results, Why, rule cost in euro, compare on the cached JSON. CI web job installs Chromium and runs it. Vitest excludes `e2e/`.
+* Design system: `rs-globe` class, `dist/` rebuilt.
+* 38 web tests green, type check, lint, build clean. The e2e passed locally on Edge (`PW_CHANNEL=msedge pnpm exec playwright test`), because the Chromium download is blocked on this network. The CI Chromium path is untested.
+* Looked at in a browser for the first time (Edge screenshot of the stock page). The first globe was a black sphere with spikes taller than the sphere. Fixed with a texture in a design system color and a smaller altitude scale.
+
+Not done in week 6:
+* Deep dive page (stretch, cut first by the cut order).
+* The globe has no continents, so it reads as an abstract sphere. A free map texture from `design_system/IMAGERY.md` sources would fix it.
+* Compare polish was limited to nothing new. The compare page is as built in week 4.
+* The Parameters page, Results and Compare were not looked at in a browser. The home page is still a placeholder.
+* Precomputed counterfactuals still cover `sku[...]` rules only. Live mode covers the rest on demand.
+* Click on a globe point was not tested in a browser (the plant table is tested).
+* Storyboard lock for the video (war plan, end of week 6) not written.
 
 ### Decisions taken with Nils
 * Demo world is 30 SKUs by 5 channels (2026-11-05). Slice 4 scope is precompute plus scenario and results API (2026-11-05). The benchmark run is skipped for now.
@@ -231,7 +254,7 @@ Not done in week 5:
 | 3 | All four slices done. Still open: benchmark run and `docs/benchmark.md`, Alembic migration |
 | 4 | Done: web shell, stock overview and table, hero slice on precomputed JSON |
 | 5 | Parameter editor, run, charts, scenario save and load, Excel export |
-| 6 | Why panel full, compare polish, globe, Playwright e2e |
+| 6 | Done: Why panel live cost, globe, Playwright e2e. Open: deep dive, storyboard, home page |
 | 7 | Docker, CI/CD, deploy, demo mode, README, ADRs, screenshots |
 | 8 | Remotion video |
 

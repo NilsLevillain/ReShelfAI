@@ -4,7 +4,7 @@ export type StockLot = components['schemas']['StockLot'];
 export type StockBucket = components['schemas']['StockBucket'];
 export type StockOut = components['schemas']['StockOut'];
 
-export type Filters = { brand?: string; category?: string; reason?: string };
+export type Filters = { brand?: string; category?: string; reason?: string; plant?: string };
 export type GroupKey = 'none' | 'brand' | 'category' | 'reason' | 'plant';
 
 export type Totals = { lots: number; units: number; valueAtRisk: number; allocated: number };
@@ -12,7 +12,10 @@ export type Totals = { lots: number; units: number; valueAtRisk: number; allocat
 export function applyFilters(lots: StockLot[], f: Filters): StockLot[] {
   return lots.filter(
     (l) =>
-      (!f.brand || l.brand === f.brand) && (!f.category || l.category === f.category) && (!f.reason || l.reason === f.reason),
+      (!f.brand || l.brand === f.brand) &&
+      (!f.category || l.category === f.category) &&
+      (!f.reason || l.reason === f.reason) &&
+      (!f.plant || l.plant === f.plant),
   );
 }
 

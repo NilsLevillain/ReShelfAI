@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { InlineError } from '../components/InlineError';
+import { liveApi, type CounterfactualOut } from '../data/live';
 import { eur } from '../stock/model';
 import {
   MODE_WORDS,
@@ -10,7 +12,60 @@ import {
   type Result,
 } from './model';
 
-export function WhyPanel({ result, line, onClose }: { result: Result; line: LineTrace; onClose: () => void }) {
+/** Cost of one rule, asked from the live solver when the cached results do not hold it. */
+function LiveCost({ resultId, line, instance }: { resultId: number; line: string; instance: string }) {
+  const [busy, setBusy] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [found, setFound] = useState<Record<string, CounterfactualOut>>({});
+
+  const ask = (mode: string) => {
+    setBusy(mode);
+    setError(null);
+    liveApi.counterfactual(resultId, line, instance, mode).then(
+      (c) => {
+        setFound((f) => ({ ...f, [mode]: c }));
+        setBusy(null);
+      },
+      (e: Error) => {
+        setError(e);
+        setBusy(null);
+      },
+    );
+  };
+
+  return (
+    <div data-testid="live-cost">
+      <code>{instance}</code>{' '}
+      {Object.entries(MODE_WORDS).map(([mode, words]) => (
+        <button key={mode} type="button" className="rs-btn" disabled={busy !== null} onClick={() => ask(mode)}>
+          {busy === mode ? 'Solving' : words}
+        </button>
+      ))}
+      {error && <InlineError error={error} onRetry={() => setError(null)} />}
+      <ul data-testid="counterfactual-result">
+        {Object.values(found).map((c) => (
+          <li key={c.mode}>
+            {MODE_WORDS[c.mode] ?? c.mode}:{' '}
+            <strong style={{ color: 'var(--rs-compare-delta-cost)' }}>{eur(c.cost_eur)}</strong> more value recovered,{' '}
+            {signedInt(c.units_destroyed_by_rule)} units destroyed ({c.status}). {c.message}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export function WhyPanel({
+  result,
+  line,
+  liveResultId,
+  onClose,
+}: {
+  result: Result;
+  line: LineTrace;
+  liveResultId?: number;
+  onClose: () => void;
+}) {
   const [shown, setShown] = useState<string | null>(null);
 
   return (
@@ -61,7 +116,9 @@ export function WhyPanel({ result, line, onClose }: { result: Result; line: Line
         const cfs = counterfactualsFor(result, b.instance);
         return (
           <div key={b.instance}>
-            {cfs.length === 0 ? (
+            {cfs.length === 0 && liveResultId !== undefined ? (
+              <LiveCost resultId={liveResultId} line={line.line} instance={b.instance} />
+            ) : cfs.length === 0 ? (
               <p>
                 <code>{b.instance}</code>: the cost of this rule is not in the cached results. The live solver computes it on
                 demand.
