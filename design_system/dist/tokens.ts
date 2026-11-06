@@ -154,6 +154,13 @@ export const tokens = {
         "aqua": "#f6fffe",
         "lilac": "#f7f4ff",
         "rose": "#fff8f7"
+      },
+      "reason": {
+        "near_expiry": "#f1c21b",
+        "excess": "#b6115a",
+        "obsolete": "#8a6500",
+        "discontinued": "#dc2026",
+        "overproduction": "#1a7f3c"
       }
     },
     "dark": {
@@ -234,6 +241,13 @@ export const tokens = {
         "aqua": "#12302f",
         "lilac": "#241f3d",
         "rose": "#33201f"
+      },
+      "reason": {
+        "near_expiry": "#f1c21b",
+        "excess": "#e56aa5",
+        "obsolete": "#c9915a",
+        "discontinued": "#fa4d56",
+        "overproduction": "#42be65"
       }
     }
   },

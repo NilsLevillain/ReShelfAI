@@ -197,6 +197,11 @@
   --rs-tile-aqua: #f6fffe;
   --rs-tile-lilac: #f7f4ff;
   --rs-tile-rose: #fff8f7;
+  --rs-reason-near_expiry: #f1c21b;
+  --rs-reason-excess: #b6115a;
+  --rs-reason-obsolete: #8a6500;
+  --rs-reason-discontinued: #dc2026;
+  --rs-reason-overproduction: #1a7f3c;
   color-scheme: light;
 }
 
@@ -257,6 +262,11 @@
   --rs-tile-aqua: #12302f;
   --rs-tile-lilac: #241f3d;
   --rs-tile-rose: #33201f;
+  --rs-reason-near_expiry: #f1c21b;
+  --rs-reason-excess: #e56aa5;
+  --rs-reason-obsolete: #c9915a;
+  --rs-reason-discontinued: #fa4d56;
+  --rs-reason-overproduction: #42be65;
   color-scheme: dark;
 }
 
@@ -318,6 +328,11 @@
     --rs-tile-aqua: #12302f;
     --rs-tile-lilac: #241f3d;
     --rs-tile-rose: #33201f;
+    --rs-reason-near_expiry: #f1c21b;
+    --rs-reason-excess: #e56aa5;
+    --rs-reason-obsolete: #c9915a;
+    --rs-reason-discontinued: #fa4d56;
+    --rs-reason-overproduction: #42be65;
     color-scheme: dark;
   }
 }

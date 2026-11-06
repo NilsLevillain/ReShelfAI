@@ -325,3 +325,72 @@ button.rs-hbar:hover .rs-hbar__label { text-decoration: underline; }
 
 /* Globe panel: the canvas sits in the middle of its card. */
 .rs-globe { display: flex; justify-content: center; }
+
+/* ---------- UX rework (first impressions, 2026-11-06) ---------- */
+/* Links that look like cards or buttons carry no underline and keep their own text color. */
+a.rs-card, a.rs-btn, a.rs-brand, a.rs-tab, a.rs-flow__step { text-decoration: none; color: inherit; }
+a.rs-card h3, a.rs-card h4 { color: var(--rs-text-primary); }
+a.rs-card:hover, a.rs-flow__step:hover { border-color: var(--rs-border-brand); }
+a.rs-btn--primary { color: var(--rs-action-primary-text); }
+a.rs-btn--primary:hover { background: var(--rs-action-primary); filter: brightness(1.08); }
+.rs-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--rs-space-2); white-space: nowrap; line-height: 1.2; transition: background var(--rs-motion-duration-fast), filter var(--rs-motion-duration-fast); }
+.rs-btn--lg { min-height: 3rem; padding: 0 var(--rs-space-6); font-size: var(--rs-type-size-md); }
+.rs-btn:focus-visible, .rs-input:focus-visible, .rs-seg button:focus-visible, .rs-groupby select:focus-visible { outline: 3px solid var(--rs-border-brand); outline-offset: 2px; }
+.rs-btn--link { border: 0; background: none; padding: 0; min-height: 0; color: var(--rs-text-link); font-weight: var(--rs-type-weight-medium); text-decoration: underline; }
+.rs-actions--center { justify-content: center; }
+
+/* KPI numbers must fit their card. Smaller size, wrap as a last resort, compact notation is done in code. */
+.rs-stat__value { font-size: clamp(1.75rem, 1rem + 1.2vw, 2.5rem); overflow-wrap: anywhere; }
+.rs-stat__hint { color: var(--rs-text-secondary); font-size: var(--rs-type-size-sm); line-height: 1.35; }
+
+/* Guided path on the home page: five steps, each is a link */
+.rs-flow { display: grid; gap: var(--rs-space-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); counter-reset: flow; }
+.rs-flow__step { position: relative; display: flex; flex-direction: column; gap: var(--rs-space-2); padding: var(--rs-space-4) var(--rs-space-5); background: var(--rs-bg-surface); border: 1px solid var(--rs-border-default); border-radius: var(--rs-radius-md); transition: border-color var(--rs-motion-duration-base), transform var(--rs-motion-duration-base) var(--rs-motion-easing-standard); }
+.rs-flow__step:hover { transform: translateY(-2px); }
+.rs-flow__step::before { counter-increment: flow; content: counter(flow); width: 1.75rem; height: 1.75rem; display: grid; place-items: center; border-radius: 50%; background: var(--rs-action-primary); color: var(--rs-action-primary-text); font-weight: var(--rs-type-weight-semibold); font-size: var(--rs-type-size-sm); }
+.rs-flow__step b { font-size: var(--rs-type-size-md); font-weight: var(--rs-type-weight-semibold); }
+.rs-flow__step span { color: var(--rs-text-secondary); font-size: var(--rs-type-size-base); line-height: 1.4; }
+.rs-goal { display: grid; gap: var(--rs-space-4); padding: clamp(1.25rem, 3vw, 2.5rem); border-radius: var(--rs-radius-lg); background: var(--rs-tile-aqua); border: 1px solid var(--rs-border-brand); }
+.rs-goal h2 { font-family: var(--rs-type-family-serif); font-size: clamp(1.75rem, 1rem + 2.4vw, 3rem); line-height: 1.1; font-weight: var(--rs-type-weight-semibold); letter-spacing: -0.015em; max-width: 24ch; text-wrap: balance; color: var(--rs-text-brand); }
+.rs-goal p { max-width: 60ch; font-size: var(--rs-type-size-md); }
+
+/* Reason and tier dots. Reason colors (warm) never mix with tier colors (violet, blue, teal). */
+.rs-dot { display: inline-block; width: 0.625rem; height: 0.625rem; border-radius: 50%; margin-right: var(--rs-space-2); background: var(--rs-dot, var(--rs-border-strong)); flex: none; }
+.rs-label { display: inline-flex; align-items: center; white-space: nowrap; }
+[data-reason="near_expiry"] { --rs-dot: var(--rs-reason-near_expiry); --rs-bar-color: var(--rs-reason-near_expiry); }
+[data-reason="excess"] { --rs-dot: var(--rs-reason-excess); --rs-bar-color: var(--rs-reason-excess); }
+[data-reason="obsolete"] { --rs-dot: var(--rs-reason-obsolete); --rs-bar-color: var(--rs-reason-obsolete); }
+[data-reason="discontinued"] { --rs-dot: var(--rs-reason-discontinued); --rs-bar-color: var(--rs-reason-discontinued); }
+[data-reason="overproduction"] { --rs-dot: var(--rs-reason-overproduction); --rs-bar-color: var(--rs-reason-overproduction); }
+[data-tier="luxury"] { --rs-dot: var(--rs-tier-luxury); --rs-bar-color: var(--rs-tier-luxury); }
+[data-tier="premium"] { --rs-dot: var(--rs-tier-premium); --rs-bar-color: var(--rs-tier-premium); }
+[data-tier="mass"] { --rs-dot: var(--rs-tier-mass); --rs-bar-color: var(--rs-tier-mass); }
+.rs-hbar__label { display: inline-flex; align-items: center; }
+
+/* Table column groups: a header row above the column names, each group says what it means */
+.rs-table .rs-colgroup th { font-size: var(--rs-type-size-xs); font-weight: var(--rs-type-weight-semibold); color: var(--rs-text-brand); background: var(--rs-bg-subtle); border-bottom: 0; border-left: 1px solid var(--rs-border-default); vertical-align: bottom; }
+.rs-table .rs-colgroup th:first-child { border-left: 0; }
+.rs-colgroup small { display: block; font-weight: var(--rs-type-weight-regular); color: var(--rs-text-secondary); font-size: var(--rs-type-size-xs); }
+.rs-table .rs-gstart { border-left: 1px solid var(--rs-border-default); }
+
+/* Side drawer (Why panel). Opens from the right over the page, closes on Escape or the backdrop. */
+.rs-drawer-backdrop { position: fixed; inset: 0; z-index: 40; background: color-mix(in srgb, var(--rs-color-neutral-900) 45%, transparent); }
+.rs-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 41; width: min(34rem, 100vw); overflow-y: auto; background: var(--rs-bg-surface); border-left: 1px solid var(--rs-border-default); box-shadow: var(--rs-shadow-overlay); padding: var(--rs-space-5); display: grid; gap: var(--rs-space-4); align-content: start; animation: rs-drawer-in var(--rs-motion-duration-base) var(--rs-motion-easing-standard); }
+.rs-drawer h3 { font-family: var(--rs-type-family-serif); font-size: var(--rs-type-size-2xl); line-height: 1.2; }
+.rs-drawer h4 { font-size: var(--rs-type-size-md); font-weight: var(--rs-type-weight-semibold); margin-top: var(--rs-space-2); }
+.rs-drawer ul { display: grid; gap: var(--rs-space-2); }
+.rs-drawer__why { display: grid; gap: var(--rs-space-2); padding: var(--rs-space-3) var(--rs-space-4); border-radius: var(--rs-radius-md); background: var(--rs-bg-subtle); }
+.rs-drawer__why b { font-weight: var(--rs-type-weight-semibold); }
+.rs-drawer__why span { color: var(--rs-text-secondary); font-size: var(--rs-type-size-base); }
+.rs-cost { color: var(--rs-compare-delta-cost); font-weight: var(--rs-type-weight-semibold); font-variant-numeric: tabular-nums; }
+@keyframes rs-drawer-in { from { transform: translateX(2rem); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .rs-drawer { animation: none; } .rs-flow__step { transition: none; transform: none !important; } }
+
+/* Details disclosure for technical content (solver status and similar) */
+.rs-more > summary { cursor: pointer; color: var(--rs-text-brand); font-size: var(--rs-type-size-sm); font-weight: var(--rs-type-weight-medium); }
+.rs-more[open] > summary { margin-bottom: var(--rs-space-2); }
+.rs-more > p { font-size: var(--rs-type-size-sm); color: var(--rs-text-secondary); font-family: var(--rs-type-family-mono); }
+.rs-select { min-height: 2rem; padding: 0 var(--rs-space-3); border: 1px solid var(--rs-border-default); border-radius: var(--rs-radius-sm); background: var(--rs-bg-surface); color: var(--rs-text-primary); }
+.rs-note { color: var(--rs-text-secondary); font-size: var(--rs-type-size-sm); max-width: 70ch; }
+.rs-callout--action { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rs-space-3); justify-content: space-between; }
+.rs-compare-cols { display: grid; gap: var(--rs-space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
