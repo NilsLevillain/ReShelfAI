@@ -1,6 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import { Shell } from './components/Shell';
 import { Placeholder } from './pages/Placeholder';
+import { Compare } from './pages/Compare';
+import { Results } from './pages/Results';
 import { Stock } from './pages/Stock';
 
 export function App() {
@@ -13,8 +15,8 @@ export function App() {
         />
         <Route path="stock" element={<Stock />} />
         <Route path="parameters" element={<Placeholder title="Parameters" lede="Rule dials arrive in week 5." />} />
-        <Route path="results" element={<Placeholder title="Results" lede="Results arrive in slice 3." />} />
-        <Route path="compare" element={<Placeholder title="Compare" lede="Compare arrives in slice 3." />} />
+        <Route path="results" element={<Results />} />
+        <Route path="compare" element={<Compare />} />
         <Route path="*" element={<Placeholder title="Page not found" lede="Use the menu above." />} />
       </Route>
     </Routes>
