@@ -37,6 +37,9 @@ a { color: var(--rs-text-link); }
 .rs-badge { display: inline-flex; align-items: center; height: 1.5rem; padding: 0 var(--rs-space-3); border-radius: var(--rs-radius-pill); background: var(--rs-bg-subtle); border: 1px solid var(--rs-border-default); color: var(--rs-text-secondary); font-size: var(--rs-type-size-xs); font-weight: var(--rs-type-weight-medium); white-space: nowrap; }
 .rs-iconbtn { width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: var(--rs-radius-sm); background: none; border: 1px solid var(--rs-border-default); color: var(--rs-text-primary); }
 .rs-iconbtn:hover { background: var(--rs-bg-subtle); }
+.rs-btn { min-height: 2.25rem; padding: 0 var(--rs-space-4); border-radius: var(--rs-radius-sm); border: 1px solid var(--rs-action-primary); background: var(--rs-bg-surface); color: var(--rs-text-brand); font-weight: var(--rs-type-weight-medium); }
+.rs-btn:hover { background: var(--rs-bg-subtle); }
+.rs-btn--primary { background: var(--rs-action-primary); color: var(--rs-action-primary-text); }
 .rs-theme-moon { display: none; }
 [data-theme="dark"] .rs-theme-sun { display: none; }
 [data-theme="dark"] .rs-theme-moon { display: block; }

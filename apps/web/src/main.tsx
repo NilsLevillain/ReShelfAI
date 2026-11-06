@@ -1,10 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
-const App = () => <div>Reshelf</div>;
+import { BrowserRouter } from 'react-router-dom';
+import '@ds/tokens.css';
+import '@ds/components.css';
+import { App } from './App';
+import { DataSourceProvider } from './data/DataSource';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <DataSourceProvider>
+        <App />
+      </DataSourceProvider>
+    </BrowserRouter>
   </React.StrictMode>,
 );
