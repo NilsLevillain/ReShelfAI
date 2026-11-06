@@ -1,4 +1,4 @@
-export const STEPS = ['Parameters', 'Run', 'Review', 'Export'] as const;
+export const STEPS = ['See the stock', 'Set the rules', 'Run the plan', 'Review the plan', 'Export'] as const;
 
 export function Stepper({ current }: { current: number }) {
   return (

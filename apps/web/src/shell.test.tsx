@@ -30,10 +30,10 @@ describe('shell', () => {
     expect(screen.getByTestId('data-source-banner')).toHaveTextContent('Live solver');
   });
 
-  it('shows the home page with the four steps', () => {
+  it('shows the home page with the five steps', () => {
     renderAt('/');
     expect(screen.getByTestId('home-head')).toHaveTextContent('Tighten a rule. See what it costs. See why.');
-    expect(screen.getAllByTestId('home-step')).toHaveLength(4);
+    expect(screen.getAllByTestId('home-step')).toHaveLength(5);
   });
 
   it('switches theme and stores it', async () => {
@@ -47,7 +47,7 @@ describe('shell', () => {
     const { unmount } = renderAt('/parameters');
     expect(screen.getByTestId('stepper')).toBeInTheDocument();
     unmount();
-    renderAt('/stock');
+    renderAt('/compare');
     expect(screen.queryByTestId('stepper')).toBeNull();
   });
 });
@@ -56,7 +56,7 @@ describe('stepper', () => {
   it('marks done, current and upcoming', () => {
     render(<Stepper current={1} />);
     const items = screen.getAllByRole('listitem');
-    expect(items.map((i) => i.dataset.state)).toEqual(['done', 'current', 'upcoming', 'upcoming']);
+    expect(items.map((i) => i.dataset.state)).toEqual(['done', 'current', 'upcoming', 'upcoming', 'upcoming']);
     expect(items[1]).toHaveAttribute('aria-current', 'step');
   });
 });

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { InlineError } from '../components/InlineError';
 import { useSource } from '../data/DataSource';
 import { liveApi, type ScenarioSpec, type ScenarioSummary } from '../data/live';
@@ -31,12 +31,40 @@ export function Parameters() {
     return (
       <>
         <section className="rs-page-head">
-          <h2>Parameters</h2>
-          <p>Edit the rules, run the solver and save the scenario.</p>
+          <h2>Set the rules and run the plan</h2>
+          <p className="rs-section__sub">
+            Here you change the business rules, run the plan and save it as a scenario you can compare and export.
+          </p>
         </section>
-        <div className="rs-callout rs-callout--info" data-testid="editor-needs-live" role="status">
-          Editing and running need the live solver. This build shows cached results only. Start the API and set VITE_API_URL
-          to edit parameters. The Results page still shows both precomputed scenarios.
+        <div className="rs-card" data-testid="editor-needs-live" role="status">
+          <h3>Running a plan needs the live solver</h3>
+          <p>
+            You are looking at cached results: plans that were prepared in advance. They cannot be edited. To change a rule and run
+            your own plan, start the live solver:
+          </p>
+          <ol className="rs-list">
+            <li>
+              <span>
+                In a terminal, in the folder <code>apps/api</code>, run <code>uv run uvicorn main:app --port 8000</code>.
+              </span>
+            </li>
+            <li>
+              <span>
+                In <code>apps/web/.env.local</code>, add <code>VITE_API_URL=http://localhost:8000</code> and restart the web app.
+              </span>
+            </li>
+            <li>
+              <span>Reload this page. The banner at the top will say Live solver.</span>
+            </li>
+          </ol>
+          <div className="rs-actions">
+            <Link className="rs-btn rs-btn--primary" to="/results">
+              Meanwhile, open the ready plan
+            </Link>
+            <Link className="rs-btn" to="/compare">
+              Compare the two ready scenarios
+            </Link>
+          </div>
         </div>
       </>
     );
@@ -157,7 +185,7 @@ function Editor() {
   return (
     <>
       <section className="rs-page-head">
-        <h2>Parameters</h2>
+        <h2>Set the rules and run the plan</h2>
         <p>Edit the rules, run the solver and save the scenario. Every value is an invented illustrative default.</p>
       </section>
       {error && <InlineError error={error} onRetry={retry} />}
@@ -269,7 +297,7 @@ function Editor() {
 
           <div className="rs-actions">
             <button type="button" className="rs-btn rs-btn--primary" disabled={busy !== null} onClick={() => void onRun()} data-testid="run-solver">
-              {busy === 'run' ? 'Solving' : 'Run the solver'}
+              {busy === 'run' ? 'Solving' : 'Run the plan'}
             </button>
             <button type="button" className="rs-btn" disabled={busy !== null} onClick={() => void onSave()} data-testid="save-scenario">
               Save scenario

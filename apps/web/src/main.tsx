@@ -4,13 +4,16 @@ import { BrowserRouter } from 'react-router-dom';
 import '@ds/tokens.css';
 import '@ds/components.css';
 import { App } from './App';
+import { CurrencyProvider } from './data/currency';
 import { DataSourceProvider } from './data/DataSource';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <DataSourceProvider>
-        <App />
+        <CurrencyProvider>
+          <App />
+        </CurrencyProvider>
       </DataSourceProvider>
     </BrowserRouter>
   </React.StrictMode>,
