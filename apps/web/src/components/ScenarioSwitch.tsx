@@ -5,7 +5,17 @@ const LABEL: Record<ScenarioName, string> = {
   luxury_protection: 'Luxury protection',
 };
 
-export function ScenarioSwitch({ value, onChange }: { value: ScenarioName; onChange: (s: ScenarioName) => void }) {
+export type Choice = ScenarioName | 'run';
+
+export function ScenarioSwitch({
+  value,
+  onChange,
+  runName,
+}: {
+  value: Choice;
+  onChange: (s: Choice) => void;
+  runName?: string;
+}) {
   return (
     <div className="rs-seg" role="group" aria-label="Scenario">
       {SCENARIOS.map((s) => (
@@ -13,6 +23,11 @@ export function ScenarioSwitch({ value, onChange }: { value: ScenarioName; onCha
           {LABEL[s]}
         </button>
       ))}
+      {runName && (
+        <button type="button" aria-pressed={value === 'run'} onClick={() => onChange('run')} data-testid="switch-run">
+          Your run: {runName}
+        </button>
+      )}
     </div>
   );
 }

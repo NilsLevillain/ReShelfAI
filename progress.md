@@ -1,6 +1,6 @@
 # Progress
 
-Last updated: 2026-11-06 (week 4 built, slices 1 to 3 committed). Source of truth for the schedule is `docs/war_plan.md` section 7.
+Last updated: 2026-11-06 (week 5 built). Source of truth for the schedule is `docs/war_plan.md` section 7.
 
 ## Status at a glance
 
@@ -18,7 +18,8 @@ Last updated: 2026-11-06 (week 4 built, slices 1 to 3 committed). Source of trut
 | 3, slice 3 | Benchmark | Code and tests done (`3ec266d`). Full run skipped on purpose (see "Week 3, slice 3"), `docs/benchmark.md` not written |
 | 3, slice 4 | Response models, precompute, scenario and results API, ADR 008 | Done (commits after `5973d55`). Stock endpoints go to week 4, Excel export to week 5 |
 | 4 | Web shell, stock endpoints and overview, hero slice on precomputed JSON | Done (`edf98b8`, `55258af`, `7eac9eb`). Not checked in a browser, see "Week 4 built" |
-| 5 to 8 | Parameter editor, Docker, video | Not started |
+| 5 | Done: parameter editor, run, charts, save and load, Excel export | Done (two commits, see "Week 5 built"). Editor only works on the live API. Not checked in a browser |
+| 6 to 8 | Why panel full, globe, e2e, Docker, video | Not started |
 
 Test state after week 3 slice 2: 236 fast tests green in about 25 s (`-m "not slow"`), ruff and mypy strict clean. The slow 50 seed test was not rerun since slice 4 (the solver change is a refactor, `solve` behavior is unchanged and `test_solver.py` passes). Earlier, slice 4: 246 tests in about 3.5 minutes. The 50 seed test is marked `slow` (`-m "not slow"` skips it, CI runs everything). Commits are local, not pushed.
 
@@ -136,6 +137,29 @@ Not done in week 4:
 * The precomputed counterfactuals cover `sku[...]` rules only, so Why panels of lines bound by other rules say the cost is not cached.
 * No Playwright e2e yet (week 6).
 
+### Week 5 built (2026-11-06)
+API (`ef61495`):
+* `params.py`: `validate_params` checks every edit (range, whole number, class keys, planner rules) and returns plain sentences. `POST /scenarios` returns 422 with that sentence.
+* New endpoints: `GET /base-scenarios/{name}/params` (defaults), `GET /scenarios` (saved list), `GET /scenarios/{id}` (load spec), `DELETE /scenarios/{id}`, `GET /scenarios/{id}/export.xlsx`.
+* `export.py`: openpyxl workbook with sheets Summary, Allocation, Baseline audit, Rule trace, Rule cost. Every sheet starts with the simulated data label. `openpyxl` and `types-openpyxl` added.
+* Tests in `test_api.py`: defaults, 7 bad edits, save list load delete, an edit changes the plan, export sheets and label, export without a result. 286 fast tests green, ruff and mypy clean, `openapi.json` and `schema.d.ts` regenerated.
+
+Web:
+* Parameters page (`pages/Parameters.tsx`): name, base world, SKUs, channels, time limit, coverage and objective scalars, score by class, push quantity per category, planner rules. Sends only the keys changed from the defaults. Run saves then solves then opens Results. Saved scenarios list with Load and Delete. Errors are inline with Retry.
+* In cached mode the page says editing needs the live solver and shows no form (the defaults come from the API, the precomputed JSON does not carry them).
+* `data/run.tsx`: the latest live run, shared by Results and Compare. They open on "Your run: name" when one exists. `data/live.ts` holds the live calls.
+* `results/Charts.tsx`: value recovered, fill rate per channel, SKUs per channel, optimizer against the greedy baseline. All read from the KPI blocks, nothing recomputed.
+* Export: button on Results, a download link for a live run, disabled with a sentence otherwise.
+* Design system: `rs-form`, `rs-fieldset`, `rs-field`, `rs-input`, `rs-check`, `rs-actions`, bar series colors (grey baseline, teal optimizer). `dist/` rebuilt.
+* `editor.test.tsx`: cached notice, run sends only edited keys and lands on the run, failed request shows inline and retries, save list load delete, charts and disabled export. 33 web tests green, type check, lint and build clean.
+
+Not done in week 5:
+* Nothing opened in a browser, and the live path was only tested with a mocked fetch plus API tests. Run the API and `pnpm dev` with `VITE_API_URL` and look.
+* Saved scenarios keep the spec only. Loading one refills the form, it does not reopen the stored result. Results of a run live in memory until reload.
+* Charts are bar lists (`HBars`), no chart library. Recharts stays unused.
+* The editor has no client side range checks on purpose (server sentences are the single source). The Run step of the stepper is not shown separately.
+* Excel export of cached scenarios is not offered.
+
 ### Decisions taken with Nils
 * Demo world is 30 SKUs by 5 channels (2026-11-05). Slice 4 scope is precompute plus scenario and results API (2026-11-05). The benchmark run is skipped for now.
 * Push quantity depends on product category.
@@ -184,6 +208,13 @@ Not done in week 4:
 * `POST /scenarios` accepts `params` edits of the scenario `params` block and rejects unknown keys. Stock endpoints and the rule dial grid are not built.
 * The 30 SKU demo world solves in under a second, so the 60 s limit and the earlier slow measures (scaled limits at 30 to 150 SKUs) do not apply to it. A bigger demo world is still open.
 * `reshelf.db` is gitignored and created in the working directory unless `RESHELF_DB` is set.
+
+### From week 5 (my calls, not yet confirmed by Nils)
+* The solver time limit lives in the scenario spec (`time_limit_s`), so the editor hides the `solver_time_limit_s` parameter to avoid two fields for one thing.
+* Parameter ranges in `params.py` are my invention (for example coverage days 1 to 365, epsilon 0 to 0.1, score weights 0 to 2).
+* `GET /base-scenarios/{name}/params` reports 30 SKUs and 5 channels as the demo size, hard coded.
+* Delete removes the scenario and its results.
+* The editor stays live only, no cached editing, so the demo needs the API running (week 7 Docker).
 
 ## To do
 

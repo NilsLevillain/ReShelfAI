@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { InlineError } from '../components/InlineError';
-import { ScenarioSwitch } from '../components/ScenarioSwitch';
-import type { ScenarioName } from '../data/source';
-import { useScenarioResult } from '../data/useScenarioResult';
+import { ScenarioSwitch, type Choice } from '../components/ScenarioSwitch';
+import { useChoiceResult } from '../data/useScenarioResult';
+import { useRun } from '../data/run';
 import { ruleName, signedEur, violationCount, pct } from '../results/model';
 import { SolverStatus } from '../results/SolverStatus';
 import { eur, int } from '../stock/model';
 
 export function Compare() {
-  const [scenario, setScenario] = useState<ScenarioName>('default');
-  const state = useScenarioResult(scenario);
-  const switcher = <ScenarioSwitch value={scenario} onChange={setScenario} />;
+  const { run } = useRun();
+  const [scenario, setScenario] = useState<Choice>(run ? 'run' : 'default');
+  const state = useChoiceResult(scenario);
+  const switcher = <ScenarioSwitch value={scenario} onChange={setScenario} runName={run?.name} />;
 
   if (state.status === 'loading')
     return (

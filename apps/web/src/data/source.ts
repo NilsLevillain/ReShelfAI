@@ -38,7 +38,7 @@ export async function detectSource(fetchFn: typeof fetch = fetch): Promise<Sourc
   }
 }
 
-async function getJson<T>(endpoint: string, init?: RequestInit, fetchFn: typeof fetch = fetch): Promise<T> {
+export async function getJson<T>(endpoint: string, init?: RequestInit, fetchFn: typeof fetch = fetch): Promise<T> {
   let res: Response;
   try {
     res = await fetchFn(endpoint, init);

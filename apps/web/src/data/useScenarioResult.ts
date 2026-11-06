@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSource } from './DataSource';
+import { useRun } from './run';
 import { fetchScenarioResult, type ScenarioName, type ScenarioResult } from './source';
 
 type State =
@@ -27,4 +28,12 @@ export function useScenarioResult(name: ScenarioName): State & { retry: () => vo
   }, [source, name, attempt]);
 
   return { ...state, retry };
+}
+
+/** A precomputed scenario, or the latest live run of the planner when the choice is `run`. */
+export function useChoiceResult(choice: ScenarioName | 'run') {
+  const { run } = useRun();
+  const cached = useScenarioResult(choice === 'run' ? 'default' : choice);
+  if (choice === 'run' && run) return { status: 'ready' as const, result: run.result, retry: cached.retry };
+  return cached;
 }

@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 
-export type BarItem = { key: string; label: string; value: number; text: string };
+export type BarItem = { key: string; label: string; value: number; text: string; series?: 'baseline' | 'optimizer' };
 
 /** Horizontal bars. The value is always printed, color is never the only signal. */
 export function HBars({
@@ -26,7 +26,7 @@ export function HBars({
           <>
             <span className="rs-hbar__label">{it.label}</span>
             <span className="rs-hbar__track">
-              <span className="rs-hbar__fill" style={style} />
+              <span className="rs-hbar__fill" style={style} data-series={it.series} />
             </span>
             <span className="rs-hbar__value">{it.text}</span>
           </>

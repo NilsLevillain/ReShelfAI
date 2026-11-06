@@ -1,21 +1,25 @@
 import { useState } from 'react';
 import { InlineError } from '../components/InlineError';
-import { ScenarioSwitch } from '../components/ScenarioSwitch';
-import type { ScenarioName } from '../data/source';
-import { useScenarioResult } from '../data/useScenarioResult';
+import { ScenarioSwitch, type Choice } from '../components/ScenarioSwitch';
+import { useChoiceResult } from '../data/useScenarioResult';
+import { useRun } from '../data/run';
+import { liveApi } from '../data/live';
+import { Charts } from '../results/Charts';
 import { RuleDial } from '../results/RuleDial';
 import { SolverStatus } from '../results/SolverStatus';
 import { WhyPanel } from '../results/WhyPanel';
 import { eur, int } from '../stock/model';
 
 export function Results() {
-  const [scenario, setScenario] = useState<ScenarioName>('default');
+  const { run } = useRun();
+  const [scenario, setScenario] = useState<Choice>(run ? 'run' : 'default');
   const [lineId, setLineId] = useState<string | null>(null);
-  const state = useScenarioResult(scenario);
+  const state = useChoiceResult(scenario);
 
   const switcher = (
     <ScenarioSwitch
       value={scenario}
+      runName={run?.name}
       onChange={(s) => {
         setScenario(s);
         setLineId(null);
@@ -48,6 +52,20 @@ export function Results() {
         <SolverStatus solve={r.solve} />
       </section>
       {switcher}
+      <div className="rs-actions" data-testid="export-step">
+        {scenario === 'run' && run ? (
+          <a className="rs-btn rs-btn--primary" href={liveApi.exportUrl(run.scenarioId)} download data-testid="export-xlsx">
+            Download Excel
+          </a>
+        ) : (
+          <>
+            <button type="button" className="rs-btn" disabled data-testid="export-xlsx">
+              Download Excel
+            </button>
+            <span>The export needs the live solver and a run of your own. Open Parameters and run one.</span>
+          </>
+        )}
+      </div>
 
       <div className="rs-cards rs-cards--stat">
         <div className="rs-card rs-stat">
@@ -67,6 +85,8 @@ export function Results() {
           <span>Units placed in second life channels</span>
         </div>
       </div>
+
+      <Charts result={r} />
 
       <RuleDial key={scenario} result={r} />
 
