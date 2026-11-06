@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 
-export type BarItem = { key: string; label: string; value: number; text: string; series?: 'baseline' | 'optimizer' };
+export type BarItem = { key: string; label: string; value: number; text: string; series?: 'baseline' | 'optimizer'; tone?: { kind: 'reason' | 'tier'; value: string } };
 
 /** Horizontal bars. The value is always printed, color is never the only signal. */
 export function HBars({
@@ -20,11 +20,15 @@ export function HBars({
       {items.map((it, i) => {
         const style = {
           '--rs-share': `${(it.value / max) * 100}%`,
-          '--rs-bar-color': `var(--rs-chart-categorical-${(i % 5) + 1})`,
+          ...(it.tone ? {} : { '--rs-bar-color': `var(--rs-chart-categorical-${(i % 5) + 1})` }),
         } as CSSProperties;
+        const toneAttr = it.tone ? { [`data-${it.tone.kind}`]: it.tone.value } : {};
         const body = (
           <>
-            <span className="rs-hbar__label">{it.label}</span>
+            <span className="rs-hbar__label">
+              {it.tone && <span className="rs-dot" aria-hidden="true" />}
+              {it.label}
+            </span>
             <span className="rs-hbar__track">
               <span className="rs-hbar__fill" style={style} data-series={it.series} />
             </span>
@@ -32,7 +36,7 @@ export function HBars({
           </>
         );
         return (
-          <li key={it.key}>
+          <li key={it.key} {...toneAttr}>
             {onSelect ? (
               <button type="button" className="rs-hbar" aria-pressed={selected === it.key} onClick={() => onSelect(it.key)}>
                 {body}

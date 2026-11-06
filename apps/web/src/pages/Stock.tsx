@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { HBars } from '../components/HBars';
 import { InlineError } from '../components/InlineError';
 import { useScenarioResult } from '../data/useScenarioResult';
-import { REASON_LABEL, applyFilters, eur, int, totalsOf, type Filters, type StockLot } from '../stock/model';
+import { useMoney } from '../data/currency';
+import { REASON_LABEL, applyFilters, int, totalsOf, type Filters, type StockLot } from '../stock/model';
 import { GlobePanel } from '../stock/GlobePanel';
 import { StockTable } from '../stock/StockTable';
 
@@ -15,6 +17,8 @@ function bucketBy(lots: StockLot[], key: 'brand' | 'category' | 'reason') {
 export function Stock() {
   const state = useScenarioResult('default');
   const [filters, setFilters] = useState<Filters>({});
+  const [withPlan, setWithPlan] = useState(false);
+  const { money, compact } = useMoney();
 
   if (state.status === 'loading') return <p role="status">Loading stock</p>;
   if (state.status === 'error') return <InlineError error={state.error} onRetry={state.retry} />;
@@ -30,47 +34,70 @@ export function Stock() {
     ? bucketBy(applyFilters(drillSource, { brand: filters.brand }), 'category')
     : bucketBy(drillSource, 'brand');
   const reasons = bucketBy(applyFilters(all, { brand: filters.brand, category: filters.category }), 'reason');
+  const tierOf = new Map(all.map((l) => [l.brand, l.tier]));
   const chips = Object.entries(filters).filter(([, v]) => v) as [keyof Filters, string][];
 
   return (
-    <>
+    <div className="rs-stack">
       <section className="rs-page-head">
         <h2>Stock that cannot sell the normal way</h2>
+        <p className="rs-section__sub">
+          These lots cannot sell through the main channels. No plan is applied yet: this is the stock as it stands before you
+          run the plan.
+        </p>
         <span className="rs-evidence">Simulated data, {state.result.n_skus} SKUs</span>
+        <div className="rs-seg" role="group" aria-label="View">
+          <button type="button" aria-pressed={!withPlan} onClick={() => setWithPlan(false)}>
+            Before the plan
+          </button>
+          <button type="button" aria-pressed={withPlan} onClick={() => setWithPlan(true)}>
+            With the ready plan applied
+          </button>
+        </div>
       </section>
 
       <div className="rs-cards rs-cards--stat">
         <div className="rs-card rs-stat" data-testid="kpi-value-at-risk">
-          <span className="rs-stat__value">{eur(t.valueAtRisk)}</span>
+          <span className="rs-stat__value" title={money(t.valueAtRisk)}>
+            {compact(t.valueAtRisk)}
+          </span>
           <span>Value at risk</span>
+          <span className="rs-stat__hint">What this stock cost, if it is destroyed.</span>
         </div>
         <div className="rs-card rs-stat">
           <span className="rs-stat__value">{int(t.units)}</span>
           <span>Units in {t.lots} lots</span>
         </div>
-        <div className="rs-card rs-stat">
-          <span className="rs-stat__value">{int(t.allocated)}</span>
-          <span>Units the plan sends out</span>
-        </div>
-        <div className="rs-card rs-stat">
-          <span className="rs-stat__value">{int(t.units - t.allocated)}</span>
-          <span>Units left unplaced</span>
-        </div>
+        {withPlan && (
+          <>
+            <div className="rs-card rs-stat">
+              <span className="rs-stat__value">{int(t.allocated)}</span>
+              <span>Units the plan sends out</span>
+            </div>
+            <div className="rs-card rs-stat">
+              <span className="rs-stat__value">{int(t.units - t.allocated)}</span>
+              <span>Units left unplaced</span>
+            </div>
+          </>
+        )}
       </div>
 
       <GlobePanel geo={state.result.geo} selected={filters.plant} onSelect={(plant) => set({ plant })} />
 
       <div className="rs-cards">
         <div className="rs-card">
-          <h3>By reason</h3>
+          <h3>Why the stock is stuck</h3>
+          <p className="rs-section__sub">Value at risk by reason. Click a bar to filter. Reasons use warm colors, brands use cool ones.</p>
           <HBars
             testId="reason-bars"
             selected={filters.reason}
             onSelect={(k) => set({ reason: filters.reason === k ? undefined : k })}
-            items={reasons.map(([k, v]) => ({ key: k, label: REASON_LABEL[k] ?? k, value: v, text: eur(v) }))}
+            items={reasons.map(([k, v]) => ({ key: k, label: REASON_LABEL[k] ?? k, value: v, text: money(v), tone: { kind: 'reason' as const, value: k } }))}
           />
         </div>
         <div className="rs-card">
+          <h3>{filters.brand ? `${filters.brand} by category` : 'Which brands'}</h3>
+          <p className="rs-section__sub">Value at risk. Violet is luxury, blue is premium, teal is mass market.</p>
           <ol className="rs-crumbs" aria-label="Drill">
             <li aria-current={filters.brand ? undefined : 'page'}>
               {filters.brand ? (
@@ -87,7 +114,13 @@ export function Stock() {
             testId="drill-bars"
             selected={filters.brand ? filters.category : undefined}
             onSelect={(k) => (filters.brand ? set({ category: filters.category === k ? undefined : k }) : set({ brand: k }))}
-            items={drill.map(([k, v]) => ({ key: k, label: k, value: v, text: eur(v) }))}
+            items={drill.map(([k, v]) => ({
+              key: k,
+              label: k,
+              value: v,
+              text: money(v),
+              tone: filters.brand ? undefined : { kind: 'tier' as const, value: tierOf.get(k) ?? '' },
+            }))}
           />
         </div>
       </div>
@@ -102,8 +135,11 @@ export function Stock() {
             ))}
           </div>
         )}
-        <StockTable lots={visible} />
+        <StockTable lots={visible} showPlan={withPlan} />
+        <p className="rs-section__sub">
+          Ready to plan? <Link to="/parameters">Check the rules and run the plan</Link>.
+        </p>
       </section>
-    </>
+    </div>
   );
 }

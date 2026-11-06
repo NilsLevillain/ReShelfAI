@@ -1,12 +1,13 @@
 import { Fragment, useState } from 'react';
-import { REASON_LABEL, eur, groupLots, int, sharePct, totalsOf, type GroupKey, type StockLot } from './model';
+import { useMoney } from '../data/currency';
+import { REASON_LABEL, groupLots, int, sharePct, totalsOf, type GroupKey, type StockLot } from './model';
 
 type ColGroup = 'identity' | 'stock' | 'allocation' | 'value';
-const GROUPS: { id: ColGroup; label: string }[] = [
-  { id: 'identity', label: 'Identity' },
-  { id: 'stock', label: 'Stock' },
-  { id: 'allocation', label: 'Allocation' },
-  { id: 'value', label: 'Value' },
+const GROUPS: { id: ColGroup; label: string; title: string; text: string; cols: number }[] = [
+  { id: 'identity', label: 'Identity', title: 'What it is', text: 'Brand, category and the plant that holds it', cols: 3 },
+  { id: 'stock', label: 'Stock', title: 'Why it is stuck', text: 'Reason, expiry date and quantity', cols: 4 },
+  { id: 'allocation', label: 'Allocation', title: 'What the plan does', text: 'Share sent out and channels that can take it', cols: 3 },
+  { id: 'value', label: 'Value', title: 'What it is worth', text: 'Cost per unit and value at risk', cols: 2 },
 ];
 
 function Share({ part, whole }: { part: number; whole: number }) {
@@ -21,11 +22,13 @@ function Share({ part, whole }: { part: number; whole: number }) {
   );
 }
 
-export function StockTable({ lots }: { lots: StockLot[] }) {
+export function StockTable({ lots, showPlan = false }: { lots: StockLot[]; showPlan?: boolean }) {
+  const { money } = useMoney();
   const [shown, setShown] = useState<Set<ColGroup>>(new Set(['identity', 'stock', 'allocation', 'value']));
   const [by, setBy] = useState<GroupKey>('none');
   const [closed, setClosed] = useState<Set<string>>(new Set());
-  const on = (g: ColGroup) => shown.has(g);
+  const on = (g: ColGroup) => shown.has(g) && (g !== 'allocation' || showPlan);
+  const groupsShown = GROUPS.filter((g) => g.id !== 'allocation' || showPlan);
   const toggle = (g: ColGroup) =>
     setShown((s) => {
       const n = new Set(s);
@@ -52,19 +55,24 @@ export function StockTable({ lots }: { lots: StockLot[] }) {
         <>
           {l ? (
             <>
-              <td>{REASON_LABEL[l.reason] ?? l.reason}</td>
+              <td className="rs-gstart">
+                <span className="rs-label" data-reason={l.reason}>
+                  <span className="rs-dot" aria-hidden="true" />
+                  {REASON_LABEL[l.reason] ?? l.reason}
+                </span>
+              </td>
               <td>{l.expiry_date}</td>
               <td className="rs-num">{int(l.days_to_expiry)}</td>
             </>
           ) : (
-            <td colSpan={3} />
+            <td colSpan={3} className="rs-gstart" />
           )}
           <td className="rs-num">{int(totals.units)}</td>
         </>
       )}
       {on('allocation') && (
         <>
-          <td>
+          <td className="rs-gstart">
             <Share part={totals.allocated} whole={totals.units} />
           </td>
           {l ? (
@@ -79,8 +87,8 @@ export function StockTable({ lots }: { lots: StockLot[] }) {
       )}
       {on('value') && (
         <>
-          <td className="rs-num">{l ? l.unit_cost.toFixed(2) : ''}</td>
-          <td className="rs-num">{eur(totals.valueAtRisk)}</td>
+          <td className="rs-num rs-gstart">{l ? l.unit_cost.toFixed(2) : ''}</td>
+          <td className="rs-num">{money(totals.valueAtRisk)}</td>
         </>
       )}
     </>
@@ -90,8 +98,8 @@ export function StockTable({ lots }: { lots: StockLot[] }) {
     <div data-testid="stock-table">
       <div className="rs-toolbar">
         <div className="rs-seg rs-seg--cols" role="group" aria-label="Column groups">
-          {GROUPS.map((g) => (
-            <button key={g.id} type="button" aria-pressed={on(g.id)} onClick={() => toggle(g.id)}>
+          {groupsShown.map((g) => (
+            <button key={g.id} type="button" aria-pressed={on(g.id)} title={`${g.title}: ${g.text}`} onClick={() => toggle(g.id)}>
               {g.label}
             </button>
           ))}
@@ -110,18 +118,29 @@ export function StockTable({ lots }: { lots: StockLot[] }) {
       <div className="rs-table-scroll">
         <table className="rs-table">
           <thead>
+            <tr className="rs-colgroup">
+              <th>
+                Lot<small>One batch of one product</small>
+              </th>
+              {groupsShown.filter((g) => on(g.id)).map((g) => (
+                <th key={g.id} colSpan={g.cols}>
+                  {g.title}
+                  <small>{g.text}</small>
+                </th>
+              ))}
+            </tr>
             <tr>
               <th>Lot</th>
               {on('identity') && (
                 <>
-                  <th>Brand</th>
+                  <th className="rs-gstart">Brand</th>
                   <th>Category</th>
                   <th>Plant</th>
                 </>
               )}
               {on('stock') && (
                 <>
-                  <th>Reason</th>
+                  <th className="rs-gstart">Reason</th>
                   <th>Expiry</th>
                   <th className="rs-num">Days left</th>
                   <th className="rs-num">Units</th>
@@ -129,14 +148,14 @@ export function StockTable({ lots }: { lots: StockLot[] }) {
               )}
               {on('allocation') && (
                 <>
-                  <th>Allocated</th>
+                  <th className="rs-gstart">Sent out</th>
                   <th className="rs-num">Open channels</th>
                   <th className="rs-num">Blocked channels</th>
                 </>
               )}
               {on('value') && (
                 <>
-                  <th className="rs-num">Unit cost</th>
+                  <th className="rs-num rs-gstart">Unit cost</th>
                   <th className="rs-num">Value at risk</th>
                 </>
               )}

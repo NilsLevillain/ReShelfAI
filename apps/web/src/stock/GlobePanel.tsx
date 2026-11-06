@@ -1,6 +1,8 @@
 import { Suspense, lazy } from 'react';
 import type { ScenarioResult } from '../data/source';
-import { eur, int } from './model';
+import { useMoney } from '../data/currency';
+import { countryName } from '../glossary';
+import { int } from './model';
 
 export type Geo = ScenarioResult['geo'];
 
@@ -27,6 +29,7 @@ export function GlobePanel({
   onSelect: (plant: string | undefined) => void;
   webgl?: boolean;
 }) {
+  const { money } = useMoney();
   return (
     <section className="rs-card" data-testid="globe-panel">
       <h3>Where the stock sits</h3>
@@ -56,8 +59,8 @@ export function GlobePanel({
                 <th scope="row">
                   {p.name} <code>{p.plant}</code>
                 </th>
-                <td>{p.country}</td>
-                <td className="rs-num">{eur(p.value_at_risk)}</td>
+                <td>{countryName(p.country)}</td>
+                <td className="rs-num">{money(p.value_at_risk)}</td>
                 <td className="rs-num">{int(p.allocated_units)}</td>
                 <td>
                   <button
