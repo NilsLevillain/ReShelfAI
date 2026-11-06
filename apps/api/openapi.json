@@ -335,6 +335,147 @@
         "title": "CounterfactualOut",
         "type": "object"
       },
+      "GeoArc": {
+        "properties": {
+          "channel": {
+            "title": "Channel",
+            "type": "string"
+          },
+          "plant": {
+            "title": "Plant",
+            "type": "string"
+          },
+          "units": {
+            "title": "Units",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "plant",
+          "channel",
+          "units"
+        ],
+        "title": "GeoArc",
+        "type": "object"
+      },
+      "GeoChannel": {
+        "properties": {
+          "allocated_units": {
+            "title": "Allocated Units",
+            "type": "integer"
+          },
+          "channel": {
+            "title": "Channel",
+            "type": "string"
+          },
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "lat": {
+            "title": "Lat",
+            "type": "number"
+          },
+          "lon": {
+            "title": "Lon",
+            "type": "number"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "channel",
+          "type",
+          "country",
+          "lat",
+          "lon",
+          "allocated_units"
+        ],
+        "title": "GeoChannel",
+        "type": "object"
+      },
+      "GeoOut": {
+        "properties": {
+          "arcs": {
+            "items": {
+              "$ref": "#/components/schemas/GeoArc"
+            },
+            "title": "Arcs",
+            "type": "array"
+          },
+          "channels": {
+            "items": {
+              "$ref": "#/components/schemas/GeoChannel"
+            },
+            "title": "Channels",
+            "type": "array"
+          },
+          "plants": {
+            "items": {
+              "$ref": "#/components/schemas/GeoPlant"
+            },
+            "title": "Plants",
+            "type": "array"
+          }
+        },
+        "required": [
+          "plants",
+          "channels",
+          "arcs"
+        ],
+        "title": "GeoOut",
+        "type": "object"
+      },
+      "GeoPlant": {
+        "properties": {
+          "allocated_units": {
+            "title": "Allocated Units",
+            "type": "integer"
+          },
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "lat": {
+            "title": "Lat",
+            "type": "number"
+          },
+          "lon": {
+            "title": "Lon",
+            "type": "number"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "plant": {
+            "title": "Plant",
+            "type": "string"
+          },
+          "units": {
+            "title": "Units",
+            "type": "integer"
+          },
+          "value_at_risk": {
+            "title": "Value At Risk",
+            "type": "number"
+          }
+        },
+        "required": [
+          "plant",
+          "name",
+          "country",
+          "lat",
+          "lon",
+          "value_at_risk",
+          "units",
+          "allocated_units"
+        ],
+        "title": "GeoPlant",
+        "type": "object"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -471,6 +612,9 @@
             "title": "Counterfactuals",
             "type": "array"
           },
+          "geo": {
+            "$ref": "#/components/schemas/GeoOut"
+          },
           "label": {
             "default": "Simulated data",
             "title": "Label",
@@ -541,7 +685,8 @@
           "baseline",
           "trace",
           "counterfactuals",
-          "stock"
+          "stock",
+          "geo"
         ],
         "title": "ScenarioResult",
         "type": "object"

@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import math
 from collections import defaultdict
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
 
 from reshelf.elimination import Reason, delivery_date, eliminate
@@ -23,6 +23,7 @@ from reshelf.schema import (
     Lot,
     Material,
     Params,
+    Plant,
 )
 from reshelf.scoring import classify_pairs, rank_table, score_weight
 
@@ -47,6 +48,7 @@ class SolverInput:
     group_of: dict[str, Group]
     group_limits: dict[tuple[str, Group], GroupLimit]
     net_value: dict[Pair, float]  # euro per unit: unit cost x recovery factor - brand penalty
+    plants: dict[str, Plant] = field(default_factory=dict)
 
 
 def _need(
@@ -127,4 +129,5 @@ def build_solver_input(dataset: CanonicalDataset) -> SolverInput:
         group_of={m.material: (m.brand, m.category) for m in dataset.materials},
         group_limits={(g.channel, (g.brand, g.category)): g for g in dataset.group_limits},
         net_value=net_value,
+        plants={p.plant: p for p in dataset.plants},
     )

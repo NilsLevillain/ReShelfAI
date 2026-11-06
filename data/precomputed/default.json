@@ -10,7 +10,7 @@
     "score": 29.810714285714287,
     "best_score": 30.09464285714286,
     "mip_gap": 0.00005701047119476272,
-    "time_s": 0.14069020003080368,
+    "time_s": 0.16103319998364896,
     "time_limit_s": 60.0,
     "solver": "highs",
     "message": ""
@@ -1898,7 +1898,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240069,
       "mip_gap": 0.00002933704492327956,
-      "time_s": 0.0789151000790298,
+      "time_s": 0.0791181999957189,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1914,7 +1914,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 242041,
       "mip_gap": 0.0,
-      "time_s": 0.0866888000164181,
+      "time_s": 0.0867577000753954,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1930,7 +1930,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240192,
       "mip_gap": 0.0,
-      "time_s": 0.8388768000295386,
+      "time_s": 0.8897958000889048,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1946,7 +1946,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 241886,
       "mip_gap": 4.498572472427946e-6,
-      "time_s": 0.10468109999783337,
+      "time_s": 0.17643819993827492,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1962,7 +1962,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240107,
       "mip_gap": 0.0,
-      "time_s": 0.2775565000483766,
+      "time_s": 0.3129133000038564,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1978,7 +1978,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 241837,
       "mip_gap": 0.0,
-      "time_s": 0.23517450003419071,
+      "time_s": 0.2353200000943616,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1994,7 +1994,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240152,
       "mip_gap": 0.0,
-      "time_s": 0.2903984000440687,
+      "time_s": 0.33987259992863983,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2010,7 +2010,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 242020,
       "mip_gap": 4.50805260926345e-6,
-      "time_s": 0.10845040006097406,
+      "time_s": 0.16266240004915744,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2026,7 +2026,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240172,
       "mip_gap": 0.00007168736617498242,
-      "time_s": 0.23933649994432926,
+      "time_s": 0.32532049994915724,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2042,7 +2042,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 242027,
       "mip_gap": 0.0,
-      "time_s": 0.1446157000027597,
+      "time_s": 0.14176850009243935,
       "time_limit_s": 10.0,
       "message": ""
     }
@@ -3687,6 +3687,219 @@
         "allocated_units": 790,
         "channels_open": 5,
         "channels_blocked": 0
+      }
+    ]
+  },
+  "geo": {
+    "plants": [
+      {
+        "plant": "AP01",
+        "name": "Suzhou",
+        "country": "CN",
+        "lat": 35.9,
+        "lon": 104.2,
+        "value_at_risk": 470833.32,
+        "units": 33246,
+        "allocated_units": 30
+      },
+      {
+        "plant": "AP10",
+        "name": "Singapore",
+        "country": "SG",
+        "lat": 1.35,
+        "lon": 103.8,
+        "value_at_risk": 361694.52,
+        "units": 37950,
+        "allocated_units": 1512
+      },
+      {
+        "plant": "EU01",
+        "name": "Łódź",
+        "country": "PL",
+        "lat": 52.0,
+        "lon": 19.1,
+        "value_at_risk": 182102.28,
+        "units": 13626,
+        "allocated_units": 511
+      },
+      {
+        "plant": "EU10",
+        "name": "Rotterdam",
+        "country": "NL",
+        "lat": 52.1,
+        "lon": 5.3,
+        "value_at_risk": 624942.9,
+        "units": 69336,
+        "allocated_units": 933
+      },
+      {
+        "plant": "NA01",
+        "name": "Monterrey",
+        "country": "MX",
+        "lat": 23.6,
+        "lon": -102.5,
+        "value_at_risk": 484888.08,
+        "units": 61854,
+        "allocated_units": 3635
+      },
+      {
+        "plant": "NA10",
+        "name": "Memphis",
+        "country": "US",
+        "lat": 39.8,
+        "lon": -98.6,
+        "value_at_risk": 463208.76,
+        "units": 38952,
+        "allocated_units": 8094
+      }
+    ],
+    "channels": [
+      {
+        "channel": "CLR_DE",
+        "type": "clearance_web",
+        "country": "DE",
+        "lat": 52.52,
+        "lon": 13.4,
+        "allocated_units": 5500
+      },
+      {
+        "channel": "FNF_GB",
+        "type": "friends_family",
+        "country": "GB",
+        "lat": 51.51,
+        "lon": -0.13,
+        "allocated_units": 963
+      },
+      {
+        "channel": "LIQ_AE",
+        "type": "liquidation",
+        "country": "AE",
+        "lat": 25.2,
+        "lon": 55.27,
+        "allocated_units": 4823
+      },
+      {
+        "channel": "NGO_ES",
+        "type": "ngo_donation",
+        "country": "ES",
+        "lat": 40.42,
+        "lon": -3.7,
+        "allocated_units": 434
+      },
+      {
+        "channel": "OUT_PL",
+        "type": "outlet",
+        "country": "PL",
+        "lat": 52.23,
+        "lon": 21.01,
+        "allocated_units": 2995
+      }
+    ],
+    "arcs": [
+      {
+        "plant": "AP01",
+        "channel": "FNF_GB",
+        "units": 30
+      },
+      {
+        "plant": "AP10",
+        "channel": "CLR_DE",
+        "units": 567
+      },
+      {
+        "plant": "AP10",
+        "channel": "FNF_GB",
+        "units": 30
+      },
+      {
+        "plant": "AP10",
+        "channel": "LIQ_AE",
+        "units": 425
+      },
+      {
+        "plant": "AP10",
+        "channel": "NGO_ES",
+        "units": 30
+      },
+      {
+        "plant": "AP10",
+        "channel": "OUT_PL",
+        "units": 460
+      },
+      {
+        "plant": "EU01",
+        "channel": "LIQ_AE",
+        "units": 432
+      },
+      {
+        "plant": "EU01",
+        "channel": "OUT_PL",
+        "units": 79
+      },
+      {
+        "plant": "EU10",
+        "channel": "CLR_DE",
+        "units": 748
+      },
+      {
+        "plant": "EU10",
+        "channel": "FNF_GB",
+        "units": 30
+      },
+      {
+        "plant": "EU10",
+        "channel": "LIQ_AE",
+        "units": 80
+      },
+      {
+        "plant": "EU10",
+        "channel": "OUT_PL",
+        "units": 75
+      },
+      {
+        "plant": "NA01",
+        "channel": "CLR_DE",
+        "units": 60
+      },
+      {
+        "plant": "NA01",
+        "channel": "LIQ_AE",
+        "units": 1250
+      },
+      {
+        "plant": "NA01",
+        "channel": "NGO_ES",
+        "units": 374
+      },
+      {
+        "plant": "NA01",
+        "channel": "OUT_PL",
+        "units": 1951
+      },
+      {
+        "plant": "NA10",
+        "channel": "CLR_DE",
+        "units": 4125
+      },
+      {
+        "plant": "NA10",
+        "channel": "FNF_GB",
+        "units": 873
+      },
+      {
+        "plant": "NA10",
+        "channel": "LIQ_AE",
+        "units": 2636
+      },
+      {
+        "plant": "NA10",
+        "channel": "NGO_ES",
+        "units": 30
+      },
+      {
+        "plant": "NA10",
+        "channel": "OUT_PL",
+        "units": 430
       }
     ]
   }
