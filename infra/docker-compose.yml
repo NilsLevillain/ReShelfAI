@@ -1,0 +1,25 @@
+# Run from the repo root: docker compose -f infra/docker-compose.yml up --build
+# Web on http://localhost:8080, API on http://localhost:8000.
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: infra/api.Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - reshelf-data:/data
+
+  web:
+    build:
+      context: ..
+      dockerfile: infra/web.Dockerfile
+      args:
+        VITE_API_URL: /api
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+
+volumes:
+  reshelf-data:

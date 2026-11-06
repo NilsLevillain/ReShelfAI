@@ -49,6 +49,15 @@ jobs:
       - run: pnpm exec vitest run --passWithNoTests
       - run: pnpm build
 
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build API image
+        run: docker build -f infra/api.Dockerfile -t reshelf-api .
+      - name: Build web image
+        run: docker build -f infra/web.Dockerfile -t reshelf-web .
+
   design-system:
     runs-on: ubuntu-latest
     steps:
