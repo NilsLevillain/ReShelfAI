@@ -20,7 +20,7 @@ test('hero flow: stock, results, why, what a rule costs, compare', async ({ page
   await page.getByRole('button', { name: /Filter stock on plant/ }).first().click();
   await expect(page.getByTestId('filter-chips')).toBeVisible();
 
-  await page.getByRole('link', { name: 'Results' }).click();
+  await page.getByRole('link', { name: 'Plan', exact: true }).click();
   await expect(page.getByTestId('lines-table')).toBeVisible();
   await expect(page.getByTestId('kpi-units-destroyed')).toBeVisible();
 
@@ -31,6 +31,9 @@ test('hero flow: stock, results, why, what a rule costs, compare', async ({ page
   await page.getByTestId('counterfactual-button').first().click();
   await expect(page.getByTestId('counterfactual-result')).toContainText('€');
 
-  await page.getByRole('link', { name: 'Compare' }).click();
-  await expect(page.getByText('against the greedy baseline').first()).toBeVisible();
+  await page.getByRole('button', { name: 'Close' }).click();
+  await expect(page.getByTestId('baseline-compare')).toBeVisible();
+
+  await page.getByRole('link', { name: 'Compare scenarios' }).click();
+  await expect(page.getByTestId('scenario-delta')).toBeVisible();
 });

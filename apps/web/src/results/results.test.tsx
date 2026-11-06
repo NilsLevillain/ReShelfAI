@@ -36,6 +36,18 @@ describe('results model', () => {
   });
 });
 
+describe('results page, baseline section', () => {
+  it('shows the plan against the greedy baseline and the audit', async () => {
+    renderAt('/results');
+    expect(await screen.findByTestId('compare-panel')).toBeInTheDocument();
+    expect(screen.getByTestId('baseline-column')).toBeInTheDocument();
+    expect(screen.getByTestId('optimizer-column')).toBeInTheDocument();
+    const gain = result.optimizer.value_recovered - result.baseline.compliant.value_recovered;
+    expect(screen.getByTestId('baseline-delta').textContent).toContain(gain < 0 ? '−' : '+');
+    expect(within(screen.getByTestId('baseline-audit')).getAllByRole('listitem').length).toBe(Object.keys(result.baseline.audit).length);
+  });
+});
+
 describe('results page', () => {
   it('shows the solver status, the unit KPI and the lines', async () => {
     renderAt('/results');
@@ -82,14 +94,11 @@ describe('results page', () => {
 });
 
 describe('compare page', () => {
-  it('shows baseline and optimizer columns, the euro delta and the audit', async () => {
+  it('compares two scenarios side by side with the euro change', async () => {
     renderAt('/compare');
-    expect(await screen.findByTestId('compare-panel')).toBeInTheDocument();
-    expect(screen.getByTestId('baseline-column')).toBeInTheDocument();
-    expect(screen.getByTestId('optimizer-column')).toBeInTheDocument();
-    const gain = result.optimizer.value_recovered - result.baseline.compliant.value_recovered;
-    expect(screen.getByTestId('euro-delta').textContent).toContain(gain < 0 ? '−' : '+');
-    expect(within(screen.getByTestId('baseline-audit')).getAllByRole('listitem').length).toBe(Object.keys(result.baseline.audit).length);
+    expect(await screen.findByTestId('scenario-compare')).toBeInTheDocument();
+    expect(screen.getByTestId('scenario-delta').textContent).toMatch(/[+−€]/);
+    expect(within(screen.getByTestId('scenario-compare')).getAllByRole('row').length).toBe(5);
   });
 
   it('shows an inline error when the results fail to load', async () => {

@@ -1,6 +1,6 @@
 import { SCENARIOS, type ScenarioName } from '../data/source';
 
-const LABEL: Record<ScenarioName, string> = {
+export const SCENARIO_LABEL: Record<ScenarioName, string> = {
   default: 'Default',
   luxury_protection: 'Luxury protection',
 };
@@ -20,7 +20,7 @@ export function ScenarioSwitch({
     <div className="rs-seg" role="group" aria-label="Scenario">
       {SCENARIOS.map((s) => (
         <button key={s} type="button" aria-pressed={value === s} onClick={() => onChange(s)}>
-          {LABEL[s]}
+          {SCENARIO_LABEL[s]}
         </button>
       ))}
       {runName && (

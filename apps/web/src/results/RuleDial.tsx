@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { eur } from '../stock/model';
-import { MODE_WORDS, counterfactualsFor, ruleInstances, ruleName, type Result } from './model';
+import { useMoney } from '../data/currency';
+import { RULE_HELP, ruleLabel } from '../glossary';
+import { MODE_WORDS, counterfactualsFor, ruleInstances, type Result } from './model';
 
 /**
  * Read only dial on a precomputed grid: current value, relaxed by 10 percent, switched off.
  * Each position shows the cost that the solver measured. Nothing is recomputed here.
  */
 export function RuleDial({ result }: { result: Result }) {
+  const { money } = useMoney();
   const instances = ruleInstances(result);
   const [instance, setInstance] = useState(instances[0] ?? '');
   const [pos, setPos] = useState(0);
@@ -18,10 +20,15 @@ export function RuleDial({ result }: { result: Result }) {
   const steps = [{ mode: 'current', label: 'Current value', cost: 0 }, ...cfs.map((c) => ({ mode: c.mode, label: MODE_WORDS[c.mode] ?? c.mode, cost: c.cost_eur }))];
   const step = steps[Math.min(pos, steps.length - 1)];
   const constraint = cfs[0]?.constraint ?? '';
+  const help = RULE_HELP[constraint]?.text;
 
   return (
     <section className="rs-card" data-testid="rule-dial" aria-label="Rule dial">
-      <h3>Relax a rule and see what it is worth</h3>
+      <h3>What is a rule worth?</h3>
+      <p className="rs-section__sub">
+        Pick a rule and loosen it. The number is the extra value the plan would recover. Use it to decide which rule is worth
+        a conversation with the brand.
+      </p>
       <label className="rs-groupby">
         Rule
         <select
@@ -33,13 +40,13 @@ export function RuleDial({ result }: { result: Result }) {
         >
           {instances.map((i) => (
             <option key={i} value={i}>
-              {i}
+              {ruleLabel(i, result.geo.channels)}
             </option>
           ))}
         </select>
       </label>
       <p>
-        {ruleName(constraint)}: <strong>{step.label}</strong>
+        {help ?? ''} Now: <strong>{step.label}</strong>
       </p>
       <input
         type="range"
@@ -53,11 +60,18 @@ export function RuleDial({ result }: { result: Result }) {
       />
       <p>
         <span className="rs-text-kpi-hero" data-testid="euro-delta" style={{ color: 'var(--rs-compare-delta-cost)' }}>
-          {eur(step.cost)}
+          {money(step.cost)}
         </span>{' '}
-        cost of this rule
+        extra value recovered
       </p>
-      <p>Precomputed with the solver, against the greedy baseline plan of the same world.</p>
+      <ul data-testid="rule-worth">
+        {cfs.map((c) => (
+          <li key={c.mode}>
+            {MODE_WORDS[c.mode] ?? c.mode}: <span className="rs-cost">{money(c.cost_eur)}</span>
+          </li>
+        ))}
+      </ul>
+      <p className="rs-note">Measured by the solver on this plan. At the current value the extra value is zero, by definition.</p>
     </section>
   );
 }
