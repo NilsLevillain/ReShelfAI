@@ -124,3 +124,73 @@ def test_scenario_without_result_says_to_solve_first(client: TestClient) -> None
     response = client.get(f"/scenarios/{created['id']}/results")
     assert response.status_code == 404
     assert "Solve it first" in response.json()["detail"]
+
+
+def test_parameter_defaults_come_from_the_base_scenario(client: TestClient) -> None:
+    body = client.get("/base-scenarios/default/params").json()
+    assert body["params"]["coverage_days"] == 90
+    assert client.get("/base-scenarios/nope/params").status_code == 404
+
+
+@pytest.mark.parametrize(
+    ("params", "sentence"),
+    [
+        ({"coverage_days": 0}, "coverage_days must be between"),
+        ({"coverage_days": 90.5}, "whole number"),
+        ({"coverage_alpha": "high"}, "must be a number"),
+        ({"score_base": {"A": 1}}, "one value for each"),
+        ({"planner_rules": ["magic"]}, "planner_rules must be"),
+        ({"push_quantity_units": {"Makeup": -1}}, "whole number from 0"),
+        ({"nonsense": 1}, "Unknown parameter"),
+    ],
+)
+def test_bad_parameter_edits_are_plain_sentences(
+    client: TestClient, params: dict[str, object], sentence: str
+) -> None:
+    response = client.post("/scenarios", json={**SPEC, "params": params})
+    assert response.status_code == 422
+    assert sentence in response.json()["detail"]
+
+
+def test_saved_scenarios_list_load_and_delete(client: TestClient) -> None:
+    spec = {**SPEC, "name": "saved one", "params": {"coverage_days": 60}}
+    created = client.post("/scenarios", json=spec).json()
+    listed = client.get("/scenarios").json()
+    entry = next(s for s in listed if s["id"] == created["id"])
+    assert entry["name"] == "saved one"
+    assert entry["solved"] is False
+    assert client.get(f"/scenarios/{created['id']}").json()["spec"]["params"] == {
+        "coverage_days": 60
+    }
+    assert client.delete(f"/scenarios/{created['id']}").status_code == 204
+    assert client.get(f"/scenarios/{created['id']}").status_code == 404
+
+
+def test_edited_parameter_changes_the_plan(client: TestClient, solved: dict[str, object]) -> None:
+    spec = {**SPEC, "name": "tight", "params": {"coverage_days": 15}}
+    sid = client.post("/scenarios", json=spec).json()["id"]
+    tight = client.post(f"/scenarios/{sid}/solve").json()["result"]
+    base = solved["result"]
+    assert tight["optimizer"]["units_allocated"] != base["optimizer"]["units_allocated"]  # type: ignore[index]
+
+
+def test_excel_export_has_the_sheets_and_the_label(
+    client: TestClient, solved: dict[str, object]
+) -> None:
+    from io import BytesIO
+
+    from openpyxl import load_workbook
+
+    response = client.get(f"/scenarios/{solved['scenario_id']}/export.xlsx")
+    assert response.status_code == 200
+    wb = load_workbook(BytesIO(response.content))
+    assert wb.sheetnames == ["Summary", "Allocation", "Baseline audit", "Rule trace", "Rule cost"]
+    assert all("Simulated data" in ws["A1"].value for ws in wb.worksheets)
+    assert wb["Allocation"].max_row - 2 == len(solved["result"]["lines"])  # type: ignore[index]
+
+
+def test_export_without_a_result_says_to_solve_first(client: TestClient) -> None:
+    sid = client.post("/scenarios", json={**SPEC, "name": "unsolved"}).json()["id"]
+    response = client.get(f"/scenarios/{sid}/export.xlsx")
+    assert response.status_code == 404
+    assert "Solve it first" in response.json()["detail"]

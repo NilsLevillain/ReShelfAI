@@ -58,6 +58,35 @@
         "title": "AuditLineOut",
         "type": "object"
       },
+      "BaseParams": {
+        "properties": {
+          "base": {
+            "title": "Base",
+            "type": "string"
+          },
+          "n_channels": {
+            "title": "N Channels",
+            "type": "integer"
+          },
+          "n_skus": {
+            "title": "N Skus",
+            "type": "integer"
+          },
+          "params": {
+            "additionalProperties": true,
+            "title": "Params",
+            "type": "object"
+          }
+        },
+        "required": [
+          "base",
+          "n_skus",
+          "n_channels",
+          "params"
+        ],
+        "title": "BaseParams",
+        "type": "object"
+      },
       "BaselineOut": {
         "description": "The greedy planner proxy: raw plan, what the checker found, and the compliant plan.",
         "properties": {
@@ -565,6 +594,39 @@
         "title": "ScenarioSpec",
         "type": "object"
       },
+      "ScenarioSummary": {
+        "properties": {
+          "base": {
+            "title": "Base",
+            "type": "string"
+          },
+          "created": {
+            "title": "Created",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "solved": {
+            "title": "Solved",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "base",
+          "created",
+          "solved"
+        ],
+        "title": "ScenarioSummary",
+        "type": "object"
+      },
       "SolveOut": {
         "properties": {
           "best_score": {
@@ -964,6 +1026,45 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/base-scenarios/{name}/params": {
+      "get": {
+        "operationId": "base_params_base_scenarios__name__params_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "title": "Name",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseParams"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Base Params"
+      }
+    },
     "/health": {
       "get": {
         "operationId": "health_health_get",
@@ -1093,6 +1194,26 @@
       }
     },
     "/scenarios": {
+      "get": {
+        "operationId": "list_scenarios_scenarios_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ScenarioSummary"
+                  },
+                  "title": "Response List Scenarios Scenarios Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Scenarios"
+      },
       "post": {
         "operationId": "create_scenario_scenarios_post",
         "requestBody": {
@@ -1169,6 +1290,112 @@
           }
         },
         "summary": "Compare"
+      }
+    },
+    "/scenarios/{scenario_id}": {
+      "delete": {
+        "operationId": "delete_scenario_scenarios__scenario_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "scenario_id",
+            "required": true,
+            "schema": {
+              "title": "Scenario Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete Scenario"
+      },
+      "get": {
+        "operationId": "load_scenario_spec_scenarios__scenario_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "scenario_id",
+            "required": true,
+            "schema": {
+              "title": "Scenario Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScenarioOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Load Scenario Spec"
+      }
+    },
+    "/scenarios/{scenario_id}/export.xlsx": {
+      "get": {
+        "operationId": "export_xlsx_scenarios__scenario_id__export_xlsx_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "scenario_id",
+            "required": true,
+            "schema": {
+              "title": "Scenario Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Export Xlsx"
       }
     },
     "/scenarios/{scenario_id}/results": {

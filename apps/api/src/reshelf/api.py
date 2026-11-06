@@ -1,6 +1,6 @@
 """FastAPI app: scenarios, solve, results, compare, explain and counterfactual (war plan 6.2).
 
-The Excel export belongs to week 5. Every error is a plain sentence in
+Week 5 adds parameter defaults, saved scenarios (list, load, delete) and the Excel export. Every error is a plain sentence in
 `detail` with a matching status code, never a stack trace.
 """
 
@@ -13,7 +13,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any, Literal
 
-from fastapi import Depends, FastAPI, HTTPException, Query, Request
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -28,6 +28,8 @@ from reshelf.api_models import (
 from reshelf.benchmark import build_world
 from reshelf.counterfactual import counterfactual
 from reshelf.db import ResultRow, ScenarioRow, make_engine, make_session_factory
+from reshelf.export import build_workbook
+from reshelf.params import validate_params
 from reshelf.pipeline import COUNTERFACTUAL_TIME_LIMIT_S, run_scenario, solve_and_trace
 from reshelf.stock import StockLot, StockSummary, filter_lots
 
@@ -55,6 +57,21 @@ class ScenarioSpec(BaseModel):
 class ScenarioOut(BaseModel):
     id: int
     spec: ScenarioSpec
+
+
+class ScenarioSummary(BaseModel):
+    id: int
+    name: str
+    base: str
+    created: str
+    solved: bool
+
+
+class BaseParams(BaseModel):
+    base: str
+    n_skus: int
+    n_channels: int
+    params: dict[str, Any]
 
 
 class StoredResult(BaseModel):
@@ -91,9 +108,10 @@ def _config(spec: ScenarioSpec) -> dict[str, Any]:
         known = sorted(p.stem for p in scenarios_dir().glob("*.yaml"))
         raise HTTPException(404, f"Unknown base scenario {spec.base!r}. Known: {', '.join(known)}.")
     cfg = copy.deepcopy(load_scenario(path))
-    unknown = sorted(set(spec.params) - set(cfg["params"]))
-    if unknown:
-        raise HTTPException(422, f"Unknown parameter(s): {', '.join(unknown)}.")
+    try:
+        validate_params(spec.params, cfg["params"])
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
     cfg["params"].update(spec.params)
     return cfg
 
@@ -203,6 +221,51 @@ def create_app(db_url: str | None = None) -> FastAPI:
                 )
             )
         return CompareOut(rows=rows)
+
+    @app.get("/base-scenarios/{name}/params", response_model=BaseParams)
+    def base_params(name: str) -> BaseParams:
+        cfg = _config(ScenarioSpec(name=name, base=name))
+        return BaseParams(base=name, n_skus=30, n_channels=5, params=copy.deepcopy(cfg["params"]))
+
+    @app.get("/scenarios", response_model=list[ScenarioSummary])
+    def list_scenarios(db: Session = Db) -> list[ScenarioSummary]:
+        solved_ids = {r[0] for r in db.query(ResultRow.scenario_id).distinct().all()}
+        rows = db.query(ScenarioRow).order_by(ScenarioRow.id.desc()).all()
+        return [
+            ScenarioSummary(
+                id=r.id,
+                name=r.name,
+                base=str(r.spec.get("base", "default")),
+                created=r.created.isoformat(),
+                solved=r.id in solved_ids,
+            )
+            for r in rows
+        ]
+
+    @app.get("/scenarios/{scenario_id}", response_model=ScenarioOut)
+    def load_scenario_spec(scenario_id: int, db: Session = Db) -> ScenarioOut:
+        row = scenario_row(db, scenario_id)
+        return ScenarioOut(id=row.id, spec=ScenarioSpec(**row.spec))
+
+    @app.delete("/scenarios/{scenario_id}", status_code=204)
+    def delete_scenario(scenario_id: int, db: Session = Db) -> Response:
+        row = scenario_row(db, scenario_id)
+        db.query(ResultRow).filter(ResultRow.scenario_id == scenario_id).delete()
+        db.delete(row)
+        db.commit()
+        return Response(status_code=204)
+
+    @app.get("/scenarios/{scenario_id}/export.xlsx")
+    def export_xlsx(scenario_id: int, db: Session = Db) -> Response:
+        row = scenario_row(db, scenario_id)
+        result = stored(latest_result(db, scenario_id)).result
+        return Response(
+            build_workbook(row.name, result),
+            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            headers={
+                "Content-Disposition": f'attachment; filename="reshelf_scenario_{scenario_id}.xlsx"'
+            },
+        )
 
     @app.get("/scenarios/{scenario_id}/results", response_model=StoredResult)
     def results(scenario_id: int, db: Session = Db) -> StoredResult:

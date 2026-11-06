@@ -4,6 +4,23 @@
  */
 
 export interface paths {
+    "/base-scenarios/{name}/params": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Base Params */
+        get: operations["base_params_base_scenarios__name__params_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -62,7 +79,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /** List Scenarios */
+        get: operations["list_scenarios_scenarios_get"];
         put?: never;
         /** Create Scenario */
         post: operations["create_scenario_scenarios_post"];
@@ -81,6 +99,41 @@ export interface paths {
         };
         /** Compare */
         get: operations["compare_scenarios_compare_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/scenarios/{scenario_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Load Scenario Spec */
+        get: operations["load_scenario_spec_scenarios__scenario_id__get"];
+        put?: never;
+        post?: never;
+        /** Delete Scenario */
+        delete: operations["delete_scenario_scenarios__scenario_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/scenarios/{scenario_id}/export.xlsx": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export Xlsx */
+        get: operations["export_xlsx_scenarios__scenario_id__export_xlsx_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -185,6 +238,19 @@ export interface components {
             count: number;
             /** Excess */
             excess: number;
+        };
+        /** BaseParams */
+        BaseParams: {
+            /** Base */
+            base: string;
+            /** N Channels */
+            n_channels: number;
+            /** N Skus */
+            n_skus: number;
+            /** Params */
+            params: {
+                [key: string]: unknown;
+            };
         };
         /**
          * BaselineOut
@@ -402,6 +468,19 @@ export interface components {
              */
             time_limit_s: number;
         };
+        /** ScenarioSummary */
+        ScenarioSummary: {
+            /** Base */
+            base: string;
+            /** Created */
+            created: string;
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            /** Solved */
+            solved: boolean;
+        };
         /** SolveOut */
         SolveOut: {
             /** Best Score */
@@ -555,6 +634,37 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    base_params_base_scenarios__name__params_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BaseParams"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     health_health_get: {
         parameters: {
             query?: never;
@@ -645,6 +755,26 @@ export interface operations {
             };
         };
     };
+    list_scenarios_scenarios_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ScenarioSummary"][];
+                };
+            };
+        };
+    };
     create_scenario_scenarios_post: {
         parameters: {
             query?: never;
@@ -697,6 +827,97 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CompareOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    load_scenario_spec_scenarios__scenario_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                scenario_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ScenarioOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_scenario_scenarios__scenario_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                scenario_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_xlsx_scenarios__scenario_id__export_xlsx_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                scenario_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */
