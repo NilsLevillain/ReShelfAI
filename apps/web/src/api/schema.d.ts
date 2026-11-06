@@ -123,6 +123,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/stock/lots": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Stock Lots Endpoint */
+        get: operations["stock_lots_endpoint_stock_lots_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/stock/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Stock Summary Endpoint */
+        get: operations["stock_summary_endpoint_stock_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -330,6 +364,7 @@ export interface components {
             /** Seed */
             seed?: number | null;
             solve: components["schemas"]["SolveOut"];
+            stock: components["schemas"]["StockOut"];
             trace: components["schemas"]["TraceOut"];
         };
         /**
@@ -387,6 +422,97 @@ export interface components {
             time_limit_s: number;
             /** Time S */
             time_s: number;
+        };
+        /** StockBrandCategory */
+        StockBrandCategory: {
+            /** Allocated Units */
+            allocated_units: number;
+            /** Brand */
+            brand: string;
+            /** Category */
+            category: string;
+            /** Key */
+            key: string;
+            /** Lots */
+            lots: number;
+            /** Units */
+            units: number;
+            /** Value At Risk */
+            value_at_risk: number;
+        };
+        /** StockBucket */
+        StockBucket: {
+            /** Allocated Units */
+            allocated_units: number;
+            /** Key */
+            key: string;
+            /** Lots */
+            lots: number;
+            /** Units */
+            units: number;
+            /** Value At Risk */
+            value_at_risk: number;
+        };
+        /** StockLot */
+        StockLot: {
+            /** Allocated Units */
+            allocated_units: number;
+            /** Brand */
+            brand: string;
+            /** Category */
+            category: string;
+            /** Channels Blocked */
+            channels_blocked: number;
+            /** Channels Open */
+            channels_open: number;
+            /** Days To Expiry */
+            days_to_expiry: number;
+            /** Description */
+            description: string;
+            /**
+             * Expiry Date
+             * Format: date
+             */
+            expiry_date: string;
+            /** Lot */
+            lot: string;
+            /** Material */
+            material: string;
+            /** Plant */
+            plant: string;
+            /** Reason */
+            reason: string;
+            /** Tier */
+            tier: string;
+            /** Unit Cost */
+            unit_cost: number;
+            /** Units */
+            units: number;
+            /** Value At Risk */
+            value_at_risk: number;
+        };
+        /** StockOut */
+        StockOut: {
+            /** Lots */
+            lots: components["schemas"]["StockLot"][];
+            summary: components["schemas"]["StockSummary"];
+        };
+        /** StockSummary */
+        StockSummary: {
+            /** Allocated Units */
+            allocated_units: number;
+            /** By Brand */
+            by_brand: components["schemas"]["StockBucket"][];
+            /** By Brand Category */
+            by_brand_category: components["schemas"]["StockBrandCategory"][];
+            /** By Reason */
+            by_reason: components["schemas"]["StockBucket"][];
+            /** Total Lots */
+            total_lots: number;
+            /** Total Units */
+            total_units: number;
+            /** Value At Risk */
+            value_at_risk: number;
         };
         /** StoredResult */
         StoredResult: {
@@ -633,6 +759,73 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StoredResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stock_lots_endpoint_stock_lots_get: {
+        parameters: {
+            query: {
+                /** @description Scenario whose latest result carries the stock */
+                scenario_id: number;
+                brand?: string | null;
+                category?: string | null;
+                reason?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockLot"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stock_summary_endpoint_stock_summary_get: {
+        parameters: {
+            query: {
+                /** @description Scenario whose latest result carries the stock */
+                scenario_id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockSummary"];
                 };
             };
             /** @description Validation Error */

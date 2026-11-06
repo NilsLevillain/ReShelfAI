@@ -497,6 +497,9 @@
           "solve": {
             "$ref": "#/components/schemas/SolveOut"
           },
+          "stock": {
+            "$ref": "#/components/schemas/StockOut"
+          },
           "trace": {
             "$ref": "#/components/schemas/TraceOut"
           }
@@ -508,7 +511,8 @@
           "lines",
           "baseline",
           "trace",
-          "counterfactuals"
+          "counterfactuals",
+          "stock"
         ],
         "title": "ScenarioResult",
         "type": "object"
@@ -619,6 +623,243 @@
           "message"
         ],
         "title": "SolveOut",
+        "type": "object"
+      },
+      "StockBrandCategory": {
+        "properties": {
+          "allocated_units": {
+            "title": "Allocated Units",
+            "type": "integer"
+          },
+          "brand": {
+            "title": "Brand",
+            "type": "string"
+          },
+          "category": {
+            "title": "Category",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "lots": {
+            "title": "Lots",
+            "type": "integer"
+          },
+          "units": {
+            "title": "Units",
+            "type": "integer"
+          },
+          "value_at_risk": {
+            "title": "Value At Risk",
+            "type": "number"
+          }
+        },
+        "required": [
+          "key",
+          "lots",
+          "units",
+          "value_at_risk",
+          "allocated_units",
+          "brand",
+          "category"
+        ],
+        "title": "StockBrandCategory",
+        "type": "object"
+      },
+      "StockBucket": {
+        "properties": {
+          "allocated_units": {
+            "title": "Allocated Units",
+            "type": "integer"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "lots": {
+            "title": "Lots",
+            "type": "integer"
+          },
+          "units": {
+            "title": "Units",
+            "type": "integer"
+          },
+          "value_at_risk": {
+            "title": "Value At Risk",
+            "type": "number"
+          }
+        },
+        "required": [
+          "key",
+          "lots",
+          "units",
+          "value_at_risk",
+          "allocated_units"
+        ],
+        "title": "StockBucket",
+        "type": "object"
+      },
+      "StockLot": {
+        "properties": {
+          "allocated_units": {
+            "title": "Allocated Units",
+            "type": "integer"
+          },
+          "brand": {
+            "title": "Brand",
+            "type": "string"
+          },
+          "category": {
+            "title": "Category",
+            "type": "string"
+          },
+          "channels_blocked": {
+            "title": "Channels Blocked",
+            "type": "integer"
+          },
+          "channels_open": {
+            "title": "Channels Open",
+            "type": "integer"
+          },
+          "days_to_expiry": {
+            "title": "Days To Expiry",
+            "type": "integer"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "expiry_date": {
+            "format": "date",
+            "title": "Expiry Date",
+            "type": "string"
+          },
+          "lot": {
+            "title": "Lot",
+            "type": "string"
+          },
+          "material": {
+            "title": "Material",
+            "type": "string"
+          },
+          "plant": {
+            "title": "Plant",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "tier": {
+            "title": "Tier",
+            "type": "string"
+          },
+          "unit_cost": {
+            "title": "Unit Cost",
+            "type": "number"
+          },
+          "units": {
+            "title": "Units",
+            "type": "integer"
+          },
+          "value_at_risk": {
+            "title": "Value At Risk",
+            "type": "number"
+          }
+        },
+        "required": [
+          "lot",
+          "material",
+          "description",
+          "brand",
+          "category",
+          "tier",
+          "plant",
+          "reason",
+          "expiry_date",
+          "days_to_expiry",
+          "units",
+          "unit_cost",
+          "value_at_risk",
+          "allocated_units",
+          "channels_open",
+          "channels_blocked"
+        ],
+        "title": "StockLot",
+        "type": "object"
+      },
+      "StockOut": {
+        "properties": {
+          "lots": {
+            "items": {
+              "$ref": "#/components/schemas/StockLot"
+            },
+            "title": "Lots",
+            "type": "array"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/StockSummary"
+          }
+        },
+        "required": [
+          "summary",
+          "lots"
+        ],
+        "title": "StockOut",
+        "type": "object"
+      },
+      "StockSummary": {
+        "properties": {
+          "allocated_units": {
+            "title": "Allocated Units",
+            "type": "integer"
+          },
+          "by_brand": {
+            "items": {
+              "$ref": "#/components/schemas/StockBucket"
+            },
+            "title": "By Brand",
+            "type": "array"
+          },
+          "by_brand_category": {
+            "items": {
+              "$ref": "#/components/schemas/StockBrandCategory"
+            },
+            "title": "By Brand Category",
+            "type": "array"
+          },
+          "by_reason": {
+            "items": {
+              "$ref": "#/components/schemas/StockBucket"
+            },
+            "title": "By Reason",
+            "type": "array"
+          },
+          "total_lots": {
+            "title": "Total Lots",
+            "type": "integer"
+          },
+          "total_units": {
+            "title": "Total Units",
+            "type": "integer"
+          },
+          "value_at_risk": {
+            "title": "Value At Risk",
+            "type": "number"
+          }
+        },
+        "required": [
+          "total_lots",
+          "total_units",
+          "value_at_risk",
+          "allocated_units",
+          "by_reason",
+          "by_brand",
+          "by_brand_category"
+        ],
+        "title": "StockSummary",
         "type": "object"
       },
       "StoredResult": {
@@ -1006,6 +1247,140 @@
           }
         },
         "summary": "Solve"
+      }
+    },
+    "/stock/lots": {
+      "get": {
+        "operationId": "stock_lots_endpoint_stock_lots_get",
+        "parameters": [
+          {
+            "description": "Scenario whose latest result carries the stock",
+            "in": "query",
+            "name": "scenario_id",
+            "required": true,
+            "schema": {
+              "description": "Scenario whose latest result carries the stock",
+              "title": "Scenario Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "brand",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Brand"
+            }
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Category"
+            }
+          },
+          {
+            "in": "query",
+            "name": "reason",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Reason"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/StockLot"
+                  },
+                  "title": "Response Stock Lots Endpoint Stock Lots Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Stock Lots Endpoint"
+      }
+    },
+    "/stock/summary": {
+      "get": {
+        "operationId": "stock_summary_endpoint_stock_summary_get",
+        "parameters": [
+          {
+            "description": "Scenario whose latest result carries the stock",
+            "in": "query",
+            "name": "scenario_id",
+            "required": true,
+            "schema": {
+              "description": "Scenario whose latest result carries the stock",
+              "title": "Scenario Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockSummary"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Stock Summary Endpoint"
       }
     }
   }

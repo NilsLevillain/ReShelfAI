@@ -20,6 +20,7 @@ from reshelf.counterfactual import top_counterfactuals
 from reshelf.kpis import compute_kpis
 from reshelf.solver import PulpSolver, SolveResult
 from reshelf.solver_input import SolverInput
+from reshelf.stock import stock_out
 from reshelf.trace import RuleTrace, build_trace
 
 DEFAULT_TIME_LIMIT_S = 60.0
@@ -71,4 +72,5 @@ def run_scenario(
         baseline=baseline_out(data, baseline_planner(data)),
         trace=trace_out(trace),
         counterfactuals=[counterfactual_out(c) for c in counterfactuals],
+        stock=stock_out(data, result.x),
     )

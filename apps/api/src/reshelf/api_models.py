@@ -16,6 +16,7 @@ from reshelf.ids import Pair, lot_label, pair_label
 from reshelf.kpis import Kpis, unit_value
 from reshelf.solver import SolveResult
 from reshelf.solver_input import SolverInput
+from reshelf.stock import StockOut
 from reshelf.trace import LineTrace, RuleTrace
 
 
@@ -123,6 +124,7 @@ class ScenarioResult(BaseModel):
     baseline: BaselineOut
     trace: TraceOut
     counterfactuals: list[CounterfactualOut]
+    stock: StockOut
 
 
 def kpi_out(kpis: Kpis) -> KpiOut:

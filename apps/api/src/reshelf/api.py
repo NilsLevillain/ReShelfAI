@@ -1,6 +1,6 @@
 """FastAPI app: scenarios, solve, results, compare, explain and counterfactual (war plan 6.2).
 
-Stock endpoints belong to week 4 and the Excel export to week 5. Every error is a plain sentence in
+The Excel export belongs to week 5. Every error is a plain sentence in
 `detail` with a matching status code, never a stack trace.
 """
 
@@ -29,6 +29,7 @@ from reshelf.benchmark import build_world
 from reshelf.counterfactual import counterfactual
 from reshelf.db import ResultRow, ScenarioRow, make_engine, make_session_factory
 from reshelf.pipeline import COUNTERFACTUAL_TIME_LIMIT_S, run_scenario, solve_and_trace
+from reshelf.stock import StockLot, StockSummary, filter_lots
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
 
@@ -207,6 +208,26 @@ def create_app(db_url: str | None = None) -> FastAPI:
     def results(scenario_id: int, db: Session = Db) -> StoredResult:
         scenario_row(db, scenario_id)
         return stored(latest_result(db, scenario_id))
+
+    @app.get("/stock/summary", response_model=StockSummary)
+    def stock_summary_endpoint(
+        scenario_id: int = Query(description="Scenario whose latest result carries the stock"),
+        db: Session = Db,
+    ) -> StockSummary:
+        scenario_row(db, scenario_id)
+        return stored(latest_result(db, scenario_id)).result.stock.summary
+
+    @app.get("/stock/lots", response_model=list[StockLot])
+    def stock_lots_endpoint(
+        scenario_id: int = Query(description="Scenario whose latest result carries the stock"),
+        brand: str | None = None,
+        category: str | None = None,
+        reason: str | None = None,
+        db: Session = Db,
+    ) -> list[StockLot]:
+        scenario_row(db, scenario_id)
+        lots = stored(latest_result(db, scenario_id)).result.stock.lots
+        return filter_lots(lots, brand, category, reason)
 
     def result_row(db: Session, result_id: int) -> ResultRow:
         row = db.get(ResultRow, result_id)
