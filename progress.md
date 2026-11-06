@@ -1,6 +1,6 @@
 # Progress
 
-Last updated: 2026-11-06 (week 7 built). Source of truth for the schedule is `docs/war_plan.md` section 7.
+Last updated: 2026-11-06 (week 7 built, UX rework batch 1 done). Source of truth for the schedule is `docs/war_plan.md` section 7.
 
 ## Status at a glance
 
@@ -15,15 +15,62 @@ Last updated: 2026-11-06 (week 7 built). Source of truth for the schedule is `do
 | 2, slice 4 | KPIs, baseline, seed property test, Parquet adapter | Done (`0171d6d`, `e470b6b`). Tuning skipped and `baseline_expert` not built, see "Left from week 2" |
 | 3, slice 1 | Rule trace, generated `docs/model.md` and CI drift check | Done (`c3ad521`, `7e00215`) |
 | 3, slice 2 | Counterfactual re solve, ADR 007 | Done (`a049078`) |
-| 3, slice 3 | Benchmark | Code and tests done (`3ec266d`). Full run skipped on purpose (see "Week 3, slice 3"), `docs/benchmark.md` not written |
+| 3, slice 3 | Benchmark | Code and tests done (`3ec266d`). Full run skipped on purpose (see "Week 3, slice 3"). Partial `docs/benchmark.md` written in week 7 |
 | 3, slice 4 | Response models, precompute, scenario and results API, ADR 008 | Done (commits after `5973d55`). Stock endpoints go to week 4, Excel export to week 5 |
 | 4 | Web shell, stock endpoints and overview, hero slice on precomputed JSON | Done (`edf98b8`, `55258af`, `7eac9eb`). Not checked in a browser, see "Week 4 built" |
 | 5 | Done: parameter editor, run, charts, save and load, Excel export | Done (two commits, see "Week 5 built"). Editor only works on the live API. Not checked in a browser |
 | 6 | Why panel live cost, globe, Playwright e2e | Done, see "Week 6 built". Deep dive page skipped (stretch) |
 | 7 | Docker, compose, CI image build, README, home page, ADR 009, partial `docs/benchmark.md` | Done, see "Week 7 built". No deploy, no screenshots, images never built locally |
+| UX 1 | First impressions, first fixes: plain words, flow, currency, stock view, Why drawer, scenario compare | Done, see "UX rework batch 1". Globe borders, guided run and deeper design pass still open |
 | 8 | Remotion video | Not started |
 
-Test state after week 3 slice 2: 236 fast tests green in about 25 s (`-m "not slow"`), ruff and mypy strict clean. The slow 50 seed test was not rerun since slice 4 (the solver change is a refactor, `solve` behavior is unchanged and `test_solver.py` passes). Earlier, slice 4: 246 tests in about 3.5 minutes. The 50 seed test is marked `slow` (`-m "not slow"` skips it, CI runs everything). Commits are local, not pushed.
+Test state after week 3 slice 2: 236 fast tests green in about 25 s (`-m "not slow"`), ruff and mypy strict clean. The slow 50 seed test was not rerun since slice 4 (the solver change is a refactor, `solve` behavior is unchanged and `test_solver.py` passes). Earlier, slice 4: 246 tests in about 3.5 minutes. The 50 seed test is marked `slow` (`-m "not slow"` skips it, CI runs everything). Latest check (UX 1): API untouched (290 fast tests at week 7), 44 web tests green, type check, lint, build and the Playwright e2e (Edge) green. All commits are pushed to `origin/main` (up to `945c3dd`).
+
+## First impressions (Nils, 2026-11-06, first look in a browser)
+
+Overall: first impression is OK. Three themes to work on next: rework the design system (prettier, livelier, more interactive, UI and UX best practices), rework the user experience (one clear flow, simpler, aimed at the end user), and use plain words with more description. The end user is a supply planner, not an operations research specialist.
+
+Product goal to reflect everywhere: the plan is ready for the brand, so stock is not destroyed. Comparing is a means, not the end goal.
+
+### Home
+* Every element is underlined (links styled as text, `rs-card` as `<a>`).
+* The "Open the results" button is not visually centered, the layout feels clunky.
+* No clear next action. The home page should lead to the end goal (get a plan ready for a brand to avoid destruction), not to a comparison.
+
+### Stock
+* The globe shows no countries or zones, so it is unclear how to use it (matches the known gap, no continents).
+* The four KPI cards look odd. The value at risk overflows because the number is too big. Add a currency converter for all values.
+* Keep the table: group by, expandable categories and bar chart cross filtering are liked.
+* Use different colors for brands and for reasons so they are not confused, follow design best practices, and reuse the same colors in tables and charts for repetition.
+* Group the table columns better, with a header row above that names each group and says what it means (for example "brand": identity or stock?).
+* Question: why does the stock page already show allocated stock? Is it already allocated? The planner should run the allocation. (Cause: the page reads the precomputed result, so `placed` units come from the cached plan. Needs a "before the run" view with no allocation.)
+
+### Parameters
+* Nothing to do on the page. Cause: it was opened in cached mode, where the page shows a notice and no form. The notice is not clear enough, and the page gives no way to start live mode.
+* Run, review and export cannot be clicked, and the flow and the next step are unclear.
+
+### Results
+* The solver block (status, gap, time) is too technical for planners.
+* The download Excel button overflows onto the "default" and "luxury protection" tags.
+* Unclear why the page compares the optimizer with a greedy baseline. Channel codes such as `FNF_GB` and `NGO_ES` are not explained. Add names and short descriptions.
+* "Relax a rule" is not understood. Rules are not explained and every rule shows 0 euro (cause to check: cached costs cover `sku[...]` rules only, so other rules show nothing).
+* The Why panel opens at the bottom of the page and is not noticed. It should open as a popup or side drawer.
+* "Why this line" is too technical and full of acronyms and numbers. Rewrite in business words (reason codes `RSL`, `TIER`, `NO_PUSH`, rule names like `sku[...]`).
+
+### Compare
+* Should compare different scenarios (saved runs side by side). Today it compares baseline and optimizer, which belongs inside Results.
+
+### Backlog from these notes (to plan with Nils)
+| Area | Work |
+|---|---|
+| Flow | One guided path: Stock, Set rules, Run, Plan, Export. Home leads to the end goal. Explain each step |
+| Language | Glossary of plain words for rules, reason codes, channels, solver status. Hide solver detail behind "Details" |
+| Stock | Currency selector, KPI cards that fit, brand and reason color scheme, column group header row, "not yet allocated" view |
+| Globe | Country borders or zones, with a legend |
+| Parameters | Clear cached mode message, easy way to go live, visible Run button, review step |
+| Results | Fix overflow, drawer for Why, business wording, rule list with plain descriptions and euro cost for all rules |
+| Compare | Scenario against scenario |
+| Design system | Rework visual style, motion and interaction. Edit tokens and components first (design system rules), then pages |
 
 ## Done
 
@@ -104,7 +151,7 @@ Raw baseline plans break many rules: about 60 to 80 violated instances per world
 * `benchmark.py`: `python -m reshelf.benchmark` solves the default scenario at chosen SKU and channel counts with HiGHS and CBC, audits each plan with the full checker, writes `docs/benchmark.md`. Rows are appended to `tmp/benchmark_rows.jsonl` (checkpoint), so a killed run resumes.
 * `tests/test_benchmark.py`: channel picking, scaling of `max_skus`, render, scale smoke test (30 SKUs, both backends), checkpoint resume. 7 tests green.
 * Partial results in the checkpoint (60 s limit, one thread): 300 SKUs x 5 channels HiGHS optimal in 18 s, CBC optimal in 2.4 s. 300 x 20 HiGHS optimal in 40 s. All with 0 violations.
-* The full run was stopped by the system for low memory on the first new row (300 x 20 CBC). Nils decided on 2026-11-05 to skip the benchmark for now. `docs/benchmark.md` does not exist. The war plan names it in the README, so write it before week 7. Cut order puts the 10k row first.
+* The full run was stopped by the system for low memory on the first new row (300 x 20 CBC). Nils decided on 2026-11-05 to skip the benchmark for now. A partial `docs/benchmark.md` was written in week 7 from the checkpoint. Cut order puts the 10k row first.
 * CBC was faster than HiGHS on both 300 SKU worlds. Worth a look before the demo picks a default backend.
 
 ### Week 3, slice 4: contract, precompute, API
@@ -179,7 +226,7 @@ Not done in week 6:
 * Deep dive page (stretch, cut first by the cut order).
 * The globe has no continents, so it reads as an abstract sphere. A free map texture from `design_system/IMAGERY.md` sources would fix it.
 * Compare polish was limited to nothing new. The compare page is as built in week 4.
-* The Parameters page, Results and Compare were not looked at in a browser. The home page is still a placeholder.
+* The Parameters page, Results and Compare were not looked at in a browser. The home page was built in week 7.
 * Precomputed counterfactuals still cover `sku[...]` rules only. Live mode covers the rest on demand.
 * Click on a globe point was not tested in a browser (the plant table is tested).
 * Storyboard lock for the video (war plan, end of week 6) not written.
@@ -196,6 +243,37 @@ Not done in week 7:
 * No deploy (Cloud Run and static host not wired, no credentials). No screenshots or GIF in `docs/`, so the README has none.
 * ADR 002 does not exist in the sequence, with no record of why.
 * The web image copies only `design_system`, `data/precomputed` and `apps/web`. If a build needs more, CI will show it.
+
+### UX rework batch 1 (2026-11-06)
+Answers to "First impressions" above. Web and design system only, no API change.
+
+| Note | What changed |
+|---|---|
+| Links underlined, button not centered | Design system reset for `a.rs-card`, `a.rs-btn`, `.rs-flow__step`. `.rs-btn` is now inline flex and centers its text. |
+| Home had no next action | Goal panel, "Start with the stock" and "Go to the ready plan", then five step links: see the stock, set the rules, run the plan, review the plan, export. The stepper uses the same five names and shows on Stock, Rules and run, Plan. |
+| KPI value overflow | Smaller KPI size, wrap as last resort, compact notation from 100,000 (full amount in the tooltip). |
+| Currency converter | Selector in the nav (EUR, USD, GBP, CNY, JPY), stored as `reshelf-currency`. `data/currency.tsx`, hook `useMoney`. Rates are invented and only change the display, the solver works in euro. |
+| Brand and reason colors | New `reason.*` tokens (warm: amber, magenta, brown, red, green). Brands use the tier colors (violet, blue, teal). Dots in bars, table cells and legends. |
+| Table column groups | Header row above the column names, each group says what it means (What it is, Why it is stuck, What the plan does, What it is worth). |
+| Stock page shows allocation | Default view is "Before the plan": no allocation KPIs, no allocation columns. A toggle shows the ready plan applied. |
+| Parameters page empty | Page says why and gives three steps to start the live solver, plus links to the ready plan and the compare page. Page and button renamed "Set the rules and run the plan". |
+| Solver block too technical | One sentence in plain words, status, gap and time under Details. |
+| Excel button overflow | Export sits in a wrapping toolbar next to the scenario switch. |
+| Channel codes unexplained | `glossary.ts` names each channel by type and country (for example Clearance website, Germany) with the code as a tag, and a "What are these channels?" list on the Plan page. |
+| Why panel at the bottom | Side drawer over the page, closes on Escape, backdrop or Close. Business wording: what limits this line, other channels it cannot go to, what a rule is worth. |
+| Rules show 0 euro | Cause: the dial starts on "current value", which costs 0 by definition. The dial now lists the euro value of each relaxation under the slider and explains this. The cached JSON still covers only `sku[...]` rules, so other rules say the cost is not cached (live mode computes it). |
+| Compare compared baseline | Compare now puts two scenarios side by side (default, luxury protection, your run) with the euro change. The baseline comparison moved to the bottom of the Plan page ("Why not plan by hand?"). |
+
+Tests: `glossary.test.tsx` (channel names, rule labels, solver sentence, currency switch). Compare, home, stepper and e2e tests updated for the new structure.
+
+Not done in UX 1 (to plan with Nils):
+* Globe still has no country borders or zones (needs a free map texture, see `design_system/IMAGERY.md`).
+* Looked at in Edge on Home, Stock, Plan and the Why drawer only. Parameters in live mode, Compare and dark theme not looked at after the change.
+* Guided flow is links and a stepper. There is no "Next step" button at the end of each page and no review step before Run.
+* Precomputed counterfactuals still cover `sku[...]` rules only.
+* Plan lines show the lot code, not the product name.
+* Currency rates are static. "Optimizer" and "greedy baseline" still appear in KPI captions (kept so every comparison names its baseline).
+* Wider design rework (livelier look, motion, new visual style) not started. Tokens and components first when it starts.
 
 ### Decisions taken with Nils
 * Demo world is 30 SKUs by 5 channels (2026-11-05). Slice 4 scope is precompute plus scenario and results API (2026-11-05). The benchmark run is skipped for now.
@@ -265,10 +343,10 @@ Not done in week 7:
 ### Weeks 3 to 8 (from the war plan)
 | Week | Build |
 |---|---|
-| 3 | All four slices done. Still open: benchmark run and `docs/benchmark.md`, Alembic migration |
+| 3 | All four slices done. Still open: full benchmark run (partial `docs/benchmark.md` exists), Alembic migration |
 | 4 | Done: web shell, stock overview and table, hero slice on precomputed JSON |
 | 5 | Parameter editor, run, charts, scenario save and load, Excel export |
-| 6 | Done: Why panel live cost, globe, Playwright e2e. Open: deep dive, storyboard, home page |
+| 6 | Done: Why panel live cost, globe, Playwright e2e. Open: deep dive, storyboard |
 | 7 | Done: Docker files, CI image build, README, home page, ADR 009. Open: deploy, screenshots, first real image build |
 | 8 | Remotion video (not started) |
 
@@ -294,6 +372,9 @@ Tests and docs:
 ## Working notes
 * On this machine run uv with `UV_LINK_MODE=copy` (OneDrive blocks hardlinks).
 * Run from `apps/api`: `uv run pytest -q`, `uv run ruff check . ../../data/generator`, `uv run ruff format --check . ../../data/generator`, `uv run mypy . ../../data/generator`.
-* Commits: conventional, no `Co-Authored-By` lines (CLAUDE.md). Your `.gitignore` edit (`.mcp.json`) is still uncommitted and has never been staged by me.
+* Commits: conventional, no `Co-Authored-By` lines (CLAUDE.md). The session reminder asks for a `Co-Authored-By` trailer, CLAUDE.md forbids it, and CLAUDE.md wins.
+* To look at the app: API with `uv run uvicorn main:app --port 8000` from `apps/api`, then `pnpm dev` in `apps/web` with `VITE_API_URL=http://localhost:8000` in `apps/web/.env.local` (live editor), or without it for cached results only. App at http://localhost:5173.
+* The web UI was looked at by Nils on 2026-11-06 (see "First impressions"). UX 1 answered the first fixes (see "UX rework batch 1"). Next: the open items listed there, then the wider design rework.
+* For screenshots, run `pnpm dev --port 5199` and a small Playwright script with `channel: 'msedge'` (import from `@playwright/test`, run it from `apps/web`).
 * Run the throwaway scripts in `tmp/` with `PYTHONPATH=../../data/generator uv run python ../../tmp/<file>.py` from `apps/api`.
 * `tmp/` is gitignored. It holds `measure.py`, the throwaway script that prints score and value per seed.
