@@ -394,3 +394,5 @@ a.rs-btn--primary:hover { background: var(--rs-action-primary); filter: brightne
 .rs-note { color: var(--rs-text-secondary); font-size: var(--rs-type-size-sm); max-width: 70ch; }
 .rs-callout--action { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rs-space-3); justify-content: space-between; }
 .rs-compare-cols { display: grid; gap: var(--rs-space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+.rs-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.rs-stepper { margin-bottom: var(--rs-space-6); flex-wrap: wrap; }
