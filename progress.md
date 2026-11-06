@@ -1,6 +1,6 @@
 # Progress
 
-Last updated: 2026-11-05 (week 3, slice 3). Source of truth for the schedule is `docs/war_plan.md` section 7.
+Last updated: 2026-11-06 (week 4 built, slices 1 to 3 committed). Source of truth for the schedule is `docs/war_plan.md` section 7.
 
 ## Status at a glance
 
@@ -17,7 +17,8 @@ Last updated: 2026-11-05 (week 3, slice 3). Source of truth for the schedule is 
 | 3, slice 2 | Counterfactual re solve, ADR 007 | Done (`a049078`) |
 | 3, slice 3 | Benchmark | Code and tests done (`3ec266d`). Full run skipped on purpose (see "Week 3, slice 3"), `docs/benchmark.md` not written |
 | 3, slice 4 | Response models, precompute, scenario and results API, ADR 008 | Done (commits after `5973d55`). Stock endpoints go to week 4, Excel export to week 5 |
-| 4 to 8 | Web app, Docker, video | Not started |
+| 4 | Web shell, stock endpoints and overview, hero slice on precomputed JSON | Done (`edf98b8`, `55258af`, `7eac9eb`). Not checked in a browser, see "Week 4 built" |
+| 5 to 8 | Parameter editor, Docker, video | Not started |
 
 Test state after week 3 slice 2: 236 fast tests green in about 25 s (`-m "not slow"`), ruff and mypy strict clean. The slow 50 seed test was not rerun since slice 4 (the solver change is a refactor, `solve` behavior is unchanged and `test_solver.py` passes). Earlier, slice 4: 246 tests in about 3.5 minutes. The 50 seed test is marked `slow` (`-m "not slow"` skips it, CI runs everything). Commits are local, not pushed.
 
@@ -110,6 +111,31 @@ Raw baseline plans break many rules: about 60 to 80 violated instances per world
 * `openapi.json` is checked in, `scripts/dump_openapi.py` regenerates it, `tests/test_openapi.py` fails on drift.
 * ADR 008. Tests: `test_api_models.py`, `test_precompute.py`, `test_api.py`, `test_openapi.py`. 269 fast tests green in about 33 s, ruff and mypy clean. The slow 50 seed test was not rerun.
 
+### Week 4 built (2026-11-06)
+Slice 1, shell (`edf98b8`):
+* `apps/web`: design system CSS import (`@ds` alias), React Router, theme switch (`data-theme`, stored as `reshelf-theme`), nav, "Simulated data" badge, data source banner, stepper on process pages, `InlineError` with Retry.
+* Data layer `src/data/source.ts`: precomputed JSON by default, live API when `VITE_API_URL` answers `/health`. Failed requests become a `RequestError` with the endpoint, shown inline.
+* `pnpm gen:api` writes `src/api/schema.d.ts` from `apps/api/openapi.json`. CI web job fails on drift.
+* `tsc` had no `noEmit`, so `pnpm build` wrote stray `.js` files next to the sources. Fixed in `tsconfig.json`.
+* `.rs-btn` added to the design system (it had no plain button).
+
+Slice 2, stock (`55258af`):
+* `stock.py`: `StockLot`, summary by reason, brand and brand/category. `ScenarioResult.stock` is built in `run_scenario`, so stock and results come from one source. `GET /stock/summary` and `GET /stock/lots` (filters brand, category, reason) read the latest stored result of a scenario. Tests in `test_stock.py`. 274 fast API tests green.
+* Web: stock overview (KPI tiles, reason bars, brand to category drill with crumbs, filter chips) and stock table (column groups, group by with subtotals, share cell, totals row).
+* Design system: `rs-hbars`, `rs-chip`, `rs-toolbar`, `rs-num`.
+
+Slice 3, hero (`7eac9eb`):
+* Results page: solver chip, KPI tiles against the compliant greedy baseline, rule dial, lines table with a Why button.
+* Why panel: binding rules as chips with slack, blocked channels with reason codes, "Relax this rule" shows the precomputed euro cost.
+* Rule dial: read only, three positions (current, relax by 10 percent, switch off) on the precomputed grid. Compare page: baseline raw, baseline compliant and optimizer columns, euro delta against the compliant plan, baseline audit list.
+* Web tests: 28 green (Vitest), type check, lint and `pnpm build` clean.
+
+Not done in week 4:
+* Nothing was opened in a browser. Tests run in jsdom, so layout, theme colors and the sprite icons are unchecked. Run `pnpm dev` and look.
+* The home page and Parameters page are placeholders. Live mode runs create and solve, but the Why panel does not call the counterfactual endpoint, it shows a sentence when a cost is not cached.
+* The precomputed counterfactuals cover `sku[...]` rules only, so Why panels of lines bound by other rules say the cost is not cached.
+* No Playwright e2e yet (week 6).
+
 ### Decisions taken with Nils
 * Demo world is 30 SKUs by 5 channels (2026-11-05). Slice 4 scope is precompute plus scenario and results API (2026-11-05). The benchmark run is skipped for now.
 * Push quantity depends on product category.
@@ -172,7 +198,7 @@ Raw baseline plans break many rules: about 60 to 80 violated instances per world
 | Week | Build |
 |---|---|
 | 3 | All four slices done. Still open: benchmark run and `docs/benchmark.md`, Alembic migration |
-| 4 | Web shell, stock overview and table, thin hero slice on precomputed JSON |
+| 4 | Done: web shell, stock overview and table, hero slice on precomputed JSON |
 | 5 | Parameter editor, run, charts, scenario save and load, Excel export |
 | 6 | Why panel full, compare polish, globe, Playwright e2e |
 | 7 | Docker, CI/CD, deploy, demo mode, README, ADRs, screenshots |
