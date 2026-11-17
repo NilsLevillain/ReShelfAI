@@ -22,3 +22,6 @@ data/generated/
 reshelf.db
 apps/web/test-results/
 apps/web/playwright-report/
+
+# stray tsc output
+apps/web/src/**/*.js
