@@ -6,7 +6,7 @@ import precomputed from '@data/precomputed/default.json';
 import { App } from './App';
 import { CurrencyProvider } from './data/currency';
 import { DataSourceProvider } from './data/DataSource';
-import { channelInfo, ruleLabel, solverSentence } from './glossary';
+import { channelInfo, lotInfo, ruleLabel, solverSentence } from './glossary';
 import type { Result } from './results/model';
 
 const result = precomputed as unknown as Result;
@@ -23,6 +23,14 @@ describe('glossary', () => {
     const c = result.geo.channels[0].channel;
     expect(ruleLabel(`sku[${c}]`, result.geo.channels)).toContain('Channel limit on SKUs');
     expect(ruleLabel('weird', result.geo.channels)).toBe('weird');
+  });
+
+  it('names a lot by its product and falls back to the code', () => {
+    const l = result.stock.lots[0];
+    const info = lotInfo(l.lot, result.stock.lots);
+    expect(info.name).toBe(l.description);
+    expect(info.code).toBe(l.lot);
+    expect(lotInfo('nope', result.stock.lots).name).toBe('nope');
   });
 
   it('says in one sentence what the solver status means', () => {

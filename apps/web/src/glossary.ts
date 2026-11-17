@@ -30,6 +30,14 @@ export function channelInfo(code: string, channels: Channel[]): ChannelInfo {
   return { code, name: `${t?.name ?? c.type}, ${countryName(c.country)}`, text: t?.text ?? '' };
 }
 
+export type LotInfo = { code: string; name: string };
+
+/** A lot shown by its product name, with the code kept as a small tag. Unknown lots fall back to the code. */
+export function lotInfo(code: string, lots: Pick<components['schemas']['StockLot'], 'lot' | 'description'>[]): LotInfo {
+  const l = lots.find((x) => x.lot === code);
+  return { code, name: l?.description || code };
+}
+
 /** What each rule means, in a sentence a planner can check against their own practice. */
 export const RULE_HELP: Record<string, { name: string; text: string }> = {
   supply: { name: 'Lot stock', text: 'A lot cannot send out more units than it holds.' },

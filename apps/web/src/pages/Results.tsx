@@ -10,7 +10,7 @@ import { RuleDial } from '../results/RuleDial';
 import { SolverStatus } from '../results/SolverStatus';
 import { WhyPanel } from '../results/WhyPanel';
 import { useMoney } from '../data/currency';
-import { CHANNEL_TYPES, channelInfo } from '../glossary';
+import { CHANNEL_TYPES, channelInfo, lotInfo } from '../glossary';
 import { int } from '../stock/model';
 
 export function Results() {
@@ -120,7 +120,7 @@ export function Results() {
           <table className="rs-table" data-testid="lines-table">
             <thead>
               <tr>
-                <th>Lot</th>
+                <th>Product and lot</th>
                 <th>Channel</th>
                 <th className="rs-num">Units</th>
                 <th className="rs-num">Net value</th>
@@ -130,7 +130,9 @@ export function Results() {
             <tbody>
               {lineRows.map((l) => (
                 <tr key={l.line}>
-                  <th scope="row">{l.lot}</th>
+                  <th scope="row">
+                    {lotInfo(l.lot, r.stock.lots).name} <span className="rs-tag">{l.lot}</span>
+                  </th>
                   <td>
                     {channelInfo(l.channel, r.geo.channels).name} <span className="rs-tag">{l.channel}</span>
                   </td>
