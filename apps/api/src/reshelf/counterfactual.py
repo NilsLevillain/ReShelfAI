@@ -184,6 +184,21 @@ def rank_binding_rules(trace: RuleTrace) -> list[tuple[str, int]]:
     return sorted(counts.items(), key=lambda item: (-item[1], item[0]))
 
 
+def rank_by_rule_type(trace: RuleTrace, per_type: int) -> list[str]:
+    """The `per_type` binding instances of each rule type that touch most lines.
+
+    Instances that bind per SKU and channel touch few lines, so a plain ranking by lines never
+    reaches them. Types come in the order of their best instance. Same ordering rule as
+    `rank_binding_rules` inside a type.
+    """
+    kept: dict[str, list[str]] = {}
+    for instance, _ in rank_binding_rules(trace):
+        bucket = kept.setdefault(_constraint_of(instance), [])
+        if len(bucket) < per_type:
+            bucket.append(instance)
+    return [instance for bucket in kept.values() for instance in bucket]
+
+
 def top_counterfactuals(
     data: SolverInput,
     base: SolveResult,
@@ -192,11 +207,19 @@ def top_counterfactuals(
     modes: tuple[Relaxation, ...] = RELAXATIONS,
     solver: PulpSolver | None = None,
     time_limit_s: float | None = None,
+    per_type: int = 0,
 ) -> list[CounterfactualResult]:
-    """Counterfactuals of the `n` binding rules that touch most lines, for the precompute."""
+    """Counterfactuals for the precompute.
+
+    The `n` binding rules that touch most lines, plus the `per_type` best of every rule type
+    that binds (zero keeps only the top `n`). Each instance appears once.
+    """
     solver = solver or PulpSolver()
+    instances = [instance for instance, _ in rank_binding_rules(trace)[:n]]
+    if per_type > 0:
+        instances += [i for i in rank_by_rule_type(trace, per_type) if i not in instances]
     return [
         counterfactual(data, base, instance, mode, solver, time_limit_s)
-        for instance, _ in rank_binding_rules(trace)[:n]
+        for instance in instances
         for mode in modes
     ]

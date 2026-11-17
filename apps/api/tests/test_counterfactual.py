@@ -12,6 +12,7 @@ from reshelf.counterfactual import (
     RELAXABLE_RULES,
     counterfactual,
     rank_binding_rules,
+    rank_by_rule_type,
     relax,
     top_counterfactuals,
 )
@@ -241,6 +242,40 @@ def test_ranking_orders_by_lines_then_name_and_skips_supply() -> None:
     assert all(not name.startswith("supply") for name, _ in ranked)
     counts = [n for _, n in ranked]
     assert counts == sorted(counts, reverse=True)
+
+
+def test_rank_by_rule_type_keeps_the_best_of_each_type() -> None:
+    data = f.solver_input(
+        materials=[f.material("M1"), f.material("M2")],
+        lots=[f.lot("M1", qty=30), f.lot("M2", qty=30)],
+        channels=[f.channel("C1", capacity=40)],
+    )
+    base = solve(data)
+    trace = build_trace(data, Solution(x=base.x))
+    ranked = [name for name, _ in rank_binding_rules(trace)]
+    for per_type in (1, 2):
+        picked = rank_by_rule_type(trace, per_type)
+        types = [name.partition("[")[0] for name in picked]
+        assert all(types.count(t) <= per_type for t in set(types))
+        assert set(types) == {name.partition("[")[0] for name in ranked}
+        assert len(set(picked)) == len(picked)
+        # Inside a type the order is the global ranking.
+        assert [p for p in ranked if p in picked] == sorted(picked, key=ranked.index)
+    assert rank_by_rule_type(trace, 1)[0] == ranked[0]
+
+
+def test_top_counterfactuals_per_type_adds_types_without_repeating_instances() -> None:
+    data = capped(50)
+    base = solve(data)
+    trace = build_trace(data, Solution(x=base.x))
+    plain = top_counterfactuals(data, base, trace, n=1)
+    wider = top_counterfactuals(data, base, trace, n=1, per_type=1)
+    keys = [(r.instance, r.mode) for r in wider]
+    assert len(set(keys)) == len(keys)
+    assert [(r.instance, r.mode) for r in plain] == keys[: len(plain)]
+    assert {r.constraint for r in wider} == {
+        name.partition("[")[0] for name, _ in rank_binding_rules(trace)
+    }
 
 
 def test_top_counterfactuals_runs_each_mode_for_the_top_rules() -> None:

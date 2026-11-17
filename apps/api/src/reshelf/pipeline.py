@@ -57,7 +57,12 @@ def run_scenario(
     result, trace = solve_and_trace(data, time_limit_s)
     counterfactuals = (
         top_counterfactuals(
-            data, result, trace, n=n_counterfactuals, time_limit_s=COUNTERFACTUAL_TIME_LIMIT_S
+            data,
+            result,
+            trace,
+            n=n_counterfactuals,
+            time_limit_s=COUNTERFACTUAL_TIME_LIMIT_S,
+            per_type=1,
         )
         if result.has_plan
         else []
