@@ -1,8 +1,12 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import precomputed from '@data/precomputed/default.json';
+import maxRecovery from '@data/precomputed/max_recovery.json';
+import { App } from './App';
+import { Delta, toneOf } from './components/Delta';
+import { DataSourceProvider } from './data/DataSource';
 import { Hint, ParamHint } from './components/Hint';
 import { CurrencyProvider } from './data/currency';
 import { CAUSE_HELP, LEVER_FIELD, PARAM_HELP } from './glossary';
@@ -82,5 +86,60 @@ describe('glossary page', () => {
     for (const [key, h] of Object.entries(PARAM_HELP)) expect(document.getElementById(key)).toHaveTextContent(h.name);
     for (const [key, h] of Object.entries(CAUSE_HELP)) expect(document.getElementById(key)).toHaveTextContent(h.title);
     expect(document.getElementById('brand_risk_index')).toHaveTextContent('Brand risk index');
+  });
+});
+
+describe('delta', () => {
+  it('says good when the better direction is reached, with an arrow and a word', () => {
+    inRouter(
+      <>
+        <Delta text="+5" change={5} better="up" />
+        <Delta text="+5" change={5} better="down" />
+        <Delta text="0" change={0} better="up" />
+      </>,
+    );
+    const [good, bad, flat] = screen.getAllByTestId('delta');
+    expect(good).toHaveAttribute('data-tone', 'good');
+    expect(good).toHaveTextContent('▲');
+    expect(good).toHaveTextContent('better');
+    expect(bad).toHaveAttribute('data-tone', 'bad');
+    expect(bad).toHaveTextContent('worse');
+    expect(flat).toHaveAttribute('data-tone', 'neutral');
+  });
+
+  it('treats a change below the epsilon as no change', () => {
+    expect(toneOf(0.0001, 'down', 0.0005)).toBe('neutral');
+    expect(toneOf(-0.01, 'down', 0.0005)).toBe('good');
+  });
+});
+
+describe('compare story', () => {
+  it('says what changed from A to B in one sentence, and marks each change good or bad', async () => {
+    const files: Record<string, unknown> = { default: precomputed, max_recovery: maxRecovery };
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url: string) => {
+        const name = Object.keys(files).find((n) => url.includes(`/${n}.json`));
+        return Promise.resolve(new Response(JSON.stringify(files[name ?? 'default'])));
+      }),
+    );
+    render(
+      <MemoryRouter initialEntries={['/compare']}>
+        <DataSourceProvider initial="cached">
+          <CurrencyProvider>
+            <App />
+          </CurrencyProvider>
+        </DataSourceProvider>
+      </MemoryRouter>,
+    );
+    const verdict = await screen.findByTestId('scenario-verdict');
+    expect(verdict).toHaveTextContent('Compared with Default, Max recovery recovers');
+    expect(verdict).toHaveTextContent('more');
+    expect(verdict).toHaveTextContent('fewer units');
+    const table = screen.getByTestId('scenario-compare');
+    const tones = within(table).getAllByTestId('delta').map((d) => d.getAttribute('data-tone'));
+    expect(tones).toEqual(['good', 'good', 'good', 'good']);
+    expect(screen.getByTestId('scenario-stories')).toHaveTextContent('180 days of sales');
+    vi.unstubAllGlobals();
   });
 });
