@@ -69,6 +69,8 @@ jobs:
         run: node design_system/scripts/build.mjs
       - name: Fail on drift between sources and committed output
         run: git diff --exit-code -- design_system/dist product_management/recap.html
+      - name: Fail when a page reinvents a style (unknown class, raw color, inline style, pixel value, raw currency)
+        run: node design_system/scripts/audit.mjs
 
   deploy:
     needs: [python, web, design-system]

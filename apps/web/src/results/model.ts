@@ -1,5 +1,4 @@
 import type { components } from '../api/schema';
-import { eur } from '../stock/model';
 
 export type Result = components['schemas']['ScenarioResult'];
 export type Kpi = components['schemas']['KpiOut'];
@@ -48,10 +47,6 @@ export function ruleInstances(result: Result): string[] {
 
 export function violationCount(result: Result): number {
   return Object.values(result.baseline.audit).reduce((s, a) => s + a.count, 0);
-}
-
-export function signedEur(v: number): string {
-  return `${v > 0 ? '+' : v < 0 ? '−' : ''}${eur(Math.abs(v))}`;
 }
 
 export function pct(v: number): string {

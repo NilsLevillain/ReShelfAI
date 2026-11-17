@@ -460,3 +460,22 @@ a.rs-btn--primary:hover { background: var(--rs-action-primary); filter: brightne
 .rs-glossary dd { margin: 0 0 var(--rs-space-3); color: var(--rs-text-secondary); max-width: 70ch; }
 .rs-hintrow { display: flex; align-items: center; gap: var(--rs-space-1); }
 .rs-field__effect { color: var(--rs-text-brand); font-size: var(--rs-type-size-sm); }
+
+/* Polish: states and motion. All of it stops under prefers-reduced-motion. */
+.rs-table tbody tr { transition: background var(--rs-motion-duration-fast) var(--rs-motion-easing-standard); }
+.rs-table tbody tr:hover { background: var(--rs-bg-subtle); }
+.rs-btn:active { transform: translateY(1px); }
+.rs-hint__btn:focus-visible, .rs-sortbtn:focus-visible { outline: 3px solid var(--rs-border-brand); outline-offset: 2px; }
+.rs-cause { transition: box-shadow var(--rs-motion-duration-base) var(--rs-motion-easing-standard); animation: rs-rise var(--rs-motion-duration-base) var(--rs-motion-easing-enter) both; }
+.rs-cause:hover { box-shadow: var(--rs-shadow-card); }
+.rs-causebar > span, .rs-hbar__fill { transform-origin: left center; animation: rs-grow var(--rs-motion-duration-slow) var(--rs-motion-easing-enter) both; }
+@keyframes rs-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes rs-rise { from { opacity: 0; transform: translateY(0.5rem); } to { opacity: 1; transform: none; } }
+.rs-skeleton { display: grid; gap: var(--rs-space-3); }
+.rs-skeleton > span { display: block; height: 1rem; border-radius: var(--rs-radius-sm); background: linear-gradient(90deg, var(--rs-bg-subtle) 25%, var(--rs-border-default) 50%, var(--rs-bg-subtle) 75%); background-size: 200% 100%; animation: rs-shimmer 1.4s linear infinite; }
+.rs-skeleton > span:nth-child(2) { width: 80%; }
+.rs-skeleton > span:nth-child(3) { width: 55%; }
+@keyframes rs-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .rs-cause, .rs-causebar > span, .rs-hbar__fill, .rs-skeleton > span, .rs-table tbody tr, .rs-btn:active { animation: none; transition: none; transform: none; }
+}

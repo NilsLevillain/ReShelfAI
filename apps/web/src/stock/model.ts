@@ -46,8 +46,6 @@ export function sharePct(part: number, whole: number): number {
   return whole > 0 ? Math.round((part / whole) * 100) : 0;
 }
 
-export const eur = (v: number) =>
-  new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
 export const int = (v: number) => new Intl.NumberFormat('en-GB').format(v);
 
 export const REASON_LABEL: Record<string, string> = {

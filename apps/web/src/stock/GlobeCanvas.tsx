@@ -10,7 +10,7 @@ const css = (name: string) => {
   document.body.appendChild(probe);
   const value = getComputedStyle(probe).color;
   probe.remove();
-  return value || undefined;
+  return value || 'rgba(0,0,0,0)';
 };
 
 /** The theme set on the page root. The globe reads colors once per theme, so it needs to know when this changes. */
@@ -56,11 +56,11 @@ export default function GlobeCanvas({
   const colors = useMemo(() => {
     void theme;
     return {
-      sea: css('--rs-bg-info') ?? '#e6f1ff',
-      land: css('--rs-bg-surface') ?? '#ffffff',
-      active: css('--rs-bg-hint') ?? '#ddefe4',
-      outline: css('--rs-border-strong') ?? '#898989',
-      activeOutline: css('--rs-border-brand') ?? '#187573',
+      sea: css('--rs-bg-info'),
+      land: css('--rs-bg-surface'),
+      active: css('--rs-bg-hint'),
+      outline: css('--rs-border-strong'),
+      activeOutline: css('--rs-border-brand'),
       plant: css('--rs-compare-delta-cost'),
       channel: css('--rs-compare-optimizer'),
     };
@@ -133,7 +133,7 @@ export default function GlobeCanvas({
         if (code) onSelect(code);
       }}
       arcsData={arcs}
-      arcColor={() => colors.channel ?? '#0f766e'}
+      arcColor={() => colors.channel}
       arcStroke={(d) => 0.2 + (0.8 * (d as { units: number }).units) / maxUnits}
       arcDashLength={1}
       arcDashGap={0}

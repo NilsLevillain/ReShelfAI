@@ -1,3 +1,4 @@
+import { Delta } from '../components/Delta';
 import { useMoney } from '../data/currency';
 import { RULE_HELP } from '../glossary';
 import { int } from '../stock/model';
@@ -32,9 +33,7 @@ export function BaselineCompare({ result: r }: { result: Result }) {
         </p>
       </div>
       <div className="rs-card rs-stat rs-stat--goal">
-        <span className="rs-stat__value" data-testid="baseline-delta" style={{ color: 'var(--rs-compare-delta-gain)' }}>
-          {signed(delta)}
-        </span>
+        <Delta large testId="baseline-delta" text={signed(delta)} change={delta} better="up" />
         <span>more value recovered against the greedy baseline, compared with its compliant plan</span>
       </div>
       <div className="rs-table-scroll" data-testid="compare-panel">

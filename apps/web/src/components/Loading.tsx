@@ -15,6 +15,11 @@ export function Loading({ what }: { what: string }) {
   return (
     <div role="status" className="rs-note" data-testid="loading">
       <p>Loading {what}</p>
+      <div className="rs-skeleton" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
       {slow && source === 'live' && (
         <p data-testid="loading-slow">
           The live solver is working on this scenario. A scenario that was not opened yet can take up to 20 seconds. It is kept

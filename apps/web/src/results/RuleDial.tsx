@@ -59,7 +59,7 @@ export function RuleDial({ result }: { result: Result }) {
         onChange={(e) => setPos(Number(e.target.value))}
       />
       <p>
-        <span className="rs-text-kpi-hero" data-testid="euro-delta" style={{ color: 'var(--rs-compare-delta-cost)' }}>
+        <span className="rs-cost" data-testid="euro-delta">
           {money(step.cost)}
         </span>{' '}
         extra value recovered
