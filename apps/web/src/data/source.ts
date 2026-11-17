@@ -58,10 +58,50 @@ export async function getJson<T>(endpoint: string, init?: RequestInit, fetchFn: 
   return (await res.json()) as T;
 }
 
-export async function fetchScenarioResult(
+const inflight = new Map<string, Promise<ScenarioResult>>();
+const settled = new Map<string, ScenarioResult>();
+const keyOf = (source: SourceKind, name: ScenarioName) => `${source}:${name}`;
+
+/** A scenario result already loaded in this visit, so a page can open on it without waiting. */
+export function loadedScenarioResult(source: SourceKind, name: ScenarioName): ScenarioResult | undefined {
+  return settled.get(keyOf(source, name));
+}
+
+/** Forget what was loaded. Used by tests, and by a reload of the page. */
+export function clearScenarioCache(): void {
+  inflight.clear();
+  settled.clear();
+}
+
+/**
+ * One load per scenario and visit. A live solve takes seconds and creates a saved scenario, so opening another
+ * page must not repeat it. A failed load is not kept, so Retry asks again.
+ */
+export function fetchScenarioResult(source: SourceKind, name: ScenarioName, fetchFn: typeof fetch = fetch): Promise<ScenarioResult> {
+  const key = keyOf(source, name);
+  const done = settled.get(key);
+  if (done) return Promise.resolve(done);
+  const running = inflight.get(key);
+  if (running) return running;
+  const load = loadScenarioResult(source, name, fetchFn).then(
+    (result) => {
+      settled.set(key, result);
+      inflight.delete(key);
+      return result;
+    },
+    (error: unknown) => {
+      inflight.delete(key);
+      throw error;
+    },
+  );
+  inflight.set(key, load);
+  return load;
+}
+
+async function loadScenarioResult(
   source: SourceKind,
   name: ScenarioName,
-  fetchFn: typeof fetch = fetch,
+  fetchFn: typeof fetch,
 ): Promise<ScenarioResult> {
   if (source === 'cached') {
     const key = Object.keys(precomputed).find((k) => k.endsWith(`/${name}.json`));

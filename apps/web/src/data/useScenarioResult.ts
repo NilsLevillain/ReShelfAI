@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSource } from './DataSource';
 import { useRun } from './run';
-import { fetchScenarioResult, type ScenarioName, type ScenarioResult } from './source';
+import { fetchScenarioResult, loadedScenarioResult, type ScenarioName, type ScenarioResult } from './source';
 
 type State =
   | { status: 'loading' }
@@ -10,14 +10,16 @@ type State =
 
 export function useScenarioResult(name: ScenarioName): State & { retry: () => void } {
   const source = useSource();
-  const [state, setState] = useState<State>({ status: 'loading' });
+  const loaded = source ? loadedScenarioResult(source, name) : undefined;
+  const [state, setState] = useState<State>(loaded ? { status: 'ready', result: loaded } : { status: 'loading' });
   const [attempt, setAttempt] = useState(0);
   const retry = useCallback(() => setAttempt((a) => a + 1), []);
 
   useEffect(() => {
     if (!source) return;
     let live = true;
-    setState({ status: 'loading' });
+    const again = loadedScenarioResult(source, name);
+    setState(again ? { status: 'ready', result: again } : { status: 'loading' });
     fetchScenarioResult(source, name).then(
       (result) => live && setState({ status: 'ready', result }),
       (error: Error) => live && setState({ status: 'error', error }),

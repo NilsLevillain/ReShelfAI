@@ -1,3 +1,4 @@
+import { Loading } from '../components/Loading';
 import { useState } from 'react';
 import { Delta } from '../components/Delta';
 import { KpiHint } from '../components/Hint';
@@ -72,7 +73,7 @@ export function Compare() {
       <>
         {head}
         {pickers}
-        <p role="status">Loading comparison</p>
+        <Loading what="the comparison" />
       </>
     );
   if (sa.status === 'error' || sb.status === 'error') {

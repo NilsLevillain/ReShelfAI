@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 import { afterEach, beforeEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
+import { clearScenarioCache } from '../data/source';
 
 // Tests must not depend on the developer's apps/web/.env.local. A test that needs an API URL stubs it itself.
 beforeEach(() => {
@@ -10,6 +11,7 @@ beforeEach(() => {
 afterEach(() => {
   vi.unstubAllEnvs();
   cleanup();
+  clearScenarioCache();
   localStorage.clear();
   document.documentElement.removeAttribute('data-theme');
 });

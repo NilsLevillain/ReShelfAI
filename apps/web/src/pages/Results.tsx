@@ -1,3 +1,4 @@
+import { Loading } from '../components/Loading';
 import { useState } from 'react';
 import { InlineError } from '../components/InlineError';
 import { NextStep } from '../components/NextStep';
@@ -37,7 +38,7 @@ export function Results() {
     return (
       <>
         {switcher}
-        <p role="status">Loading results</p>
+        <Loading what="results" />
       </>
     );
   if (state.status === 'error')

@@ -1,3 +1,4 @@
+import { Loading } from '../components/Loading';
 import { useState } from 'react';
 import { HBars } from '../components/HBars';
 import { InlineError } from '../components/InlineError';
@@ -20,7 +21,7 @@ export function Stock() {
   const [withPlan, setWithPlan] = useState(false);
   const { money, compact } = useMoney();
 
-  if (state.status === 'loading') return <p role="status">Loading stock</p>;
+  if (state.status === 'loading') return <Loading what="stock" />;
   if (state.status === 'error') return <InlineError error={state.error} onRetry={state.retry} />;
 
   const all = state.result.stock.lots;

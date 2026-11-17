@@ -102,7 +102,7 @@ export default function GlobeCanvas({
     if (!total) return;
     const lat = geo.plants.reduce((s, p) => s + p.lat * p.value_at_risk, 0) / total;
     const lng = geo.plants.reduce((s, p) => s + p.lon * p.value_at_risk, 0) / total;
-    globe.current?.pointOfView({ lat, lng, altitude: 2.4 }, 0);
+    globe.current?.pointOfView({ lat, lng, altitude: 1.8 }, 0);
   };
 
   return (
@@ -117,7 +117,7 @@ export default function GlobeCanvas({
       polygonAltitude={(d) => (isActive(d as object) ? 0.012 : 0.006)}
       polygonLabel={(d) => labelOf('country', String((d as CountryShape).id ?? '')) || (d as CountryShape).properties.name || ''}
       width={width}
-      height={Math.round(width * 0.75)}
+      height={Math.round(width * 0.6)}
       backgroundColor="rgba(0,0,0,0)"
       globeImageUrl={surface}
       showAtmosphere={false}

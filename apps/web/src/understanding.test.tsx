@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
@@ -6,6 +6,7 @@ import precomputed from '@data/precomputed/default.json';
 import maxRecovery from '@data/precomputed/max_recovery.json';
 import { App } from './App';
 import { Delta, toneOf } from './components/Delta';
+import { Loading } from './components/Loading';
 import { DataSourceProvider } from './data/DataSource';
 import { Hint, ParamHint } from './components/Hint';
 import { CurrencyProvider } from './data/currency';
@@ -141,5 +142,32 @@ describe('compare story', () => {
     expect(tones).toEqual(['good', 'good', 'good', 'good']);
     expect(screen.getByTestId('scenario-stories')).toHaveTextContent('180 days of sales');
     vi.unstubAllGlobals();
+  });
+});
+
+describe('loading line', () => {
+  it('says a live solve can take a while, but only in live mode and only after a short wait', async () => {
+    vi.useFakeTimers();
+    const { unmount } = render(
+      <DataSourceProvider initial="live">
+        <Loading what="results" />
+      </DataSourceProvider>,
+    );
+    expect(screen.queryByTestId('loading-slow')).toBeNull();
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(screen.getByTestId('loading-slow')).toHaveTextContent('up to 20 seconds');
+    unmount();
+    render(
+      <DataSourceProvider initial="cached">
+        <Loading what="results" />
+      </DataSourceProvider>,
+    );
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(screen.queryByTestId('loading-slow')).toBeNull();
+    vi.useRealTimers();
   });
 });

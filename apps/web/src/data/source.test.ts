@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { RequestError, detectSource, fetchScenarioResult } from './source';
+import { RequestError, detectSource, fetchScenarioResult, loadedScenarioResult } from './source';
 
 const ok = (body: unknown) => Promise.resolve(new Response(JSON.stringify(body), { status: 200 }));
 
@@ -48,5 +48,31 @@ describe('fetchScenarioResult', () => {
     }) as unknown as typeof fetch;
     expect(await fetchScenarioResult('live', 'default', f)).toEqual({ scenario: 'default' });
     expect(calls).toEqual(['http://api.test/scenarios', 'http://api.test/scenarios/7/solve']);
+  });
+});
+
+describe('scenario result cache', () => {
+  it('loads a scenario once per visit, even when two pages ask at the same time', async () => {
+    const f = vi.fn(() => ok({ scenario: 'default' })) as unknown as typeof fetch;
+    const [a, b] = await Promise.all([fetchScenarioResult('cached', 'default', f), fetchScenarioResult('cached', 'default', f)]);
+    await fetchScenarioResult('cached', 'default', f);
+    expect(a).toBe(b);
+    expect(f).toHaveBeenCalledTimes(1);
+    expect(loadedScenarioResult('cached', 'default')).toEqual({ scenario: 'default' });
+  });
+
+  it('keeps live and cached results apart, and one scenario apart from another', async () => {
+    const f = vi.fn(() => ok({ scenario: 'x' })) as unknown as typeof fetch;
+    await fetchScenarioResult('cached', 'default', f);
+    expect(loadedScenarioResult('cached', 'max_recovery')).toBeUndefined();
+    expect(loadedScenarioResult('live', 'default')).toBeUndefined();
+  });
+
+  it('does not keep a failed load, so Retry asks again', async () => {
+    const bad = vi.fn(() => Promise.resolve(new Response('{}', { status: 503 }))) as unknown as typeof fetch;
+    await expect(fetchScenarioResult('cached', 'default', bad)).rejects.toBeInstanceOf(RequestError);
+    const good = vi.fn(() => ok({ scenario: 'default' })) as unknown as typeof fetch;
+    expect(await fetchScenarioResult('cached', 'default', good)).toEqual({ scenario: 'default' });
+    expect(good).toHaveBeenCalledTimes(1);
   });
 });

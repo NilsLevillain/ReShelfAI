@@ -9,6 +9,8 @@ export default defineConfig({
   use: { baseURL: 'http://localhost:5174', headless: true, channel: process.env.PW_CHANNEL || undefined },
   webServer: {
     command: 'pnpm exec vite --port 5174 --strictPort',
+    // The test reads cached results. An empty value beats apps/web/.env.local, so a running API cannot change the test.
+    env: { VITE_API_URL: '' },
     url: 'http://localhost:5174',
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,
