@@ -16,3 +16,6 @@ afterEach(() => {
 
 // jsdom has no canvas. Return null so the WebGL check says "no WebGL" without printing a warning.
 HTMLCanvasElement.prototype.getContext = (() => null) as typeof HTMLCanvasElement.prototype.getContext;
+
+// jsdom does not implement scrolling. Pages that scroll a field into view only need the call to exist.
+Element.prototype.scrollIntoView = () => undefined;

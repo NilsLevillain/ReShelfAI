@@ -10,7 +10,7 @@ const precomputed = import.meta.glob('@data/precomputed/*.json', {
   eager: true,
 }) as Record<string, string>;
 
-export const SCENARIOS = ['default', 'luxury_protection'] as const;
+export const SCENARIOS = ['default', 'luxury_protection', 'max_recovery', 'shelf_life_strict'] as const;
 export type ScenarioName = (typeof SCENARIOS)[number];
 
 export class RequestError extends Error {

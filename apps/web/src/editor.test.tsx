@@ -77,14 +77,14 @@ describe('parameter editor', () => {
   it('runs only the edited parameters and lands on the results of the run', async () => {
     const calls = mockApi();
     renderAt('/parameters', 'live');
-    const days = await screen.findByLabelText('Coverage days');
+    const days = await screen.findByLabelText('Days of sales a channel should hold');
     expect(screen.getByTestId('changed-count')).toHaveTextContent('0 parameter(s)');
     await userEvent.clear(days);
     await userEvent.type(days, '45');
     expect(screen.getByTestId('changed-count')).toHaveTextContent('1 parameter(s)');
     await userEvent.click(screen.getByTestId('run-solver'));
     const review = await screen.findByTestId('review-step');
-    expect(review).toHaveTextContent('Coverage days');
+    expect(review).toHaveTextContent('Days of sales a channel should hold');
     expect(review).toHaveTextContent('90 to 45');
     expect(calls.some((c) => c.url.endsWith('/solve'))).toBe(false);
     await userEvent.click(screen.getByTestId('confirm-run'));
@@ -99,7 +99,7 @@ describe('parameter editor', () => {
   it('ticking a rule off and on again is not a change', async () => {
     mockApi();
     renderAt('/parameters', 'live');
-    await screen.findByLabelText('Coverage days');
+    await screen.findByLabelText('Days of sales a channel should hold');
     const tier = screen.getByRole('checkbox', { name: 'Brand tier' });
     await userEvent.click(tier);
     expect(screen.getByTestId('changed-count')).toHaveTextContent('1 parameter(s)');
@@ -107,10 +107,25 @@ describe('parameter editor', () => {
     expect(screen.getByTestId('changed-count')).toHaveTextContent('0 parameter(s)');
   });
 
+  it('opens at the field a lever button points to', async () => {
+    mockApi();
+    renderAt('/parameters?lever=coverage_days', 'live');
+    const days = await screen.findByLabelText('Days of sales a channel should hold');
+    await waitFor(() => expect(days).toHaveFocus());
+  });
+
+  it('explains a field on its info button', async () => {
+    mockApi();
+    renderAt('/parameters', 'live');
+    await screen.findByLabelText('Days of sales a channel should hold');
+    await userEvent.click(screen.getByRole('button', { name: 'About: Days of sales a channel should hold' }));
+    expect(screen.getByRole('note')).toHaveTextContent('If you raise it');
+  });
+
   it('typing a number over the old one leaves no leading zero', async () => {
     mockApi();
     renderAt('/parameters', 'live');
-    const alpha = (await screen.findByLabelText('Coverage floor share')) as HTMLInputElement;
+    const alpha = (await screen.findByLabelText('Smallest shipment, as a share of the need')) as HTMLInputElement;
     await userEvent.clear(alpha);
     expect(alpha.value).toBe('');
     await userEvent.type(alpha, '1');
@@ -124,7 +139,7 @@ describe('parameter editor', () => {
   it('review says defaults are used and lets the planner go back', async () => {
     mockApi();
     renderAt('/parameters', 'live');
-    await screen.findByLabelText('Coverage days');
+    await screen.findByLabelText('Days of sales a channel should hold');
     await userEvent.click(screen.getByTestId('run-solver'));
     expect(await screen.findByTestId('review-step')).toHaveTextContent('default rules');
     await userEvent.click(screen.getByTestId('back-to-edit'));
@@ -145,7 +160,7 @@ describe('parameter editor', () => {
     renderAt('/parameters', 'live');
     const list = await screen.findByTestId('saved-list');
     await userEvent.click(within(list).getByRole('button', { name: 'Load Tight' }));
-    await waitFor(() => expect(screen.getByLabelText('Coverage days')).toHaveValue(30));
+    await waitFor(() => expect(screen.getByLabelText('Days of sales a channel should hold')).toHaveValue(30));
     expect(screen.getByTestId('editor-notice')).toHaveTextContent('Loaded "Tight"');
     await userEvent.click(screen.getByTestId('save-scenario'));
     expect(await screen.findByTestId('editor-notice')).toHaveTextContent('Saved "Tight" as scenario 7');

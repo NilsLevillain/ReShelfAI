@@ -1,9 +1,7 @@
 import { SCENARIOS, type ScenarioName } from '../data/source';
+import { SCENARIO_INFO } from '../glossary';
 
-export const SCENARIO_LABEL: Record<ScenarioName, string> = {
-  default: 'Default',
-  luxury_protection: 'Luxury protection',
-};
+export const SCENARIO_LABEL = Object.fromEntries(SCENARIOS.map((s) => [s, SCENARIO_INFO[s].name])) as Record<ScenarioName, string>;
 
 export type Choice = ScenarioName | 'run';
 

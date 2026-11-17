@@ -14,6 +14,7 @@ export const NAV: NavItem[] = [
   { to: '/parameters', label: 'Rules and run', icon: 'sliders', step: 1 },
   { to: '/results', label: 'Plan', icon: 'chart', step: 3 },
   { to: '/compare', label: 'Compare scenarios', icon: 'scale' },
+  { to: '/glossary', label: 'Glossary', icon: 'book' },
 ];
 
 export function Shell() {

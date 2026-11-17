@@ -6,6 +6,8 @@ import { useChoiceResult } from '../data/useScenarioResult';
 import { useRun } from '../data/run';
 import { liveApi } from '../data/live';
 import { BaselineCompare } from '../results/BaselineCompare';
+import { DestructionPanel } from '../results/DestructionPanel';
+import { KpiHint } from '../components/Hint';
 import { Charts } from '../results/Charts';
 import { RuleDial } from '../results/RuleDial';
 import { SolverStatus } from '../results/SolverStatus';
@@ -80,12 +82,18 @@ export function Results() {
           <span className="rs-stat__value" title={eur(r.optimizer.value_recovered)}>
             {compact(r.optimizer.value_recovered)}
           </span>
-          <span>Value recovered by the plan</span>
+          <span>
+            Value recovered by the plan
+            <KpiHint k="value_recovered" />
+          </span>
           <span className="rs-stat__hint">{eur(r.baseline.compliant.value_recovered)} against the greedy baseline (compliant plan)</span>
         </div>
         <div className="rs-card rs-stat" data-testid="kpi-units-destroyed">
           <span className="rs-stat__value">{int(r.optimizer.units_destroyed)}</span>
-          <span>Units still destroyed</span>
+          <span>
+            Units still destroyed
+            <KpiHint k="units_destroyed" />
+          </span>
           <span className="rs-stat__hint">{int(r.baseline.compliant.units_destroyed)} against the greedy baseline (compliant plan)</span>
         </div>
         <div className="rs-card rs-stat">
@@ -93,6 +101,8 @@ export function Results() {
           <span>Units given a second life</span>
         </div>
       </div>
+
+      <DestructionPanel destruction={r.destruction} />
 
       <details className="rs-more">
         <summary>What are these channels?</summary>

@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Shell } from './components/Shell';
 import { RunProvider } from './data/run';
 import { Compare } from './pages/Compare';
+import { Glossary } from './pages/Glossary';
 import { Home } from './pages/Home';
 import { Parameters } from './pages/Parameters';
 import { Placeholder } from './pages/Placeholder';
@@ -18,6 +19,7 @@ export function App() {
           <Route path="parameters" element={<Parameters />} />
           <Route path="results" element={<Results />} />
           <Route path="compare" element={<Compare />} />
+          <Route path="glossary" element={<Glossary />} />
           <Route path="*" element={<Placeholder title="Page not found" lede="Use the menu above." />} />
         </Route>
       </Routes>

@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { InlineError } from '../components/InlineError';
 import { NumberField } from '../components/NumberField';
 import { useSource } from '../data/DataSource';
+import { SCENARIOS } from '../data/source';
 import { liveApi, type ScenarioSpec, type ScenarioSummary } from '../data/live';
 import { useRun } from '../data/run';
-import { describeEdits } from '../glossary';
+import { ParamHint, RuleHint } from '../components/Hint';
+import { describeEdits, PARAM_HELP, SCENARIO_INFO } from '../glossary';
 
 type Params = Record<string, unknown>;
-const BASES = ['default', 'luxury_protection'] as const;
+const BASES = SCENARIOS;
 type Base = (typeof BASES)[number];
 const CLASSES = ['A', 'B', 'C', 'NEW'] as const;
 const RULES = [
@@ -16,12 +18,31 @@ const RULES = [
   ['tier', 'Brand tier'],
   ['capacity', 'Channel capacity'],
 ] as const;
-const SCALARS: { key: string; label: string; hint: string; step: number }[] = [
-  { key: 'coverage_days', label: 'Coverage days', hint: 'Days of sales a channel should hold', step: 1 },
-  { key: 'coverage_alpha', label: 'Coverage floor share', hint: 'Share of the need a selected SKU must get', step: 0.05 },
-  { key: 'score_rank_weight', label: 'Rank bonus', hint: 'Score bonus for a better sales rank', step: 0.05 },
-  { key: 'epsilon', label: 'Score give up (epsilon)', hint: 'Score the second phase may give up for value', step: 0.005 },
+type Scalar = { key: string; step: number; min?: number; fallback?: number };
+const COVERAGE: Scalar[] = [
+  { key: 'coverage_days', step: 1, min: 1 },
+  { key: 'coverage_alpha', step: 0.05, min: 0 },
+  { key: 'channel_sku_limit_scale', step: 0.1, min: 0.1, fallback: 1 },
 ];
+const CHOICE: Scalar[] = [
+  { key: 'score_rank_weight', step: 0.05, min: 0 },
+  { key: 'epsilon', step: 0.005, min: 0 },
+];
+
+/** One number of the rules page: plain name, an explanation on the info button, the allowed values underneath. */
+function ScalarField({ spec, value, onValue }: { spec: Scalar; value: number; onValue: (n: number) => void }) {
+  const help = PARAM_HELP[spec.key];
+  return (
+    <label className="rs-field" id={`field-${spec.key}`}>
+      <span className="rs-field__label">
+        {help.name}
+        <ParamHint k={spec.key} />
+      </span>
+      <NumberField step={spec.step} min={spec.min} aria-label={help.name} value={value} onValue={onValue} />
+      <span className="rs-field__hint">{help.range}</span>
+    </label>
+  );
+}
 
 const asRecord = (v: unknown): Record<string, number> => (v ?? {}) as Record<string, number>;
 
@@ -54,7 +75,7 @@ export function Parameters() {
             </li>
             <li>
               <span>
-                In <code>apps/web/.env.local</code>, add <code>VITE_API_URL=http://localhost:8000</code> and restart the web app.
+                In <code>apps/web/.env.local</code>, add <code>VITE_API_URL=/api</code> (plain UTF-8, one line) and restart the web app.
               </span>
             </li>
             <li>
@@ -119,6 +140,16 @@ function Editor() {
     loadDefaults(base);
   }, [base, loadDefaults]);
   useEffect(loadSaved, [loadSaved]);
+
+  // A button on the Plan page can open this page at one field: ?lever=coverage_days
+  const [query] = useSearchParams();
+  const lever = query.get('lever');
+  useEffect(() => {
+    if (!lever || !defaults) return;
+    const box = document.getElementById(`field-${lever}`);
+    box?.scrollIntoView({ block: 'center' });
+    box?.querySelector<HTMLInputElement>('input')?.focus();
+  }, [lever, defaults]);
 
   const edits = (): Params =>
     Object.fromEntries(Object.entries(params).filter(([k, v]) => canon(v) !== canon(defaults?.[k])));
@@ -211,14 +242,15 @@ function Editor() {
               <input className="rs-input" value={name} onChange={(e) => setName(e.target.value)} />
             </label>
             <label className="rs-field">
-              <span className="rs-field__label">Base world</span>
+              <span className="rs-field__label">Start from the scenario</span>
               <select className="rs-input" value={base} onChange={(e) => setBase(e.target.value as Base)}>
                 {BASES.map((b) => (
                   <option key={b} value={b}>
-                    {b}
+                    {SCENARIO_INFO[b].name}
                   </option>
                 ))}
               </select>
+              <span className="rs-field__hint">{SCENARIO_INFO[base].story}</span>
             </label>
             <label className="rs-field">
               <span className="rs-field__label">SKUs</span>
@@ -236,33 +268,17 @@ function Editor() {
           </fieldset>
 
           <fieldset className="rs-fieldset">
-            <legend>Coverage and objective</legend>
-            {SCALARS.map((s) => (
-              <label key={s.key} className="rs-field">
-                <span className="rs-field__label">{s.label}</span>
-                <NumberField step={s.step} aria-label={s.label} value={Number(params[s.key] ?? 0)} onValue={(n) => set(s.key, n)} />
-                <span className="rs-field__hint">{s.hint}</span>
-              </label>
+            <legend>How much stock a channel takes</legend>
+            {COVERAGE.map((s) => (
+              <ScalarField key={s.key} spec={s} value={Number(params[s.key] ?? s.fallback ?? 0)} onValue={(n) => set(s.key, n)} />
             ))}
           </fieldset>
 
-          <fieldset className="rs-fieldset">
-            <legend>Score by class</legend>
-            {CLASSES.map((c) => (
-              <label key={c} className="rs-field">
-                <span className="rs-field__label">Class {c}</span>
-                <NumberField
-                  step={0.05}
-                  aria-label={`Score class ${c}`}
-                  value={asRecord(params.score_base)[c] ?? 0}
-                  onValue={(n) => setIn('score_base', c, n)}
-                />
-              </label>
-            ))}
-          </fieldset>
-
-          <fieldset className="rs-fieldset">
-            <legend>Push quantity for new products (units)</legend>
+          <fieldset className="rs-fieldset" id="field-push_quantity_units">
+            <legend>
+              Push quantity for new products (units)
+              <ParamHint k="push_quantity_units" />
+            </legend>
             {Object.keys(asRecord(defaults.push_quantity_units)).map((c) => (
               <label key={c} className="rs-field">
                 <span className="rs-field__label">{c}</span>
@@ -274,19 +290,52 @@ function Editor() {
                 />
               </label>
             ))}
+            <span className="rs-field__hint">{PARAM_HELP.push_quantity_units.range}</span>
           </fieldset>
 
           <fieldset className="rs-fieldset">
-            <legend>Rules the greedy baseline applies by hand</legend>
-            {RULES.map(([key, label]) => (
-              <label key={key} className="rs-check">
-                <input
-                  type="checkbox"
-                  checked={rules.includes(key)}
-                  onChange={(e) => set('planner_rules', e.target.checked ? [...rules, key] : rules.filter((r) => r !== key))}
+            <legend>How the plan chooses between products</legend>
+            {CHOICE.map((s) => (
+              <ScalarField key={s.key} spec={s} value={Number(params[s.key] ?? 0)} onValue={(n) => set(s.key, n)} />
+            ))}
+          </fieldset>
+
+          <fieldset className="rs-fieldset" id="field-score_base">
+            <legend>
+              Score by product class
+              <ParamHint k="score_base" />
+            </legend>
+            {CLASSES.map((c) => (
+              <label key={c} className="rs-field">
+                <span className="rs-field__label">Class {c}</span>
+                <NumberField
+                  step={0.05}
+                  aria-label={`Score class ${c}`}
+                  value={asRecord(params.score_base)[c] ?? 0}
+                  onValue={(n) => setIn('score_base', c, n)}
                 />
-                {label}
               </label>
+            ))}
+            <span className="rs-field__hint">{PARAM_HELP.score_base.range}</span>
+          </fieldset>
+
+          <fieldset className="rs-fieldset" id="field-planner_rules">
+            <legend>
+              Rules the plan made by hand applies
+              <ParamHint k="planner_rules" />
+            </legend>
+            {RULES.map(([key, label]) => (
+              <div key={key} className="rs-hintrow">
+                <label className="rs-check">
+                  <input
+                    type="checkbox"
+                    checked={rules.includes(key)}
+                    onChange={(e) => set('planner_rules', e.target.checked ? [...rules, key] : rules.filter((r) => r !== key))}
+                  />
+                  {label}
+                </label>
+                <RuleHint k={key} />
+              </div>
             ))}
           </fieldset>
 

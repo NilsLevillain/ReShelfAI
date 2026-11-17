@@ -403,3 +403,47 @@ a.rs-btn--primary:hover { background: var(--rs-action-primary); filter: brightne
 .rs-review__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--rs-space-3); padding: var(--rs-space-2) 0; border-bottom: 1px solid var(--rs-border-default); }
 .rs-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .rs-stepper { margin-bottom: var(--rs-space-6); flex-wrap: wrap; }
+
+/* Hint: a small info button that opens a short explanation. Hover, focus and click all open it, Escape closes it. */
+.rs-hint { position: relative; display: inline-flex; vertical-align: middle; margin-left: var(--rs-space-2); }
+.rs-hint__btn { display: inline-grid; place-items: center; width: 1.25rem; height: 1.25rem; padding: 0; border: 1px solid var(--rs-border-strong); border-radius: var(--rs-radius-pill); background: var(--rs-bg-surface); color: var(--rs-text-secondary); font-size: var(--rs-type-size-xs); font-weight: var(--rs-type-weight-semibold); line-height: 1; cursor: help; transition: background var(--rs-motion-duration-fast) var(--rs-motion-easing-standard), color var(--rs-motion-duration-fast) var(--rs-motion-easing-standard); }
+.rs-hint__btn:hover, .rs-hint__btn[aria-expanded="true"] { background: var(--rs-bg-hint); color: var(--rs-text-brand); border-color: var(--rs-border-brand); }
+.rs-hint__panel { position: absolute; z-index: 30; top: calc(100% + var(--rs-space-2)); left: 0; width: min(24rem, 80vw); display: grid; gap: var(--rs-space-2); padding: var(--rs-space-3) var(--rs-space-4); border: 1px solid var(--rs-border-default); border-radius: var(--rs-radius-md); background: var(--rs-bg-surface); box-shadow: var(--rs-shadow-overlay); color: var(--rs-text-primary); font-size: var(--rs-type-size-sm); font-weight: var(--rs-type-weight-regular); text-align: left; white-space: normal; }
+.rs-hint__panel p { margin: 0; }
+.rs-hint__panel dt { color: var(--rs-text-secondary); font-weight: var(--rs-type-weight-semibold); }
+.rs-hint__panel dd { margin: 0 0 var(--rs-space-1); }
+.rs-hint__more { color: var(--rs-text-brand); font-weight: var(--rs-type-weight-medium); }
+
+/* Why is stock destroyed: one bar split by cause, then one row per cause with the lever that moves it. */
+.rs-causebar { display: flex; height: 1.25rem; border-radius: var(--rs-radius-pill); overflow: hidden; background: var(--rs-bg-subtle); }
+.rs-causebar > span { flex: var(--rs-share) 1 0%; min-width: 2px; background: var(--rs-bar-color); }
+.rs-causes { display: grid; gap: var(--rs-space-3); list-style: none; margin: 0; padding: 0; }
+.rs-cause { display: grid; gap: var(--rs-space-1) var(--rs-space-4); grid-template-columns: minmax(0, 1fr) auto; align-items: start; padding: var(--rs-space-3) var(--rs-space-4); border: 1px solid var(--rs-border-default); border-left: 0.25rem solid var(--rs-bar-color); border-radius: var(--rs-radius-md); background: var(--rs-bg-surface); }
+.rs-cause h4 { margin: 0; font-size: var(--rs-type-size-md); font-weight: var(--rs-type-weight-semibold); }
+.rs-cause p { margin: 0; color: var(--rs-text-secondary); font-size: var(--rs-type-size-sm); max-width: 70ch; }
+.rs-cause__num { text-align: right; font-variant-numeric: tabular-nums; font-weight: var(--rs-type-weight-semibold); }
+.rs-cause__num small { display: block; color: var(--rs-text-secondary); font-weight: var(--rs-type-weight-regular); }
+.rs-cause__action { grid-column: 1 / -1; }
+[data-cause="coverage_ceiling"] { --rs-bar-color: var(--rs-chart-categorical-1); }
+[data-cause="push_ceiling"] { --rs-bar-color: var(--rs-chart-categorical-2); }
+[data-cause="sku_limit"] { --rs-bar-color: var(--rs-chart-categorical-3); }
+[data-cause="capacity"] { --rs-bar-color: var(--rs-chart-categorical-4); }
+[data-cause="group_limit"] { --rs-bar-color: var(--rs-chart-categorical-5); }
+[data-cause="blocked"] { --rs-bar-color: var(--rs-status-error); }
+[data-cause="no_demand"] { --rs-bar-color: var(--rs-compare-baseline); }
+[data-cause="not_worth"] { --rs-bar-color: var(--rs-text-muted); }
+
+/* Delta: a change with a direction and a verdict. Arrow and word say it, color only helps. */
+.rs-delta { display: inline-flex; align-items: baseline; gap: var(--rs-space-1); font-variant-numeric: tabular-nums; font-weight: var(--rs-type-weight-semibold); color: var(--rs-text-secondary); }
+.rs-delta[data-tone="good"] { color: var(--rs-status-success-text); }
+.rs-delta[data-tone="bad"] { color: var(--rs-status-error-text); }
+.rs-delta__word { font-size: var(--rs-type-size-xs); font-weight: var(--rs-type-weight-medium); }
+.rs-verdict { display: grid; gap: var(--rs-space-2); }
+.rs-verdict ul { margin: 0; padding-left: var(--rs-space-5); }
+
+/* Glossary page: one entry per word. */
+.rs-glossary { display: grid; gap: var(--rs-space-3); margin: 0; }
+.rs-glossary dt { font-weight: var(--rs-type-weight-semibold); }
+.rs-glossary dd { margin: 0 0 var(--rs-space-3); color: var(--rs-text-secondary); max-width: 70ch; }
+.rs-hintrow { display: flex; align-items: center; gap: var(--rs-space-1); }
+.rs-field__effect { color: var(--rs-text-brand); font-size: var(--rs-type-size-sm); }
