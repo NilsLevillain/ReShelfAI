@@ -306,16 +306,16 @@ function Editor() {
               ) : (
                 <>
                   <p>These values differ from the defaults:</p>
-                  <ul className="rs-list">
+                  <div className="rs-review__rows">
                     {changes.map((c) => (
-                      <li key={c.label} className="rs-review__row">
+                      <div key={c.label} className="rs-review__row">
                         <strong>{c.label}</strong>
                         <span>
                           {c.from} to {c.to}
                         </span>
-                      </li>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </>
               )}
               <p className="rs-section__sub">

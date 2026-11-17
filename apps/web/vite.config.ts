@@ -13,7 +13,8 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 5173,
       fs: { allow: ['../..'] },
-      proxy: { '/api': { target: env.VITE_API_URL || 'http://localhost:8000', rewrite: (p) => p.replace(/^\/api/, '') } },
+      // The app calls /api on its own origin (VITE_API_URL=/api), like the Docker image does, so the API needs no CORS.
+      proxy: { '/api': { target: env.API_PROXY_TARGET || 'http://localhost:8000', rewrite: (p) => p.replace(/^\/api/, '') } },
     },
   };
 });

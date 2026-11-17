@@ -1,6 +1,7 @@
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { CURRENCIES, useMoney, type CurrencyCode } from '../data/currency';
 import { useSource } from '../data/DataSource';
+import { apiUrl } from '../data/source';
 import { useTheme } from '../theme';
 import { Icon, IconSprite } from './Icon';
 import { Stepper } from './Stepper';
@@ -85,6 +86,14 @@ export function Shell() {
             <span>
               <strong>Cached results</strong>: you are looking at a plan that was prepared in advance. To change rules and run the
               plan yourself, start the live solver.
+              {apiUrl() && (
+                <>
+                  {' '}
+                  <span data-testid="api-unreachable">
+                    This app is set to use the solver at <code>{apiUrl()}</code>, but it did not answer. Check that the API is running.
+                  </span>
+                </>
+              )}
             </span>
             <Link className="rs-btn--link" to="/parameters">
               How to start the live solver

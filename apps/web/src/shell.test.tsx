@@ -25,6 +25,20 @@ describe('shell', () => {
     expect(screen.getByTestId('data-source-banner')).toHaveTextContent('Cached results');
   });
 
+  it('says so when an API is configured but did not answer', () => {
+    vi.stubEnv('VITE_API_URL', '/api');
+    renderAt('/');
+    expect(screen.getByTestId('api-unreachable')).toHaveTextContent('/api');
+    vi.unstubAllEnvs();
+  });
+
+  it('does not blame an API that is not configured', () => {
+    vi.stubEnv('VITE_API_URL', '');
+    renderAt('/');
+    expect(screen.queryByTestId('api-unreachable')).toBeNull();
+    vi.unstubAllEnvs();
+  });
+
   it('says Live solver when the API answers', () => {
     renderAt('/', 'live');
     expect(screen.getByTestId('data-source-banner')).toHaveTextContent('Live solver');

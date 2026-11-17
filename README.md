@@ -27,10 +27,10 @@ Source tables (SAP style CSV or Parquet) -> SourceAdapter -> Canonical dataset -
 Python 3.11 or newer and uv, Node 20 and pnpm 9.
 
 ```
-cd apps/api && uv sync --all-extras && uv run uvicorn main:app --port 8000
+cd apps/api && uv sync --all-extras && PYTHONPATH=../../data/generator uv run uvicorn main:app --port 8000
 cd apps/web && pnpm install && pnpm dev
 ```
-The app shows cached results from `data/precomputed/*.json`. Set `VITE_API_URL=http://localhost:8000` in `apps/web/.env.local` to use the live solver and the parameter editor. Banner text says "Cached results" or "Live solver".
+The app shows cached results from `data/precomputed/*.json`. Set `VITE_API_URL=/api` in `apps/web/.env.local` (plain UTF-8, the dev server proxies `/api` to the API on port 8000) to use the live solver and the parameter editor. Banner text says "Cached results" or "Live solver".
 
 With Docker (web on http://localhost:8080, API on http://localhost:8000):
 ```

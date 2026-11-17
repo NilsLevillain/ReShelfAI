@@ -399,6 +399,7 @@ a.rs-btn--primary:hover { background: var(--rs-action-primary); filter: brightne
 .rs-nextstep p { margin: 0; max-width: 60ch; }
 /* Review step before a run: changed values against defaults. */
 .rs-review { display: grid; gap: var(--rs-space-3); }
-.rs-review__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--rs-space-3); }
+.rs-review__rows { display: grid; }
+.rs-review__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--rs-space-3); padding: var(--rs-space-2) 0; border-bottom: 1px solid var(--rs-border-default); }
 .rs-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .rs-stepper { margin-bottom: var(--rs-space-6); flex-wrap: wrap; }

@@ -1,8 +1,14 @@
 import '@testing-library/jest-dom/vitest';
-import { afterEach } from 'vitest';
+import { afterEach, beforeEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 
+// Tests must not depend on the developer's apps/web/.env.local. A test that needs an API URL stubs it itself.
+beforeEach(() => {
+  vi.stubEnv('VITE_API_URL', '');
+});
+
 afterEach(() => {
+  vi.unstubAllEnvs();
   cleanup();
   localStorage.clear();
   document.documentElement.removeAttribute('data-theme');

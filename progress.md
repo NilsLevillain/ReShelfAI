@@ -1,6 +1,6 @@
 # Progress
 
-Last updated: 2026-11-06 (week 7 built, UX rework batch 1 done). Source of truth for the schedule is `docs/war_plan.md` section 7.
+Last updated: 2026-11-17 (week 7 built, UX rework batches 1 and 2 done, design system rework next). Source of truth for the schedule is `docs/war_plan.md` section 7.
 
 ## Status at a glance
 
@@ -22,6 +22,7 @@ Last updated: 2026-11-06 (week 7 built, UX rework batch 1 done). Source of truth
 | 6 | Why panel live cost, globe, Playwright e2e | Done, see "Week 6 built". Deep dive page skipped (stretch) |
 | 7 | Docker, compose, CI image build, README, home page, ADR 009, partial `docs/benchmark.md` | Done, see "Week 7 built". No deploy, no screenshots, images never built locally |
 | UX 1 | First impressions, first fixes: plain words, flow, currency, stock view, Why drawer, scenario compare | Done, see "UX rework batch 1". Globe borders, guided run and deeper design pass still open |
+| UX 2 | Product names, Next step, review before run, cached counterfactuals for every rule type, globe borders, live mode fix | Done, see "Cleanup and UX rework batch 2" |
 | 8 | Remotion video | Not started |
 
 Test state after week 3 slice 2: 236 fast tests green in about 25 s (`-m "not slow"`), ruff and mypy strict clean. The slow 50 seed test was not rerun since slice 4 (the solver change is a refactor, `solve` behavior is unchanged and `test_solver.py` passes). Earlier, slice 4: 246 tests in about 3.5 minutes. The 50 seed test is marked `slow` (`-m "not slow"` skips it, CI runs everything). Latest check (UX 1): API untouched (290 fast tests at week 7), 44 web tests green, type check, lint, build and the Playwright e2e (Edge) green. All commits are pushed to `origin/main` (up to `945c3dd`).
@@ -275,6 +276,31 @@ Not done in UX 1 (to plan with Nils):
 * Currency rates are static. "Optimizer" and "greedy baseline" still appear in KPI captions (kept so every comparison names its baseline).
 * Wider design rework (livelier look, motion, new visual style) not started. Tokens and components first when it starts.
 
+### Cleanup and UX rework batch 2 (2026-11-17)
+Plan: cleanup and verify first, then batch 2, then the design system rework (not started).
+
+| Item | What changed |
+|---|---|
+| Cleanup | Stray `tsc` output in `apps/web/src` removed and ignored. Seven unpushed UX 1 commits pushed. |
+| Product names | Plan lines show the product name with the lot code as a tag (`lotInfo` in `glossary.ts`, joined from `result.stock.lots`, no API change). |
+| Next step | `components/NextStep.tsx` on Stock and Plan. Class `rs-nextstep` in the design system. |
+| Review before run | "Review and run the plan" opens a review of changed values against defaults (`describeEdits` in `glossary.ts`), then "Confirm and run" or "Back to edit". |
+| Cached counterfactuals | `rank_by_rule_type` and `per_type` in `counterfactual.py`. The precompute now keeps the top 5 rules plus the best of each binding type: 18 counterfactuals per scenario (was 10), covering `sku`, `asrt`, `cov_hi`, `cov_lo`, `push`. Slowest solve 2.5 s. `data/precomputed/*.json` regenerated. |
+| Globe | Country borders from `world-atlas` (Natural Earth, 110m), countries with a plant or channel highlighted, legend, view starts on the plants, colors follow the theme switch. Credits in `design_system/assets/CREDITS.md` (new file). |
+| Live mode bug | The documented dev setup never worked in a browser. `VITE_API_URL=http://localhost:8000` is cross origin and the API has no CORS, so the app fell back to cached results without saying why. Also, `apps/web/.env.local` was saved as UTF-16 and Vite could not read it. Fix: dev uses `VITE_API_URL=/api` and the Vite proxy (`API_PROXY_TARGET` for the target). The banner now says when an API is set but did not answer. `.env.local` rewritten as UTF-8. |
+| Start command | Documented API start lacked `PYTHONPATH=../../data/generator`, so `/base-scenarios/{name}/params` returned 500 (`reshelf_datagen` not found). Docs fixed (CLAUDE.md, README, this file). |
+| Tests | Vitest setup now pins `VITE_API_URL` to empty so tests do not read `.env.local`. 50 web tests, 292 fast API tests, type check, lint, build and the Edge e2e green. |
+
+First time the live flow ran in a browser (Edge): Parameters form, review step, run, Plan with product names and Next step, Compare in dark theme.
+
+Not done or found in batch 2:
+* Compare in live mode took about 9 s to load (two scenarios solved on request). Slow for a planner. Consider caching or a progress message.
+* The globe canvas is a fixed 560 by 420 and looks small in its card.
+* The stepper still has no own state for Run and Export (Run happens on the Parameters page, Export on the Plan page).
+* The Value recovered card on Plan has a large empty gradient area, chart legends are long. Design rework items.
+* Cached `cap[...]` rules did not bind in the demo world, so no cached cost exists for them (live mode still computes it).
+* Docker images still never built locally. CI result for the push was not read (no `gh` on this machine, check on GitHub).
+
 ### Decisions taken with Nils
 * Demo world is 30 SKUs by 5 channels (2026-11-05). Slice 4 scope is precompute plus scenario and results API (2026-11-05). The benchmark run is skipped for now.
 * Push quantity depends on product category.
@@ -373,7 +399,7 @@ Tests and docs:
 * On this machine run uv with `UV_LINK_MODE=copy` (OneDrive blocks hardlinks).
 * Run from `apps/api`: `uv run pytest -q`, `uv run ruff check . ../../data/generator`, `uv run ruff format --check . ../../data/generator`, `uv run mypy . ../../data/generator`.
 * Commits: conventional, no `Co-Authored-By` lines (CLAUDE.md). The session reminder asks for a `Co-Authored-By` trailer, CLAUDE.md forbids it, and CLAUDE.md wins.
-* To look at the app: API with `uv run uvicorn main:app --port 8000` from `apps/api`, then `pnpm dev` in `apps/web` with `VITE_API_URL=http://localhost:8000` in `apps/web/.env.local` (live editor), or without it for cached results only. App at http://localhost:5173.
+* To look at the app: API with `PYTHONPATH=../../data/generator uv run uvicorn main:app --port 8000` from `apps/api`, then `pnpm dev` in `apps/web` with `VITE_API_URL=/api` in `apps/web/.env.local`, plain UTF-8 (live editor), or without it for cached results only. App at http://localhost:5173.
 * The web UI was looked at by Nils on 2026-11-06 (see "First impressions"). UX 1 answered the first fixes (see "UX rework batch 1"). Next: the open items listed there, then the wider design rework.
 * For screenshots, run `pnpm dev --port 5199` and a small Playwright script with `channel: 'msedge'` (import from `@playwright/test`, run it from `apps/web`).
 * Run the throwaway scripts in `tmp/` with `PYTHONPATH=../../data/generator uv run python ../../tmp/<file>.py` from `apps/api`.
