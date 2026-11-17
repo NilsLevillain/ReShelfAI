@@ -17,6 +17,7 @@ from reshelf.api_models import (
 from reshelf.baseline import baseline_planner
 from reshelf.constraints import Solution
 from reshelf.counterfactual import top_counterfactuals
+from reshelf.destruction import explain_destruction
 from reshelf.geo import geo_out
 from reshelf.kpis import compute_kpis
 from reshelf.solver import PulpSolver, SolveResult
@@ -80,4 +81,5 @@ def run_scenario(
         counterfactuals=[counterfactual_out(c) for c in counterfactuals],
         stock=stock_out(data, result.x),
         geo=geo_out(data, result.x),
+        destruction=explain_destruction(data, result.x),
     )

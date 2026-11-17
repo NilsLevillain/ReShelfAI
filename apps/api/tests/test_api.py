@@ -174,6 +174,30 @@ def test_edited_parameter_changes_the_plan(client: TestClient, solved: dict[str,
     assert tight["optimizer"]["units_allocated"] != base["optimizer"]["units_allocated"]  # type: ignore[index]
 
 
+def test_the_channel_sku_limit_scale_is_an_editor_lever(
+    client: TestClient, solved: dict[str, object]
+) -> None:
+    assert client.get("/base-scenarios/default/params").json()["params"][
+        "channel_sku_limit_scale"
+    ] == pytest.approx(1.0)
+    spec = {**SPEC, "name": "few skus", "params": {"channel_sku_limit_scale": 0.1}}
+    sid = client.post("/scenarios", json=spec).json()["id"]
+    few = client.post(f"/scenarios/{sid}/solve").json()["result"]
+    base = solved["result"]
+    assert few["optimizer"]["units_allocated"] < base["optimizer"]["units_allocated"]  # type: ignore[index]
+    causes = {c["cause"] for c in few["destruction"]["causes"]}
+    assert "sku_limit" in causes
+    bad = client.post("/scenarios", json={**SPEC, "params": {"channel_sku_limit_scale": 0}})
+    assert bad.status_code == 422
+    assert "channel_sku_limit_scale must be between" in bad.json()["detail"]
+
+
+def test_the_result_explains_the_destroyed_units(solved: dict[str, object]) -> None:
+    out = solved["result"]["destruction"]  # type: ignore[index]
+    assert out["units_destroyed"] == solved["result"]["optimizer"]["units_destroyed"]  # type: ignore[index]
+    assert sum(c["units"] for c in out["causes"]) == out["units_destroyed"]
+
+
 def test_excel_export_has_the_sheets_and_the_label(
     client: TestClient, solved: dict[str, object]
 ) -> None:

@@ -358,6 +358,43 @@ export interface components {
             /** Units Destroyed By Rule */
             units_destroyed_by_rule: number;
         };
+        /** DestroyedMaterial */
+        DestroyedMaterial: {
+            /** Description */
+            description: string;
+            /** Material */
+            material: string;
+            /** Units */
+            units: number;
+        };
+        /** DestructionCause */
+        DestructionCause: {
+            /** Cause */
+            cause: string;
+            /** Lever */
+            lever: string | null;
+            /** Share */
+            share: number;
+            /** Top Materials */
+            top_materials: components["schemas"]["DestroyedMaterial"][];
+            /** Units */
+            units: number;
+            /** Value At Risk */
+            value_at_risk: number;
+        };
+        /** DestructionOut */
+        DestructionOut: {
+            /** Causes */
+            causes: components["schemas"]["DestructionCause"][];
+            /** Units At Risk */
+            units_at_risk: number;
+            /** Units Destroyed */
+            units_destroyed: number;
+            /** Units Placed */
+            units_placed: number;
+            /** Value Destroyed */
+            value_destroyed: number;
+        };
         /** GeoArc */
         GeoArc: {
             /** Channel */
@@ -465,6 +502,7 @@ export interface components {
             baseline: components["schemas"]["BaselineOut"];
             /** Counterfactuals */
             counterfactuals: components["schemas"]["CounterfactualOut"][];
+            destruction: components["schemas"]["DestructionOut"];
             geo: components["schemas"]["GeoOut"];
             /**
              * Label

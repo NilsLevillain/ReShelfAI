@@ -1,0 +1,13 @@
+# Scenario: max_recovery
+# Channels are asked to hold more stock: 180 days of sales instead of 90, and twice the push
+# quantity for new products. The coverage ceiling is the main reason stock is destroyed in the
+# default world, so this scenario shows what happens when a planner agrees to fill the channels more.
+# Same seed and same stock as `default`. Illustrative default, invented for the demo.
+
+extends: default
+name: max_recovery
+description: Channels hold 180 days of sales and new products get twice the push quantity. Less stock destroyed, more value recovered.
+
+params:
+  coverage_days: 180
+  push_quantity_units: {Fragrance: 10, Skincare: 60, Makeup: 60, Haircare: 100}

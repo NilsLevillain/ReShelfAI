@@ -335,6 +335,113 @@
         "title": "CounterfactualOut",
         "type": "object"
       },
+      "DestroyedMaterial": {
+        "properties": {
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "material": {
+            "title": "Material",
+            "type": "string"
+          },
+          "units": {
+            "title": "Units",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "material",
+          "description",
+          "units"
+        ],
+        "title": "DestroyedMaterial",
+        "type": "object"
+      },
+      "DestructionCause": {
+        "properties": {
+          "cause": {
+            "title": "Cause",
+            "type": "string"
+          },
+          "lever": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lever"
+          },
+          "share": {
+            "title": "Share",
+            "type": "number"
+          },
+          "top_materials": {
+            "items": {
+              "$ref": "#/components/schemas/DestroyedMaterial"
+            },
+            "title": "Top Materials",
+            "type": "array"
+          },
+          "units": {
+            "title": "Units",
+            "type": "integer"
+          },
+          "value_at_risk": {
+            "title": "Value At Risk",
+            "type": "number"
+          }
+        },
+        "required": [
+          "cause",
+          "lever",
+          "units",
+          "value_at_risk",
+          "share",
+          "top_materials"
+        ],
+        "title": "DestructionCause",
+        "type": "object"
+      },
+      "DestructionOut": {
+        "properties": {
+          "causes": {
+            "items": {
+              "$ref": "#/components/schemas/DestructionCause"
+            },
+            "title": "Causes",
+            "type": "array"
+          },
+          "units_at_risk": {
+            "title": "Units At Risk",
+            "type": "integer"
+          },
+          "units_destroyed": {
+            "title": "Units Destroyed",
+            "type": "integer"
+          },
+          "units_placed": {
+            "title": "Units Placed",
+            "type": "integer"
+          },
+          "value_destroyed": {
+            "title": "Value Destroyed",
+            "type": "number"
+          }
+        },
+        "required": [
+          "units_at_risk",
+          "units_placed",
+          "units_destroyed",
+          "value_destroyed",
+          "causes"
+        ],
+        "title": "DestructionOut",
+        "type": "object"
+      },
       "GeoArc": {
         "properties": {
           "channel": {
@@ -612,6 +719,9 @@
             "title": "Counterfactuals",
             "type": "array"
           },
+          "destruction": {
+            "$ref": "#/components/schemas/DestructionOut"
+          },
           "geo": {
             "$ref": "#/components/schemas/GeoOut"
           },
@@ -686,7 +796,8 @@
           "trace",
           "counterfactuals",
           "stock",
-          "geo"
+          "geo",
+          "destruction"
         ],
         "title": "ScenarioResult",
         "type": "object"

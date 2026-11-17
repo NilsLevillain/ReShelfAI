@@ -1,12 +1,16 @@
 # Scenario: luxury_protection
-# The hero trade off. Banning luxury from the clearance website lowers brand risk and costs
-# visible value. Same seed and same stock as `default`, only the rule changes.
+# The hero trade off. Luxury is never discounted: it is banned from the outlet, friends and family
+# and clearance channels (liquidation and donation already refuse it). That lowers the brand image
+# risk and costs visible value. Same seed and same stock as `default`, only the rule changes.
+# In the 30 SKU demo world only a small part of the stock is luxury, so the cost is small.
 # Illustrative default, invented for the demo.
 
 extends: default
 name: luxury_protection
-description: Luxury is banned from the clearance website. Compare against default to see the euro cost of the rule.
+description: Luxury is never discounted. It is banned from the outlet, friends and family and clearance channels. Compare against default to see the euro cost of the rule.
 
 rules:
   allowed_tiers:
+    outlet: [premium, mass]
+    friends_family: [premium, mass]
     clearance_web: [premium, mass]

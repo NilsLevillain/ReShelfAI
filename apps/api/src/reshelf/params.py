@@ -12,6 +12,10 @@ from typing import Any
 CLASSES = ("A", "B", "C", "NEW")
 PLANNER_RULES = ("rsl", "tier", "capacity")
 
+# Not a ZPARAM row. It scales the channel SKU limit (rule sku) of every channel type when the world is built.
+SKU_LIMIT_SCALE = "channel_sku_limit_scale"
+EDITOR_ONLY_DEFAULTS: dict[str, Any] = {SKU_LIMIT_SCALE: 1.0}
+
 # key: (low, high, whole number). Scalar parameters only.
 SCALARS: dict[str, tuple[float, float, bool]] = {
     "score_rank_weight": (0.0, 1.0, False),
@@ -20,6 +24,7 @@ SCALARS: dict[str, tuple[float, float, bool]] = {
     "coverage_alpha": (0.0, 1.0, False),
     "solver_time_limit_s": (1, 600, True),
     "counterfactual_time_limit_s": (1, 120, True),
+    SKU_LIMIT_SCALE: (0.1, 10.0, False),
 }
 
 

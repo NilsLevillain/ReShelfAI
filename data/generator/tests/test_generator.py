@@ -300,7 +300,9 @@ def test_luxury_protection_changes_only_the_rule(cfg: dict[str, Any]) -> None:
         if b != p
     ]
     assert changed
-    assert all(channel.startswith("CLR") and tier == "luxury" for channel, tier in changed)
+    assert all(
+        channel[:3] in {"OUT", "FNF", "CLR"} and tier == "luxury" for channel, tier in changed
+    )
 
 
 def test_every_channel_has_a_transit_time(tables: Tables) -> None:

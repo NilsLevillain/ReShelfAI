@@ -29,7 +29,7 @@ from reshelf.benchmark import build_world
 from reshelf.counterfactual import counterfactual
 from reshelf.db import ResultRow, ScenarioRow, make_engine, make_session_factory
 from reshelf.export import build_workbook
-from reshelf.params import validate_params
+from reshelf.params import EDITOR_ONLY_DEFAULTS, SKU_LIMIT_SCALE, validate_params
 from reshelf.pipeline import COUNTERFACTUAL_TIME_LIMIT_S, run_scenario, solve_and_trace
 from reshelf.stock import StockLot, StockSummary, filter_lots
 
@@ -109,10 +109,14 @@ def _config(spec: ScenarioSpec) -> dict[str, Any]:
         raise HTTPException(404, f"Unknown base scenario {spec.base!r}. Known: {', '.join(known)}.")
     cfg = copy.deepcopy(load_scenario(path))
     try:
-        validate_params(spec.params, cfg["params"])
+        validate_params(spec.params, {**cfg["params"], **EDITOR_ONLY_DEFAULTS})
     except ValueError as exc:
         raise HTTPException(422, str(exc)) from exc
-    cfg["params"].update(spec.params)
+    edits = dict(spec.params)
+    scale = float(edits.pop(SKU_LIMIT_SCALE, 1.0))
+    for channel_type in cfg["generator"]["channel_types"].values():
+        channel_type["max_skus"] = max(1, round(channel_type["max_skus"] * scale))
+    cfg["params"].update(edits)
     return cfg
 
 
@@ -225,7 +229,12 @@ def create_app(db_url: str | None = None) -> FastAPI:
     @app.get("/base-scenarios/{name}/params", response_model=BaseParams)
     def base_params(name: str) -> BaseParams:
         cfg = _config(ScenarioSpec(name=name, base=name))
-        return BaseParams(base=name, n_skus=30, n_channels=5, params=copy.deepcopy(cfg["params"]))
+        return BaseParams(
+            base=name,
+            n_skus=30,
+            n_channels=5,
+            params={**copy.deepcopy(cfg["params"]), **EDITOR_ONLY_DEFAULTS},
+        )
 
     @app.get("/scenarios", response_model=list[ScenarioSummary])
     def list_scenarios(db: Session = Db) -> list[ScenarioSummary]:

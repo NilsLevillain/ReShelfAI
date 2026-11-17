@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field
 
 from reshelf.baseline import BaselineResult
 from reshelf.counterfactual import CounterfactualResult
+from reshelf.destruction import DestructionOut
 from reshelf.geo import GeoOut
 from reshelf.ids import Pair, lot_label, pair_label
 from reshelf.kpis import Kpis, unit_value
@@ -127,6 +128,7 @@ class ScenarioResult(BaseModel):
     counterfactuals: list[CounterfactualOut]
     stock: StockOut
     geo: GeoOut
+    destruction: DestructionOut
 
 
 def kpi_out(kpis: Kpis) -> KpiOut:

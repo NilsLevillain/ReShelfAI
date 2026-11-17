@@ -23,7 +23,7 @@ from reshelf.pipeline import DEFAULT_TIME_LIMIT_S, run_scenario
 
 DEMO_SKUS = 30
 DEMO_CHANNELS = 5
-DEFAULT_SCENARIOS = ("default", "luxury_protection")
+DEFAULT_SCENARIOS = ("default", "luxury_protection", "max_recovery", "shelf_life_strict")
 
 
 def precompute_one(

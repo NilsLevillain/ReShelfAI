@@ -10,7 +10,7 @@
     "score": 29.810714285714287,
     "best_score": 30.09464285714286,
     "mip_gap": 0.00005701047119476272,
-    "time_s": 0.3286191001534462,
+    "time_s": 0.14523699996061623,
     "time_limit_s": 60.0,
     "solver": "highs",
     "message": ""
@@ -1898,7 +1898,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240069,
       "mip_gap": 0.00002933704492327956,
-      "time_s": 0.16647649998776615,
+      "time_s": 0.09179640002548695,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1914,7 +1914,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 242041,
       "mip_gap": 0.0,
-      "time_s": 0.16725579998455942,
+      "time_s": 0.09000720013864338,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1930,7 +1930,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240192,
       "mip_gap": 0.0,
-      "time_s": 1.2925619001034647,
+      "time_s": 0.8853309999685735,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1946,7 +1946,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 241886,
       "mip_gap": 4.498572472427946e-6,
-      "time_s": 0.14439760008826852,
+      "time_s": 0.12195880012586713,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1962,7 +1962,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240107,
       "mip_gap": 0.0,
-      "time_s": 0.3052360999863595,
+      "time_s": 0.24193149991333485,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1978,7 +1978,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 241837,
       "mip_gap": 0.0,
-      "time_s": 0.2634072999935597,
+      "time_s": 0.2008692999370396,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1994,7 +1994,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240152,
       "mip_gap": 0.0,
-      "time_s": 0.3421695998404175,
+      "time_s": 0.27079450013116,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2010,7 +2010,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 242020,
       "mip_gap": 4.50805260926345e-6,
-      "time_s": 0.17810350004583597,
+      "time_s": 0.11226679990068078,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2026,7 +2026,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240172,
       "mip_gap": 0.00007168736617498242,
-      "time_s": 0.3220659999642521,
+      "time_s": 0.22404429991729558,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2042,7 +2042,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 242027,
       "mip_gap": 0.0,
-      "time_s": 0.15904700011014938,
+      "time_s": 0.1074135999660939,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2058,7 +2058,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240249,
       "mip_gap": 0.00005701047119476272,
-      "time_s": 0.15994589985348284,
+      "time_s": 0.09439860004931688,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2074,7 +2074,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240249,
       "mip_gap": 0.00005701047119476272,
-      "time_s": 0.1469485000707209,
+      "time_s": 0.1023524000775069,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2090,7 +2090,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 239938,
       "mip_gap": 0.000055890617551055224,
-      "time_s": 0.1450005997903645,
+      "time_s": 0.09381910017691553,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2106,7 +2106,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 234745,
       "mip_gap": 0.0,
-      "time_s": 0.5254389999900013,
+      "time_s": 0.309996800031513,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2122,7 +2122,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240265,
       "mip_gap": 0.000057001797510835886,
-      "time_s": 0.1550787000451237,
+      "time_s": 0.0939140000846237,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2138,7 +2138,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240402,
       "mip_gap": 0.0000569276370033665,
-      "time_s": 0.14080190006643534,
+      "time_s": 0.09345619985833764,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2154,7 +2154,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240249,
       "mip_gap": 0.00005701047119476272,
-      "time_s": 0.1399430998135358,
+      "time_s": 0.09770079981535673,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2170,7 +2170,7 @@
       "base_destroyed": 240249,
       "relaxed_destroyed": 240249,
       "mip_gap": 0.00005701047119476272,
-      "time_s": 0.1451111000496894,
+      "time_s": 0.09546000021509826,
       "time_limit_s": 10.0,
       "message": ""
     }
@@ -4028,6 +4028,134 @@
         "plant": "NA10",
         "channel": "OUT_PL",
         "units": 430
+      }
+    ]
+  },
+  "destruction": {
+    "units_at_risk": 254964,
+    "units_placed": 14715,
+    "units_destroyed": 240249,
+    "value_destroyed": 2437076.25,
+    "causes": [
+      {
+        "cause": "coverage_ceiling",
+        "lever": "coverage_days",
+        "units": 163091,
+        "value_at_risk": 1835992.9587605083,
+        "share": 0.6788415352405213,
+        "top_materials": [
+          {
+            "material": "100022",
+            "description": "Velaire Rose Poudrée Rouge à Lèvres 400 ml",
+            "units": 46387
+          },
+          {
+            "material": "100019",
+            "description": "Velaire Soie Rouge à Lèvres 50 ml",
+            "units": 37224
+          },
+          {
+            "material": "100005",
+            "description": "Noctua Éclat Crème Visage 30 ml",
+            "units": 26520
+          }
+        ]
+      },
+      {
+        "cause": "push_ceiling",
+        "lever": "push_quantity_units",
+        "units": 69280,
+        "value_at_risk": 477070.6345986589,
+        "share": 0.28836748540056356,
+        "top_materials": [
+          {
+            "material": "100014",
+            "description": "Brightleaf Velours Conditioner 100 ml",
+            "units": 16504
+          },
+          {
+            "material": "100026",
+            "description": "Pigment Lab Éclat Mascara 100 ml",
+            "units": 15294
+          },
+          {
+            "material": "100020",
+            "description": "Pigment Lab Lumière Rouge à Lèvres 100 ml",
+            "units": 8202
+          }
+        ]
+      },
+      {
+        "cause": "blocked",
+        "lever": null,
+        "units": 3096,
+        "value_at_risk": 81292.68,
+        "share": 0.012886630121249205,
+        "top_materials": [
+          {
+            "material": "100021",
+            "description": "Atelier Sable Bois Noir Eau de Toilette 15 ml",
+            "units": 2274
+          },
+          {
+            "material": "100013",
+            "description": "Atelier Sable Ambre Extrait 15 ml",
+            "units": 702
+          },
+          {
+            "material": "100009",
+            "description": "Atelier Sable Cèdre Eau de Toilette 250 ml",
+            "units": 120
+          }
+        ]
+      },
+      {
+        "cause": "sku_limit",
+        "lever": "channel_sku_limit_scale",
+        "units": 2462,
+        "value_at_risk": 20546.905800697306,
+        "share": 0.010247701343189773,
+        "top_materials": [
+          {
+            "material": "100017",
+            "description": "Noctua Lumière Sérum 15 ml",
+            "units": 334
+          },
+          {
+            "material": "100015",
+            "description": "Brightleaf Aurore Shampoo 15 ml",
+            "units": 250
+          },
+          {
+            "material": "100016",
+            "description": "Velaire Nuit Dorée Mascara 15 ml",
+            "units": 150
+          }
+        ]
+      },
+      {
+        "cause": "not_worth",
+        "lever": null,
+        "units": 2320,
+        "value_at_risk": 22173.070840135377,
+        "share": 0.009656647894476149,
+        "top_materials": [
+          {
+            "material": "100028",
+            "description": "Noctua Ambre Gel Nettoyant 50 ml",
+            "units": 1927
+          },
+          {
+            "material": "100012",
+            "description": "Noctua Océan Gel Nettoyant 400 ml",
+            "units": 240
+          },
+          {
+            "material": "100011",
+            "description": "Velaire Cèdre Vernis 250 ml",
+            "units": 153
+          }
+        ]
       }
     ]
   }

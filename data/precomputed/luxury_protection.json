@@ -6,20 +6,20 @@
   "label": "Simulated data",
   "solve": {
     "status": "optimal",
-    "objective": 34995.5665,
-    "score": 29.801785714285714,
+    "objective": 34409.31,
+    "score": 29.8,
     "best_score": 30.09464285714286,
     "mip_gap": 0.0,
-    "time_s": 0.23585129994899035,
+    "time_s": 0.4008087997790426,
     "time_limit_s": 60.0,
     "solver": "highs",
     "message": ""
   },
   "optimizer": {
-    "value_recovered": 34995.56649999999,
-    "units_allocated": 14715,
-    "units_destroyed": 240249,
-    "brand_risk_index": 0.07125174205925361,
+    "value_recovered": 34409.31,
+    "units_allocated": 14686,
+    "units_destroyed": 240278,
+    "brand_risk_index": 0.07149432131622836,
     "skus_per_channel": {
       "OUT_PL": 5,
       "FNF_GB": 4,
@@ -28,30 +28,22 @@
       "LIQ_AE": 12
     },
     "fill_rate": {
-      "OUT_PL": 0.055278700627537834,
+      "OUT_PL": 0.05437430786267996,
       "FNF_GB": 0.037029916173190805,
-      "CLR_DE": 0.08459456133874739,
+      "CLR_DE": 0.08490217792543374,
       "NGO_ES": 0.020025839793281652,
       "LIQ_AE": 0.09675995586317584
     },
-    "score": 29.801785714285714
+    "score": 29.8
   },
   "lines": [
     {
-      "line": "100003/AP10/2028-08,CLR_DE",
+      "line": "100003/AP10/2028-08,NGO_ES",
       "lot": "100003/AP10/2028-08",
-      "channel": "CLR_DE",
+      "channel": "NGO_ES",
       "quantity": 30,
       "lot_supply": 14688,
-      "net_value_eur": 21.36
-    },
-    {
-      "line": "100003/AP10/2028-08,FNF_GB",
-      "lot": "100003/AP10/2028-08",
-      "channel": "FNF_GB",
-      "quantity": 30,
-      "lot_supply": 14688,
-      "net_value_eur": 38.28
+      "net_value_eur": 3.4799999999999995
     },
     {
       "line": "100003/AP10/2028-08,OUT_PL",
@@ -70,6 +62,14 @@
       "net_value_eur": 60.071200000000005
     },
     {
+      "line": "100004/AP01/2028-02,CLR_DE",
+      "lot": "100004/AP01/2028-02",
+      "channel": "CLR_DE",
+      "quantity": 30,
+      "lot_supply": 240,
+      "net_value_eur": 180.29999999999998
+    },
+    {
       "line": "100005/AP10/2028-03,CLR_DE",
       "lot": "100005/AP10/2028-03",
       "channel": "CLR_DE",
@@ -86,12 +86,28 @@
       "net_value_eur": 18.384
     },
     {
+      "line": "100005/AP10/2028-03,OUT_PL",
+      "lot": "100005/AP10/2028-03",
+      "channel": "OUT_PL",
+      "quantity": 30,
+      "lot_supply": 13542,
+      "net_value_eur": 226.41
+    },
+    {
       "line": "100005/NA10/2028-07,FNF_GB",
       "lot": "100005/NA10/2028-07",
       "channel": "FNF_GB",
       "quantity": 873,
       "lot_supply": 7632,
       "net_value_eur": 7956.522000000001
+    },
+    {
+      "line": "100008/EU01/2027-12,CLR_DE",
+      "lot": "100008/EU01/2027-12",
+      "channel": "CLR_DE",
+      "quantity": 50,
+      "lot_supply": 1866,
+      "net_value_eur": 144.27499999999998
     },
     {
       "line": "100008/EU01/2027-12,LIQ_AE",
@@ -126,14 +142,6 @@
       "net_value_eur": -8.67599999999998
     },
     {
-      "line": "100013/EU01/2028-06,OUT_PL",
-      "lot": "100013/EU01/2028-06",
-      "channel": "OUT_PL",
-      "quantity": 79,
-      "lot_supply": 576,
-      "net_value_eur": 1137.4815
-    },
-    {
       "line": "100014/EU10/2027-02,LIQ_AE",
       "lot": "100014/EU10/2027-02",
       "channel": "LIQ_AE",
@@ -158,28 +166,28 @@
       "net_value_eur": 15.816000000000013
     },
     {
-      "line": "100019/EU10/2027-12,CLR_DE",
-      "lot": "100019/EU10/2027-12",
-      "channel": "CLR_DE",
-      "quantity": 748,
-      "lot_supply": 2808,
-      "net_value_eur": 1733.49
+      "line": "100019/EU10/2027-04,LIQ_AE",
+      "lot": "100019/EU10/2027-04",
+      "channel": "LIQ_AE",
+      "quantity": 30,
+      "lot_supply": 11232,
+      "net_value_eur": 0.1200000000000001
     },
     {
-      "line": "100019/EU10/2028-01,FNF_GB",
-      "lot": "100019/EU10/2028-01",
+      "line": "100019/EU10/2027-12,FNF_GB",
+      "lot": "100019/EU10/2027-12",
       "channel": "FNF_GB",
       "quantity": 30,
-      "lot_supply": 8136,
+      "lot_supply": 2808,
       "net_value_eur": 150.82500000000002
     },
     {
-      "line": "100019/EU10/2028-01,LIQ_AE",
-      "lot": "100019/EU10/2028-01",
-      "channel": "LIQ_AE",
-      "quantity": 30,
-      "lot_supply": 8136,
-      "net_value_eur": 0.1200000000000001
+      "line": "100019/EU10/2028-03,CLR_DE",
+      "lot": "100019/EU10/2028-03",
+      "channel": "CLR_DE",
+      "quantity": 748,
+      "lot_supply": 21888,
+      "net_value_eur": 1733.49
     },
     {
       "line": "100022/AP01/2028-02,FNF_GB",
@@ -222,20 +230,20 @@
       "net_value_eur": 11423.105
     },
     {
+      "line": "100023/EU10/2029-02,FNF_GB",
+      "lot": "100023/EU10/2029-02",
+      "channel": "FNF_GB",
+      "quantity": 30,
+      "lot_supply": 1278,
+      "net_value_eur": 97.2
+    },
+    {
       "line": "100023/EU10/2029-02,OUT_PL",
       "lot": "100023/EU10/2029-02",
       "channel": "OUT_PL",
       "quantity": 75,
       "lot_supply": 1278,
       "net_value_eur": 199.5
-    },
-    {
-      "line": "100026/NA01/2027-11,CLR_DE",
-      "lot": "100026/NA01/2027-11",
-      "channel": "CLR_DE",
-      "quantity": 30,
-      "lot_supply": 14736,
-      "net_value_eur": 35.324999999999996
     },
     {
       "line": "100026/NA01/2027-11,LIQ_AE",
@@ -246,20 +254,20 @@
       "net_value_eur": 5.759999999999999
     },
     {
-      "line": "100026/NA01/2027-11,NGO_ES",
-      "lot": "100026/NA01/2027-11",
-      "channel": "NGO_ES",
-      "quantity": 30,
-      "lot_supply": 14736,
-      "net_value_eur": 5.475
+      "line": "100028/NA10/2027-12,CLR_DE",
+      "lot": "100028/NA10/2027-12",
+      "channel": "CLR_DE",
+      "quantity": 1020,
+      "lot_supply": 1020,
+      "net_value_eur": 2299.5899999999992
     },
     {
       "line": "100028/NA10/2028-01,CLR_DE",
       "lot": "100028/NA10/2028-01",
       "channel": "CLR_DE",
-      "quantity": 3105,
+      "quantity": 2085,
       "lot_supply": 9546,
-      "net_value_eur": 7000.222499999998
+      "net_value_eur": 4700.632499999999
     },
     {
       "line": "100028/NA10/2028-01,LIQ_AE",
@@ -573,48 +581,24 @@
   "trace": {
     "lines": [
       {
-        "line": "100003/AP10/2028-08,CLR_DE",
+        "line": "100003/AP10/2028-08,NGO_ES",
         "lot": "100003/AP10/2028-08",
-        "channel": "CLR_DE",
+        "channel": "NGO_ES",
         "quantity": 30,
         "binding": [
           {
             "constraint": "sku",
-            "instance": "sku[CLR_DE]",
+            "instance": "sku[NGO_ES]",
             "slack": 0.0
           },
           {
             "constraint": "cov_hi",
-            "instance": "cov_hi[100003,CLR_DE]",
+            "instance": "cov_hi[100003,NGO_ES]",
             "slack": 0.0
           },
           {
             "constraint": "push",
-            "instance": "push[100003,CLR_DE]",
-            "slack": 0.0
-          }
-        ],
-        "blocked": []
-      },
-      {
-        "line": "100003/AP10/2028-08,FNF_GB",
-        "lot": "100003/AP10/2028-08",
-        "channel": "FNF_GB",
-        "quantity": 30,
-        "binding": [
-          {
-            "constraint": "sku",
-            "instance": "sku[FNF_GB]",
-            "slack": 0.0
-          },
-          {
-            "constraint": "cov_hi",
-            "instance": "cov_hi[100003,FNF_GB]",
-            "slack": 0.0
-          },
-          {
-            "constraint": "push",
-            "instance": "push[100003,FNF_GB]",
+            "instance": "push[100003,NGO_ES]",
             "slack": 0.0
           }
         ],
@@ -684,6 +668,37 @@
         ]
       },
       {
+        "line": "100004/AP01/2028-02,CLR_DE",
+        "lot": "100004/AP01/2028-02",
+        "channel": "CLR_DE",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100004,CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100004,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
         "line": "100005/AP10/2028-03,CLR_DE",
         "lot": "100005/AP10/2028-03",
         "channel": "CLR_DE",
@@ -746,6 +761,37 @@
         ]
       },
       {
+        "line": "100005/AP10/2028-03,OUT_PL",
+        "lot": "100005/AP10/2028-03",
+        "channel": "OUT_PL",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[OUT_PL]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100005,OUT_PL]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100005,OUT_PL]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
         "line": "100005/NA10/2028-07,FNF_GB",
         "lot": "100005/NA10/2028-07",
         "channel": "FNF_GB",
@@ -760,9 +806,51 @@
             "constraint": "cov_hi",
             "instance": "cov_hi[100005,FNF_GB]",
             "slack": 0.0
+          },
+          {
+            "constraint": "asrt",
+            "instance": "asrt[Noctua/Skincare,FNF_GB]",
+            "slack": 0.0
           }
         ],
         "blocked": []
+      },
+      {
+        "line": "100008/EU01/2027-12,CLR_DE",
+        "lot": "100008/EU01/2027-12",
+        "channel": "CLR_DE",
+        "quantity": 50,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100008,CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100008,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
       },
       {
         "line": "100008/EU01/2027-12,LIQ_AE",
@@ -905,50 +993,6 @@
         ]
       },
       {
-        "line": "100013/EU01/2028-06,OUT_PL",
-        "lot": "100013/EU01/2028-06",
-        "channel": "OUT_PL",
-        "quantity": 79,
-        "binding": [
-          {
-            "constraint": "sku",
-            "instance": "sku[OUT_PL]",
-            "slack": 0.0
-          },
-          {
-            "constraint": "cov_hi",
-            "instance": "cov_hi[100013,OUT_PL]",
-            "slack": 0.0
-          }
-        ],
-        "blocked": [
-          {
-            "channel": "CLR_DE",
-            "reasons": [
-              "TIER"
-            ]
-          },
-          {
-            "channel": "FNF_GB",
-            "reasons": [
-              "RSL"
-            ]
-          },
-          {
-            "channel": "LIQ_AE",
-            "reasons": [
-              "TIER"
-            ]
-          },
-          {
-            "channel": "NGO_ES",
-            "reasons": [
-              "TIER"
-            ]
-          }
-        ]
-      },
-      {
         "line": "100014/EU10/2027-02,LIQ_AE",
         "lot": "100014/EU10/2027-02",
         "channel": "LIQ_AE",
@@ -1062,27 +1106,57 @@
         ]
       },
       {
-        "line": "100019/EU10/2027-12,CLR_DE",
-        "lot": "100019/EU10/2027-12",
-        "channel": "CLR_DE",
-        "quantity": 748,
+        "line": "100019/EU10/2027-04,LIQ_AE",
+        "lot": "100019/EU10/2027-04",
+        "channel": "LIQ_AE",
+        "quantity": 30,
         "binding": [
           {
             "constraint": "sku",
-            "instance": "sku[CLR_DE]",
+            "instance": "sku[LIQ_AE]",
             "slack": 0.0
           },
           {
             "constraint": "cov_hi",
-            "instance": "cov_hi[100019,CLR_DE]",
+            "instance": "cov_hi[100019,LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100019,LIQ_AE]",
             "slack": 0.0
           }
         ],
-        "blocked": []
+        "blocked": [
+          {
+            "channel": "CLR_DE",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "NGO_ES",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
       },
       {
-        "line": "100019/EU10/2028-01,FNF_GB",
-        "lot": "100019/EU10/2028-01",
+        "line": "100019/EU10/2027-12,FNF_GB",
+        "lot": "100019/EU10/2027-12",
         "channel": "FNF_GB",
         "quantity": 30,
         "binding": [
@@ -1110,24 +1184,19 @@
         "blocked": []
       },
       {
-        "line": "100019/EU10/2028-01,LIQ_AE",
-        "lot": "100019/EU10/2028-01",
-        "channel": "LIQ_AE",
-        "quantity": 30,
+        "line": "100019/EU10/2028-03,CLR_DE",
+        "lot": "100019/EU10/2028-03",
+        "channel": "CLR_DE",
+        "quantity": 748,
         "binding": [
           {
             "constraint": "sku",
-            "instance": "sku[LIQ_AE]",
+            "instance": "sku[CLR_DE]",
             "slack": 0.0
           },
           {
             "constraint": "cov_hi",
-            "instance": "cov_hi[100019,LIQ_AE]",
-            "slack": 0.0
-          },
-          {
-            "constraint": "push",
-            "instance": "push[100019,LIQ_AE]",
+            "instance": "cov_hi[100019,CLR_DE]",
             "slack": 0.0
           }
         ],
@@ -1272,6 +1341,35 @@
         ]
       },
       {
+        "line": "100023/EU10/2029-02,FNF_GB",
+        "lot": "100023/EU10/2029-02",
+        "channel": "FNF_GB",
+        "quantity": 30,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100023,FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100023,FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "asrt",
+            "instance": "asrt[Noctua/Skincare,FNF_GB]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
         "line": "100023/EU10/2029-02,OUT_PL",
         "lot": "100023/EU10/2029-02",
         "channel": "OUT_PL",
@@ -1289,37 +1387,6 @@
           }
         ],
         "blocked": []
-      },
-      {
-        "line": "100026/NA01/2027-11,CLR_DE",
-        "lot": "100026/NA01/2027-11",
-        "channel": "CLR_DE",
-        "quantity": 30,
-        "binding": [
-          {
-            "constraint": "sku",
-            "instance": "sku[CLR_DE]",
-            "slack": 0.0
-          },
-          {
-            "constraint": "cov_hi",
-            "instance": "cov_hi[100026,CLR_DE]",
-            "slack": 0.0
-          },
-          {
-            "constraint": "push",
-            "instance": "push[100026,CLR_DE]",
-            "slack": 0.0
-          }
-        ],
-        "blocked": [
-          {
-            "channel": "FNF_GB",
-            "reasons": [
-              "RSL"
-            ]
-          }
-        ]
       },
       {
         "line": "100026/NA01/2027-11,LIQ_AE",
@@ -1353,30 +1420,36 @@
         ]
       },
       {
-        "line": "100026/NA01/2027-11,NGO_ES",
-        "lot": "100026/NA01/2027-11",
-        "channel": "NGO_ES",
-        "quantity": 30,
+        "line": "100028/NA10/2027-12,CLR_DE",
+        "lot": "100028/NA10/2027-12",
+        "channel": "CLR_DE",
+        "quantity": 1020,
         "binding": [
           {
+            "constraint": "supply",
+            "instance": "supply[100028/NA10/2027-12]",
+            "slack": 0.0
+          },
+          {
             "constraint": "sku",
-            "instance": "sku[NGO_ES]",
+            "instance": "sku[CLR_DE]",
             "slack": 0.0
           },
           {
             "constraint": "cov_hi",
-            "instance": "cov_hi[100026,NGO_ES]",
-            "slack": 0.0
-          },
-          {
-            "constraint": "push",
-            "instance": "push[100026,NGO_ES]",
+            "instance": "cov_hi[100028,CLR_DE]",
             "slack": 0.0
           }
         ],
         "blocked": [
           {
             "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
             "reasons": [
               "RSL"
             ]
@@ -1387,7 +1460,7 @@
         "line": "100028/NA10/2028-01,CLR_DE",
         "lot": "100028/NA10/2028-01",
         "channel": "CLR_DE",
-        "quantity": 3105,
+        "quantity": 2085,
         "binding": [
           {
             "constraint": "sku",
@@ -1550,17 +1623,12 @@
     "binding": [
       {
         "constraint": "asrt",
+        "instance": "asrt[Noctua/Skincare,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "asrt",
         "instance": "asrt[Velaire/Makeup,FNF_GB]",
-        "slack": 0.0
-      },
-      {
-        "constraint": "cov_hi",
-        "instance": "cov_hi[100003,CLR_DE]",
-        "slack": 0.0
-      },
-      {
-        "constraint": "cov_hi",
-        "instance": "cov_hi[100003,FNF_GB]",
         "slack": 0.0
       },
       {
@@ -1570,7 +1638,17 @@
       },
       {
         "constraint": "cov_hi",
+        "instance": "cov_hi[100003,NGO_ES]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
         "instance": "cov_hi[100003,OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100004,CLR_DE]",
         "slack": 0.0
       },
       {
@@ -1590,17 +1668,22 @@
       },
       {
         "constraint": "cov_hi",
+        "instance": "cov_hi[100005,OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100008,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
         "instance": "cov_hi[100008,LIQ_AE]",
         "slack": 0.0
       },
       {
         "constraint": "cov_hi",
         "instance": "cov_hi[100012,CLR_DE]",
-        "slack": 0.0
-      },
-      {
-        "constraint": "cov_hi",
-        "instance": "cov_hi[100013,OUT_PL]",
         "slack": 0.0
       },
       {
@@ -1660,22 +1743,17 @@
       },
       {
         "constraint": "cov_hi",
+        "instance": "cov_hi[100023,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
         "instance": "cov_hi[100023,OUT_PL]",
         "slack": 0.0
       },
       {
         "constraint": "cov_hi",
-        "instance": "cov_hi[100026,CLR_DE]",
-        "slack": 0.0
-      },
-      {
-        "constraint": "cov_hi",
         "instance": "cov_hi[100026,LIQ_AE]",
-        "slack": 0.0
-      },
-      {
-        "constraint": "cov_hi",
-        "instance": "cov_hi[100026,NGO_ES]",
         "slack": 0.0
       },
       {
@@ -1720,12 +1798,12 @@
       },
       {
         "constraint": "push",
-        "instance": "push[100003,CLR_DE]",
+        "instance": "push[100003,NGO_ES]",
         "slack": 0.0
       },
       {
         "constraint": "push",
-        "instance": "push[100003,FNF_GB]",
+        "instance": "push[100004,CLR_DE]",
         "slack": 0.0
       },
       {
@@ -1736,6 +1814,16 @@
       {
         "constraint": "push",
         "instance": "push[100005,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100005,OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100008,CLR_DE]",
         "slack": 0.0
       },
       {
@@ -1765,17 +1853,12 @@
       },
       {
         "constraint": "push",
-        "instance": "push[100026,CLR_DE]",
+        "instance": "push[100023,FNF_GB]",
         "slack": 0.0
       },
       {
         "constraint": "push",
         "instance": "push[100026,LIQ_AE]",
-        "slack": 0.0
-      },
-      {
-        "constraint": "push",
-        "instance": "push[100026,NGO_ES]",
         "slack": 0.0
       },
       {
@@ -1812,14 +1895,20 @@
         "constraint": "sku",
         "instance": "sku[OUT_PL]",
         "slack": 0.0
+      },
+      {
+        "constraint": "supply",
+        "instance": "supply[100028/NA10/2027-12]",
+        "slack": 0.0
       }
     ],
     "lines_per_rule": {
-      "asrt": 2,
-      "cov_hi": 30,
+      "asrt": 4,
+      "cov_hi": 31,
       "cov_lo": 3,
-      "push": 14,
-      "sku": 33
+      "push": 15,
+      "sku": 34,
+      "supply": 1
     }
   },
   "counterfactuals": [
@@ -1828,14 +1917,14 @@
       "instance": "sku[LIQ_AE]",
       "mode": "plus_10pct",
       "status": "optimal",
-      "cost_eur": 1440.4801000000007,
-      "units_destroyed_by_rule": 179,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 36436.0466,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 240070,
-      "mip_gap": 0.00003390408490721912,
-      "time_s": 0.14679249981418252,
+      "cost_eur": 487.3680000000022,
+      "units_destroyed_by_rule": -96,
+      "base_objective": 34409.31,
+      "relaxed_objective": 34896.678,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 240374,
+      "mip_gap": 0.00008407321356104953,
+      "time_s": 0.08569800015538931,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1844,14 +1933,14 @@
       "instance": "sku[LIQ_AE]",
       "mode": "off",
       "status": "optimal",
-      "cost_eur": 1507.1108999999997,
-      "units_destroyed_by_rule": -1793,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 36502.6774,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 242042,
-      "mip_gap": 4.558569722740666e-6,
-      "time_s": 0.18367039994336665,
+      "cost_eur": 532.1448000000019,
+      "units_destroyed_by_rule": -1877,
+      "base_objective": 34409.31,
+      "relaxed_objective": 34941.4548,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 242155,
+      "mip_gap": 0.0,
+      "time_s": 0.09560449980199337,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1860,14 +1949,14 @@
       "instance": "sku[CLR_DE]",
       "mode": "plus_10pct",
       "status": "optimal",
-      "cost_eur": 1224.950499999999,
-      "units_destroyed_by_rule": 57,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 36220.517,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 240192,
+      "cost_eur": 516.6692000000039,
+      "units_destroyed_by_rule": -92,
+      "base_objective": 34409.31,
+      "relaxed_objective": 34925.9792,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 240370,
       "mip_gap": 0.0,
-      "time_s": 2.548254800029099,
+      "time_s": 0.08484769985079765,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1876,14 +1965,14 @@
       "instance": "sku[CLR_DE]",
       "mode": "off",
       "status": "optimal",
-      "cost_eur": 1909.3117999999959,
-      "units_destroyed_by_rule": -1651,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 36904.8783,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 241900,
-      "mip_gap": 2.1677350986345412e-6,
-      "time_s": 0.16843710001558065,
+      "cost_eur": 934.2592999999979,
+      "units_destroyed_by_rule": -1736,
+      "base_objective": 34409.31,
+      "relaxed_objective": 35343.569299999996,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 242014,
+      "mip_gap": 0.0,
+      "time_s": 0.1115089999511838,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1892,14 +1981,14 @@
       "instance": "sku[OUT_PL]",
       "mode": "plus_10pct",
       "status": "optimal",
-      "cost_eur": 1508.2504999999946,
-      "units_destroyed_by_rule": 142,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 36503.816999999995,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 240107,
+      "cost_eur": 640.8060000000041,
+      "units_destroyed_by_rule": 90,
+      "base_objective": 34409.31,
+      "relaxed_objective": 35050.116,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 240188,
       "mip_gap": 0.0,
-      "time_s": 0.28649770002812147,
+      "time_s": 0.5398432998917997,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1908,14 +1997,14 @@
       "instance": "sku[OUT_PL]",
       "mode": "off",
       "status": "optimal",
-      "cost_eur": 2754.2773000000016,
-      "units_destroyed_by_rule": -1588,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 37749.8438,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 241837,
-      "mip_gap": 1.9274139656661115e-16,
-      "time_s": 0.15331960003823042,
+      "cost_eur": 1204.719799999999,
+      "units_destroyed_by_rule": -1738,
+      "base_objective": 34409.31,
+      "relaxed_objective": 35614.0298,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 242016,
+      "mip_gap": 0.0,
+      "time_s": 0.08501000003889203,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1924,14 +2013,14 @@
       "instance": "sku[FNF_GB]",
       "mode": "plus_10pct",
       "status": "optimal",
-      "cost_eur": 1258.7255000000005,
-      "units_destroyed_by_rule": 97,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 36254.292,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 240152,
+      "cost_eur": 513.3041999999987,
+      "units_destroyed_by_rule": -92,
+      "base_objective": 34409.31,
+      "relaxed_objective": 34922.614199999996,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 240370,
       "mip_gap": 0.0,
-      "time_s": 0.5779176000505686,
+      "time_s": 0.19764519995078444,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1940,14 +2029,14 @@
       "instance": "sku[FNF_GB]",
       "mode": "off",
       "status": "optimal",
-      "cost_eur": 1916.3252999999968,
-      "units_destroyed_by_rule": -1770,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 36911.8918,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 242019,
+      "cost_eur": 841.9078000000009,
+      "units_destroyed_by_rule": -1860,
+      "base_objective": 34409.31,
+      "relaxed_objective": 35251.2178,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 242138,
       "mip_gap": 0.0,
-      "time_s": 0.1364661999978125,
+      "time_s": 0.08655470004305243,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1956,14 +2045,14 @@
       "instance": "sku[NGO_ES]",
       "mode": "plus_10pct",
       "status": "optimal",
-      "cost_eur": 1205.8754999999946,
-      "units_destroyed_by_rule": 77,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 36201.441999999995,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 240172,
-      "mip_gap": 0.0,
-      "time_s": 1.3518103999085724,
+      "cost_eur": 447.7292000000016,
+      "units_destroyed_by_rule": -92,
+      "base_objective": 34409.31,
+      "relaxed_objective": 34857.0392,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 240370,
+      "mip_gap": 0.00008645535728048686,
+      "time_s": 0.0851941998116672,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -1972,78 +2061,78 @@
       "instance": "sku[NGO_ES]",
       "mode": "off",
       "status": "optimal",
-      "cost_eur": 1528.706299999998,
-      "units_destroyed_by_rule": -1778,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 36524.2728,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 242027,
+      "cost_eur": 553.5737999999983,
+      "units_destroyed_by_rule": -1863,
+      "base_objective": 34409.31,
+      "relaxed_objective": 34962.883799999996,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 242141,
       "mip_gap": 0.0,
-      "time_s": 0.17333190003409982,
+      "time_s": 0.08351389993913472,
       "time_limit_s": 10.0,
       "message": ""
     },
     {
       "constraint": "asrt",
-      "instance": "asrt[Velaire/Makeup,FNF_GB]",
+      "instance": "asrt[Noctua/Skincare,FNF_GB]",
       "mode": "plus_10pct",
       "status": "optimal",
       "cost_eur": 0.0,
       "units_destroyed_by_rule": 0,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 34995.5665,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 240249,
+      "base_objective": 34409.31,
+      "relaxed_objective": 34409.31,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 240278,
       "mip_gap": 0.0,
-      "time_s": 0.15503509994596243,
+      "time_s": 0.3111151000484824,
       "time_limit_s": 10.0,
       "message": ""
     },
     {
       "constraint": "asrt",
-      "instance": "asrt[Velaire/Makeup,FNF_GB]",
+      "instance": "asrt[Noctua/Skincare,FNF_GB]",
       "mode": "off",
       "status": "optimal",
       "cost_eur": 0.0,
       "units_destroyed_by_rule": 0,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 34995.5665,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 240249,
+      "base_objective": 34409.31,
+      "relaxed_objective": 34409.31,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 240278,
       "mip_gap": 0.0,
-      "time_s": 0.14808900002390146,
+      "time_s": 0.30790950008668005,
       "time_limit_s": 10.0,
       "message": ""
     },
     {
       "constraint": "cov_hi",
-      "instance": "cov_hi[100003,CLR_DE]",
+      "instance": "cov_hi[100028,CLR_DE]",
       "mode": "plus_10pct",
       "status": "optimal",
-      "cost_eur": 2.135999999998603,
-      "units_destroyed_by_rule": 3,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 34997.7025,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 240246,
+      "cost_eur": 701.1494999999995,
+      "units_destroyed_by_rule": 311,
+      "base_objective": 34409.31,
+      "relaxed_objective": 35110.4595,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 239967,
       "mip_gap": 0.0,
-      "time_s": 0.14783530007116497,
+      "time_s": 0.3480779000092298,
       "time_limit_s": 10.0,
       "message": ""
     },
     {
       "constraint": "cov_hi",
-      "instance": "cov_hi[100003,CLR_DE]",
+      "instance": "cov_hi[100028,CLR_DE]",
       "mode": "off",
       "status": "optimal",
-      "cost_eur": 10087.615999999995,
-      "units_destroyed_by_rule": 14168,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 45083.182499999995,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 226081,
+      "cost_eur": 12466.373,
+      "units_destroyed_by_rule": 5554,
+      "base_objective": 34409.31,
+      "relaxed_objective": 46875.683,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 234724,
       "mip_gap": 0.0,
-      "time_s": 0.15935679990798235,
+      "time_s": 0.5620921000372618,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2052,14 +2141,14 @@
       "instance": "cov_lo[100011,LIQ_AE]",
       "mode": "plus_10pct",
       "status": "optimal",
-      "cost_eur": 5.324799999994866,
+      "cost_eur": 5.324800000002142,
       "units_destroyed_by_rule": -16,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 35000.891299999996,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 240265,
+      "base_objective": 34409.31,
+      "relaxed_objective": 34414.6348,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 240294,
       "mip_gap": 0.0,
-      "time_s": 0.15049110003747046,
+      "time_s": 0.37394400010816753,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2068,46 +2157,46 @@
       "instance": "cov_lo[100011,LIQ_AE]",
       "mode": "off",
       "status": "optimal",
-      "cost_eur": 50.91839999999502,
+      "cost_eur": 50.91840000000229,
       "units_destroyed_by_rule": -153,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 35046.484899999996,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 240402,
+      "base_objective": 34409.31,
+      "relaxed_objective": 34460.2284,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 240431,
       "mip_gap": 0.0,
-      "time_s": 0.15036930004134774,
+      "time_s": 0.3079606001265347,
       "time_limit_s": 10.0,
       "message": ""
     },
     {
       "constraint": "push",
-      "instance": "push[100003,CLR_DE]",
+      "instance": "push[100003,NGO_ES]",
       "mode": "plus_10pct",
       "status": "optimal",
       "cost_eur": 0.0,
       "units_destroyed_by_rule": 0,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 34995.5665,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 240249,
+      "base_objective": 34409.31,
+      "relaxed_objective": 34409.31,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 240278,
       "mip_gap": 0.0,
-      "time_s": 0.1543662000913173,
+      "time_s": 0.35525020002387464,
       "time_limit_s": 10.0,
       "message": ""
     },
     {
       "constraint": "push",
-      "instance": "push[100003,CLR_DE]",
+      "instance": "push[100003,NGO_ES]",
       "mode": "off",
       "status": "optimal",
       "cost_eur": 0.0,
       "units_destroyed_by_rule": 0,
-      "base_objective": 34995.5665,
-      "relaxed_objective": 34995.5665,
-      "base_destroyed": 240249,
-      "relaxed_destroyed": 240249,
+      "base_objective": 34409.31,
+      "relaxed_objective": 34409.31,
+      "base_destroyed": 240278,
+      "relaxed_destroyed": 240278,
       "mip_gap": 0.0,
-      "time_s": 0.14530189987272024,
+      "time_s": 0.3518838998861611,
       "time_limit_s": 10.0,
       "message": ""
     }
@@ -2117,21 +2206,21 @@
       "total_lots": 84,
       "total_units": 254964,
       "value_at_risk": 2587669.86,
-      "allocated_units": 14715,
+      "allocated_units": 14686,
       "by_reason": [
         {
           "key": "excess",
           "lots": 29,
           "units": 142338,
           "value_at_risk": 1703829.78,
-          "allocated_units": 5632
+          "allocated_units": 5523
         },
         {
           "key": "near_expiry",
           "lots": 18,
           "units": 46020,
           "value_at_risk": 331503.84,
-          "allocated_units": 835
+          "allocated_units": 865
         },
         {
           "key": "overproduction",
@@ -2145,7 +2234,7 @@
           "lots": 16,
           "units": 13458,
           "value_at_risk": 137251.86,
-          "allocated_units": 1801
+          "allocated_units": 1851
         },
         {
           "key": "discontinued",
@@ -2168,28 +2257,28 @@
           "lots": 23,
           "units": 63984,
           "value_at_risk": 890697.96,
-          "allocated_units": 6818
+          "allocated_units": 6908
         },
         {
           "key": "Brightleaf",
           "lots": 18,
           "units": 30876,
           "value_at_risk": 177102.3,
-          "allocated_units": 1272
+          "allocated_units": 1322
         },
         {
           "key": "Pigment Lab",
           "lots": 18,
           "units": 48984,
           "value_at_risk": 149019.48,
-          "allocated_units": 1241
+          "allocated_units": 1151
         },
         {
           "key": "Atelier Sable",
           "lots": 7,
           "units": 4374,
           "value_at_risk": 123073.2,
-          "allocated_units": 79
+          "allocated_units": 0
         }
       ],
       "by_brand_category": [
@@ -2198,7 +2287,7 @@
           "lots": 7,
           "units": 4374,
           "value_at_risk": 123073.2,
-          "allocated_units": 79,
+          "allocated_units": 0,
           "brand": "Atelier Sable",
           "category": "Fragrance"
         },
@@ -2207,7 +2296,7 @@
           "lots": 18,
           "units": 30876,
           "value_at_risk": 177102.3,
-          "allocated_units": 1272,
+          "allocated_units": 1322,
           "brand": "Brightleaf",
           "category": "Haircare"
         },
@@ -2216,7 +2305,7 @@
           "lots": 23,
           "units": 63984,
           "value_at_risk": 890697.96,
-          "allocated_units": 6818,
+          "allocated_units": 6908,
           "brand": "Noctua",
           "category": "Skincare"
         },
@@ -2225,7 +2314,7 @@
           "lots": 18,
           "units": 48984,
           "value_at_risk": 149019.48,
-          "allocated_units": 1241,
+          "allocated_units": 1151,
           "brand": "Pigment Lab",
           "category": "Makeup"
         },
@@ -2310,8 +2399,8 @@
         "unit_cost": 24.77,
         "value_at_risk": 10700.64,
         "allocated_units": 0,
-        "channels_open": 1,
-        "channels_blocked": 4
+        "channels_open": 0,
+        "channels_blocked": 5
       },
       {
         "lot": "100003/AP10/2028-08",
@@ -2327,7 +2416,7 @@
         "units": 14688,
         "unit_cost": 2.32,
         "value_at_risk": 34076.16,
-        "allocated_units": 520,
+        "allocated_units": 490,
         "channels_open": 5,
         "channels_blocked": 0
       },
@@ -2381,7 +2470,7 @@
         "units": 240,
         "unit_cost": 20.6,
         "value_at_risk": 4944.0,
-        "allocated_units": 0,
+        "allocated_units": 30,
         "channels_open": 4,
         "channels_blocked": 1
       },
@@ -2435,7 +2524,7 @@
         "units": 13542,
         "unit_cost": 17.66,
         "value_at_risk": 239151.72,
-        "allocated_units": 60,
+        "allocated_units": 90,
         "channels_open": 4,
         "channels_blocked": 1
       },
@@ -2615,7 +2704,7 @@
         "units": 1866,
         "unit_cost": 8.53,
         "value_at_risk": 15916.98,
-        "allocated_units": 432,
+        "allocated_units": 482,
         "channels_open": 3,
         "channels_blocked": 2
       },
@@ -2688,8 +2777,8 @@
         "unit_cost": 39.74,
         "value_at_risk": 10729.8,
         "allocated_units": 0,
-        "channels_open": 2,
-        "channels_blocked": 3
+        "channels_open": 0,
+        "channels_blocked": 5
       },
       {
         "lot": "100009/NA10/2027-02",
@@ -2849,9 +2938,9 @@
         "units": 576,
         "unit_cost": 35.33,
         "value_at_risk": 20350.08,
-        "allocated_units": 79,
-        "channels_open": 1,
-        "channels_blocked": 4
+        "allocated_units": 0,
+        "channels_open": 0,
+        "channels_blocked": 5
       },
       {
         "lot": "100013/EU10/2027-08",
@@ -3227,7 +3316,7 @@
         "units": 11232,
         "unit_cost": 10.05,
         "value_at_risk": 112881.6,
-        "allocated_units": 0,
+        "allocated_units": 30,
         "channels_open": 1,
         "channels_blocked": 4
       },
@@ -3245,7 +3334,7 @@
         "units": 2808,
         "unit_cost": 10.05,
         "value_at_risk": 28220.4,
-        "allocated_units": 748,
+        "allocated_units": 30,
         "channels_open": 5,
         "channels_blocked": 0
       },
@@ -3263,7 +3352,7 @@
         "units": 8136,
         "unit_cost": 10.05,
         "value_at_risk": 81766.8,
-        "allocated_units": 60,
+        "allocated_units": 0,
         "channels_open": 5,
         "channels_blocked": 0
       },
@@ -3281,7 +3370,7 @@
         "units": 21888,
         "unit_cost": 10.05,
         "value_at_risk": 219974.4,
-        "allocated_units": 0,
+        "allocated_units": 748,
         "channels_open": 5,
         "channels_blocked": 0
       },
@@ -3425,7 +3514,7 @@
         "units": 1278,
         "unit_cost": 6.8,
         "value_at_risk": 8690.4,
-        "allocated_units": 75,
+        "allocated_units": 105,
         "channels_open": 5,
         "channels_blocked": 0
       },
@@ -3623,7 +3712,7 @@
         "units": 14736,
         "unit_cost": 3.65,
         "value_at_risk": 53786.4,
-        "allocated_units": 90,
+        "allocated_units": 30,
         "channels_open": 4,
         "channels_blocked": 1
       },
@@ -3695,7 +3784,7 @@
         "units": 1020,
         "unit_cost": 9.87,
         "value_at_risk": 10067.4,
-        "allocated_units": 0,
+        "allocated_units": 1020,
         "channels_open": 3,
         "channels_blocked": 2
       },
@@ -3713,7 +3802,7 @@
         "units": 9546,
         "unit_cost": 9.87,
         "value_at_risk": 94219.02,
-        "allocated_units": 5062,
+        "allocated_units": 4042,
         "channels_open": 3,
         "channels_blocked": 2
       },
@@ -3765,7 +3854,7 @@
         "lon": 104.2,
         "value_at_risk": 470833.32,
         "units": 33246,
-        "allocated_units": 30
+        "allocated_units": 60
       },
       {
         "plant": "AP10",
@@ -3785,7 +3874,7 @@
         "lon": 19.1,
         "value_at_risk": 182102.28,
         "units": 13626,
-        "allocated_units": 511
+        "allocated_units": 482
       },
       {
         "plant": "EU10",
@@ -3795,7 +3884,7 @@
         "lon": 5.3,
         "value_at_risk": 624942.9,
         "units": 69336,
-        "allocated_units": 933
+        "allocated_units": 963
       },
       {
         "plant": "NA01",
@@ -3805,7 +3894,7 @@
         "lon": -102.5,
         "value_at_risk": 484888.08,
         "units": 61854,
-        "allocated_units": 3665
+        "allocated_units": 3605
       },
       {
         "plant": "NA10",
@@ -3825,7 +3914,7 @@
         "country": "DE",
         "lat": 52.52,
         "lon": 13.4,
-        "allocated_units": 5500
+        "allocated_units": 5520
       },
       {
         "channel": "FNF_GB",
@@ -3857,10 +3946,15 @@
         "country": "PL",
         "lat": 52.23,
         "lon": 21.01,
-        "allocated_units": 2995
+        "allocated_units": 2946
       }
     ],
     "arcs": [
+      {
+        "plant": "AP01",
+        "channel": "CLR_DE",
+        "units": 30
+      },
       {
         "plant": "AP01",
         "channel": "FNF_GB",
@@ -3869,12 +3963,7 @@
       {
         "plant": "AP10",
         "channel": "CLR_DE",
-        "units": 567
-      },
-      {
-        "plant": "AP10",
-        "channel": "FNF_GB",
-        "units": 30
+        "units": 537
       },
       {
         "plant": "AP10",
@@ -3883,18 +3972,23 @@
       },
       {
         "plant": "AP10",
+        "channel": "NGO_ES",
+        "units": 30
+      },
+      {
+        "plant": "AP10",
         "channel": "OUT_PL",
-        "units": 460
+        "units": 490
+      },
+      {
+        "plant": "EU01",
+        "channel": "CLR_DE",
+        "units": 50
       },
       {
         "plant": "EU01",
         "channel": "LIQ_AE",
         "units": 432
-      },
-      {
-        "plant": "EU01",
-        "channel": "OUT_PL",
-        "units": 79
       },
       {
         "plant": "EU10",
@@ -3904,7 +3998,7 @@
       {
         "plant": "EU10",
         "channel": "FNF_GB",
-        "units": 30
+        "units": 60
       },
       {
         "plant": "EU10",
@@ -3919,7 +4013,7 @@
       {
         "plant": "NA01",
         "channel": "CLR_DE",
-        "units": 60
+        "units": 30
       },
       {
         "plant": "NA01",
@@ -3929,7 +4023,7 @@
       {
         "plant": "NA01",
         "channel": "NGO_ES",
-        "units": 404
+        "units": 374
       },
       {
         "plant": "NA01",
@@ -3960,6 +4054,134 @@
         "plant": "NA10",
         "channel": "OUT_PL",
         "units": 430
+      }
+    ]
+  },
+  "destruction": {
+    "units_at_risk": 254964,
+    "units_placed": 14686,
+    "units_destroyed": 240278,
+    "value_destroyed": 2438337.7199999997,
+    "causes": [
+      {
+        "cause": "coverage_ceiling",
+        "lever": "coverage_days",
+        "units": 162313,
+        "value_at_risk": 1811823.6474134238,
+        "share": 0.6755216873787863,
+        "top_materials": [
+          {
+            "material": "100022",
+            "description": "Velaire Rose Poudrée Rouge à Lèvres 400 ml",
+            "units": 46387
+          },
+          {
+            "material": "100019",
+            "description": "Velaire Soie Rouge à Lèvres 50 ml",
+            "units": 37224
+          },
+          {
+            "material": "100005",
+            "description": "Noctua Éclat Crème Visage 30 ml",
+            "units": 26520
+          }
+        ]
+      },
+      {
+        "cause": "push_ceiling",
+        "lever": "push_quantity_units",
+        "units": 68979,
+        "value_at_risk": 465489.7507934519,
+        "share": 0.2870799657063901,
+        "top_materials": [
+          {
+            "material": "100014",
+            "description": "Brightleaf Velours Conditioner 100 ml",
+            "units": 16504
+          },
+          {
+            "material": "100026",
+            "description": "Pigment Lab Éclat Mascara 100 ml",
+            "units": 15294
+          },
+          {
+            "material": "100020",
+            "description": "Pigment Lab Lumière Rouge à Lèvres 100 ml",
+            "units": 8202
+          }
+        ]
+      },
+      {
+        "cause": "blocked",
+        "lever": null,
+        "units": 4374,
+        "value_at_risk": 123073.2,
+        "share": 0.01820391379984851,
+        "top_materials": [
+          {
+            "material": "100021",
+            "description": "Atelier Sable Bois Noir Eau de Toilette 15 ml",
+            "units": 2274
+          },
+          {
+            "material": "100013",
+            "description": "Atelier Sable Ambre Extrait 15 ml",
+            "units": 1278
+          },
+          {
+            "material": "100002",
+            "description": "Atelier Sable Pivoine Eau de Parfum 15 ml",
+            "units": 432
+          }
+        ]
+      },
+      {
+        "cause": "not_worth",
+        "lever": null,
+        "units": 2320,
+        "value_at_risk": 22173.070840135377,
+        "share": 0.00965548239955385,
+        "top_materials": [
+          {
+            "material": "100028",
+            "description": "Noctua Ambre Gel Nettoyant 50 ml",
+            "units": 1927
+          },
+          {
+            "material": "100012",
+            "description": "Noctua Océan Gel Nettoyant 400 ml",
+            "units": 240
+          },
+          {
+            "material": "100011",
+            "description": "Velaire Cèdre Vernis 250 ml",
+            "units": 153
+          }
+        ]
+      },
+      {
+        "cause": "sku_limit",
+        "lever": "channel_sku_limit_scale",
+        "units": 2292,
+        "value_at_risk": 15778.050952988646,
+        "share": 0.009538950715421303,
+        "top_materials": [
+          {
+            "material": "100017",
+            "description": "Noctua Lumière Sérum 15 ml",
+            "units": 334
+          },
+          {
+            "material": "100015",
+            "description": "Brightleaf Aurore Shampoo 15 ml",
+            "units": 250
+          },
+          {
+            "material": "100016",
+            "description": "Velaire Nuit Dorée Mascara 15 ml",
+            "units": 150
+          }
+        ]
       }
     ]
   }

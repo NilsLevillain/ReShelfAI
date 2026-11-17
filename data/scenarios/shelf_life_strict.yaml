@@ -1,0 +1,17 @@
+# Scenario: shelf_life_strict
+# Every channel type asks for 30 more points of remaining shelf life at delivery (capped at 90).
+# More lots are refused at the door (reason code RSL), so more stock is destroyed and less value is
+# recovered. It shows the cost of a stricter shelf life rule. Same seed and same stock as `default`.
+# Illustrative default, invented for the demo.
+
+extends: default
+name: shelf_life_strict
+description: Channels ask for 30 more points of remaining shelf life. More stock is refused at the door and destroyed.
+
+generator:
+  channel_types:
+    outlet:         {min_rsl_pct: 80}
+    friends_family: {min_rsl_pct: 90}
+    clearance_web:  {min_rsl_pct: 70}
+    ngo_donation:   {min_rsl_pct: 55}
+    liquidation:    {min_rsl_pct: 30}

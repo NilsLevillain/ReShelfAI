@@ -1,0 +1,4329 @@
+{
+  "scenario": "max_recovery",
+  "seed": 20261025,
+  "n_skus": 30,
+  "n_channels": 5,
+  "label": "Simulated data",
+  "solve": {
+    "status": "optimal",
+    "objective": 91608.68109999999,
+    "score": 29.801785714285714,
+    "best_score": 30.09464285714286,
+    "mip_gap": 0.0,
+    "time_s": 0.7634467000607401,
+    "time_limit_s": 60.0,
+    "solver": "highs",
+    "message": ""
+  },
+  "optimizer": {
+    "value_recovered": 91608.68110000003,
+    "units_allocated": 44577,
+    "units_destroyed": 210387,
+    "brand_risk_index": 0.06727893795978929,
+    "skus_per_channel": {
+      "OUT_PL": 5,
+      "FNF_GB": 4,
+      "CLR_DE": 9,
+      "NGO_ES": 3,
+      "LIQ_AE": 12
+    },
+    "fill_rate": {
+      "OUT_PL": 0.16424880029531191,
+      "FNF_GB": 0.08578789510113051,
+      "CLR_DE": 0.21503937492309586,
+      "NGO_ES": 0.11291066814322628,
+      "LIQ_AE": 0.3414384592235931
+    },
+    "score": 29.801785714285714
+  },
+  "lines": [
+    {
+      "line": "100003/AP10/2028-08,CLR_DE",
+      "lot": "100003/AP10/2028-08",
+      "channel": "CLR_DE",
+      "quantity": 60,
+      "lot_supply": 14688,
+      "net_value_eur": 42.72
+    },
+    {
+      "line": "100003/AP10/2028-08,FNF_GB",
+      "lot": "100003/AP10/2028-08",
+      "channel": "FNF_GB",
+      "quantity": 60,
+      "lot_supply": 14688,
+      "net_value_eur": 76.56
+    },
+    {
+      "line": "100003/AP10/2028-08,OUT_PL",
+      "lot": "100003/AP10/2028-08",
+      "channel": "OUT_PL",
+      "quantity": 2212,
+      "lot_supply": 14688,
+      "net_value_eur": 2309.328
+    },
+    {
+      "line": "100003/NA01/2027-02,LIQ_AE",
+      "lot": "100003/NA01/2027-02",
+      "channel": "LIQ_AE",
+      "quantity": 3457,
+      "lot_supply": 3774,
+      "net_value_eur": 329.1064
+    },
+    {
+      "line": "100005/AP10/2028-03,CLR_DE",
+      "lot": "100005/AP10/2028-03",
+      "channel": "CLR_DE",
+      "quantity": 60,
+      "lot_supply": 13542,
+      "net_value_eur": 298.86
+    },
+    {
+      "line": "100005/AP10/2028-03,LIQ_AE",
+      "lot": "100005/AP10/2028-03",
+      "channel": "LIQ_AE",
+      "quantity": 60,
+      "lot_supply": 13542,
+      "net_value_eur": 36.768
+    },
+    {
+      "line": "100005/NA10/2028-06,FNF_GB",
+      "lot": "100005/NA10/2028-06",
+      "channel": "FNF_GB",
+      "quantity": 2051,
+      "lot_supply": 4944,
+      "net_value_eur": 18692.814000000002
+    },
+    {
+      "line": "100008/EU01/2027-12,LIQ_AE",
+      "lot": "100008/EU01/2027-12",
+      "channel": "LIQ_AE",
+      "quantity": 1154,
+      "lot_supply": 1866,
+      "net_value_eur": 672.0896
+    },
+    {
+      "line": "100011/AP10/2026-11,LIQ_AE",
+      "lot": "100011/AP10/2026-11",
+      "channel": "LIQ_AE",
+      "quantity": 362,
+      "lot_supply": 894,
+      "net_value_eur": -120.47360000000002
+    },
+    {
+      "line": "100012/AP10/2027-11,CLR_DE",
+      "lot": "100012/AP10/2027-11",
+      "channel": "CLR_DE",
+      "quantity": 1244,
+      "lot_supply": 5652,
+      "net_value_eur": 2665.27
+    },
+    {
+      "line": "100012/AP10/2027-11,LIQ_AE",
+      "lot": "100012/AP10/2027-11",
+      "channel": "LIQ_AE",
+      "quantity": 659,
+      "lot_supply": 5652,
+      "net_value_eur": -23.723999999999947
+    },
+    {
+      "line": "100013/EU01/2028-06,OUT_PL",
+      "lot": "100013/EU01/2028-06",
+      "channel": "OUT_PL",
+      "quantity": 159,
+      "lot_supply": 576,
+      "net_value_eur": 2289.3615
+    },
+    {
+      "line": "100014/EU10/2027-02,LIQ_AE",
+      "lot": "100014/EU10/2027-02",
+      "channel": "LIQ_AE",
+      "quantity": 100,
+      "lot_supply": 8358,
+      "net_value_eur": 22.240000000000002
+    },
+    {
+      "line": "100018/EU01/2027-07,LIQ_AE",
+      "lot": "100018/EU01/2027-07",
+      "channel": "LIQ_AE",
+      "quantity": 1307,
+      "lot_supply": 1638,
+      "net_value_eur": 23.003200000000078
+    },
+    {
+      "line": "100018/NA10/2027-09,LIQ_AE",
+      "lot": "100018/NA10/2027-09",
+      "channel": "LIQ_AE",
+      "quantity": 60,
+      "lot_supply": 60,
+      "net_value_eur": 1.4400000000000013
+    },
+    {
+      "line": "100018/NA10/2027-10,CLR_DE",
+      "lot": "100018/NA10/2027-10",
+      "channel": "CLR_DE",
+      "quantity": 1734,
+      "lot_supply": 1866,
+      "net_value_eur": 4170.27
+    },
+    {
+      "line": "100018/NA10/2027-10,LIQ_AE",
+      "lot": "100018/NA10/2027-10",
+      "channel": "LIQ_AE",
+      "quantity": 132,
+      "lot_supply": 1866,
+      "net_value_eur": 3.168000000000003
+    },
+    {
+      "line": "100019/EU10/2027-04,LIQ_AE",
+      "lot": "100019/EU10/2027-04",
+      "channel": "LIQ_AE",
+      "quantity": 60,
+      "lot_supply": 11232,
+      "net_value_eur": 0.2400000000000002
+    },
+    {
+      "line": "100019/EU10/2028-01,FNF_GB",
+      "lot": "100019/EU10/2028-01",
+      "channel": "FNF_GB",
+      "quantity": 60,
+      "lot_supply": 8136,
+      "net_value_eur": 301.65000000000003
+    },
+    {
+      "line": "100019/EU10/2028-03,CLR_DE",
+      "lot": "100019/EU10/2028-03",
+      "channel": "CLR_DE",
+      "quantity": 4151,
+      "lot_supply": 21888,
+      "net_value_eur": 9619.9425
+    },
+    {
+      "line": "100022/AP01/2028-02,FNF_GB",
+      "lot": "100022/AP01/2028-02",
+      "channel": "FNF_GB",
+      "quantity": 60,
+      "lot_supply": 18378,
+      "net_value_eur": 418.8
+    },
+    {
+      "line": "100022/NA01/2027-10,CLR_DE",
+      "lot": "100022/NA01/2027-10",
+      "channel": "CLR_DE",
+      "quantity": 60,
+      "lot_supply": 24456,
+      "net_value_eur": 219.9
+    },
+    {
+      "line": "100022/NA01/2027-10,LIQ_AE",
+      "lot": "100022/NA01/2027-10",
+      "channel": "LIQ_AE",
+      "quantity": 5033,
+      "lot_supply": 24456,
+      "net_value_eur": 1570.2960000000003
+    },
+    {
+      "line": "100022/NA01/2027-10,NGO_ES",
+      "lot": "100022/NA01/2027-10",
+      "channel": "NGO_ES",
+      "quantity": 2327,
+      "lot_supply": 24456,
+      "net_value_eur": 919.1650000000002
+    },
+    {
+      "line": "100022/NA01/2027-10,OUT_PL",
+      "lot": "100022/NA01/2027-10",
+      "channel": "OUT_PL",
+      "quantity": 5209,
+      "lot_supply": 24456,
+      "net_value_eur": 30498.694999999996
+    },
+    {
+      "line": "100023/EU10/2029-02,OUT_PL",
+      "lot": "100023/EU10/2029-02",
+      "channel": "OUT_PL",
+      "quantity": 356,
+      "lot_supply": 1278,
+      "net_value_eur": 946.96
+    },
+    {
+      "line": "100026/NA01/2027-11,CLR_DE",
+      "lot": "100026/NA01/2027-11",
+      "channel": "CLR_DE",
+      "quantity": 60,
+      "lot_supply": 14736,
+      "net_value_eur": 70.64999999999999
+    },
+    {
+      "line": "100026/NA01/2027-11,LIQ_AE",
+      "lot": "100026/NA01/2027-11",
+      "channel": "LIQ_AE",
+      "quantity": 60,
+      "lot_supply": 14736,
+      "net_value_eur": 11.519999999999998
+    },
+    {
+      "line": "100026/NA01/2027-11,NGO_ES",
+      "lot": "100026/NA01/2027-11",
+      "channel": "NGO_ES",
+      "quantity": 60,
+      "lot_supply": 14736,
+      "net_value_eur": 10.95
+    },
+    {
+      "line": "100028/NA10/2027-12,CLR_DE",
+      "lot": "100028/NA10/2027-12",
+      "channel": "CLR_DE",
+      "quantity": 999,
+      "lot_supply": 1020,
+      "net_value_eur": 2252.245499999999
+    },
+    {
+      "line": "100028/NA10/2027-12,NGO_ES",
+      "lot": "100028/NA10/2027-12",
+      "channel": "NGO_ES",
+      "quantity": 21,
+      "lot_supply": 1020,
+      "net_value_eur": 4.0635
+    },
+    {
+      "line": "100028/NA10/2028-01,CLR_DE",
+      "lot": "100028/NA10/2028-01",
+      "channel": "CLR_DE",
+      "quantity": 5032,
+      "lot_supply": 9546,
+      "net_value_eur": 11344.643999999997
+    },
+    {
+      "line": "100028/NA10/2028-01,LIQ_AE",
+      "lot": "100028/NA10/2028-01",
+      "channel": "LIQ_AE",
+      "quantity": 4475,
+      "lot_supply": 9546,
+      "net_value_eur": -46.54000000000034
+    },
+    {
+      "line": "100028/NA10/2028-01,NGO_ES",
+      "lot": "100028/NA10/2028-01",
+      "channel": "NGO_ES",
+      "quantity": 39,
+      "lot_supply": 9546,
+      "net_value_eur": 7.5465
+    },
+    {
+      "line": "100030/NA10/2029-03,CLR_DE",
+      "lot": "100030/NA10/2029-03",
+      "channel": "CLR_DE",
+      "quantity": 581,
+      "lot_supply": 1644,
+      "net_value_eur": 584.4859999999999
+    },
+    {
+      "line": "100030/NA10/2029-03,LIQ_AE",
+      "lot": "100030/NA10/2029-03",
+      "channel": "LIQ_AE",
+      "quantity": 100,
+      "lot_supply": 1644,
+      "net_value_eur": 15.280000000000001
+    },
+    {
+      "line": "100030/NA10/2029-03,OUT_PL",
+      "lot": "100030/NA10/2029-03",
+      "channel": "OUT_PL",
+      "quantity": 963,
+      "lot_supply": 1644,
+      "net_value_eur": 1369.3860000000002
+    }
+  ],
+  "baseline": {
+    "raw": {
+      "value_recovered": 676962.3821999999,
+      "units_allocated": 216719,
+      "units_destroyed": 38245,
+      "brand_risk_index": 0.05137799758002191,
+      "skus_per_channel": {
+        "OUT_PL": 3,
+        "FNF_GB": 2,
+        "CLR_DE": 7,
+        "NGO_ES": 4,
+        "LIQ_AE": 11
+      },
+      "fill_rate": {
+        "OUT_PL": 1.0,
+        "FNF_GB": 1.0,
+        "CLR_DE": 1.0,
+        "NGO_ES": 1.0,
+        "LIQ_AE": 1.0
+      },
+      "score": 22.364285714285714
+    },
+    "audit": {
+      "asrt_units": {
+        "count": 4,
+        "excess": 41977
+      },
+      "cov_hi": {
+        "count": 27,
+        "excess": 189116
+      },
+      "sku": {
+        "count": 1,
+        "excess": 1
+      }
+    },
+    "compliant": {
+      "value_recovered": 63169.92579999999,
+      "units_allocated": 27543,
+      "units_destroyed": 227421,
+      "brand_risk_index": 0.08182351032144178,
+      "skus_per_channel": {
+        "OUT_PL": 3,
+        "FNF_GB": 2,
+        "CLR_DE": 7,
+        "NGO_ES": 3,
+        "LIQ_AE": 11
+      },
+      "fill_rate": {
+        "OUT_PL": 0.09835732742709487,
+        "FNF_GB": 0.004614319772360225,
+        "CLR_DE": 0.20490340839178048,
+        "NGO_ES": 0.010151347360649687,
+        "LIQ_AE": 0.17157187280569766
+      },
+      "score": 21.59107142857143
+    },
+    "compliant_lines": [
+      {
+        "line": "100003/NA01/2027-03,LIQ_AE",
+        "lot": "100003/NA01/2027-03",
+        "channel": "LIQ_AE",
+        "quantity": 3457,
+        "lot_supply": 4176,
+        "net_value_eur": 329.1064
+      },
+      {
+        "line": "100004/AP01/2028-03,LIQ_AE",
+        "lot": "100004/AP01/2028-03",
+        "channel": "LIQ_AE",
+        "quantity": 60,
+        "lot_supply": 2190,
+        "net_value_eur": 50.88
+      },
+      {
+        "line": "100005/AP10/2028-03,OUT_PL",
+        "lot": "100005/AP10/2028-03",
+        "channel": "OUT_PL",
+        "quantity": 60,
+        "lot_supply": 13542,
+        "net_value_eur": 452.82
+      },
+      {
+        "line": "100005/EU01/2028-12,LIQ_AE",
+        "lot": "100005/EU01/2028-12",
+        "channel": "LIQ_AE",
+        "quantity": 60,
+        "lot_supply": 5040,
+        "net_value_eur": 33.35999999999999
+      },
+      {
+        "line": "100005/NA10/2028-07,CLR_DE",
+        "lot": "100005/NA10/2028-07",
+        "channel": "CLR_DE",
+        "quantity": 60,
+        "lot_supply": 7632,
+        "net_value_eur": 295.0799999999999
+      },
+      {
+        "line": "100008/EU10/2027-11,CLR_DE",
+        "lot": "100008/EU10/2027-11",
+        "channel": "CLR_DE",
+        "quantity": 100,
+        "lot_supply": 5346,
+        "net_value_eur": 286.1
+      },
+      {
+        "line": "100008/EU10/2027-12,NGO_ES",
+        "lot": "100008/EU10/2027-12",
+        "channel": "NGO_ES",
+        "quantity": 100,
+        "lot_supply": 2202,
+        "net_value_eur": 42.300000000000004
+      },
+      {
+        "line": "100008/NA10/2027-01,LIQ_AE",
+        "lot": "100008/NA10/2027-01",
+        "channel": "LIQ_AE",
+        "quantity": 1154,
+        "lot_supply": 2610,
+        "net_value_eur": 662.8576
+      },
+      {
+        "line": "100011/AP10/2026-11,LIQ_AE",
+        "lot": "100011/AP10/2026-11",
+        "channel": "LIQ_AE",
+        "quantity": 724,
+        "lot_supply": 894,
+        "net_value_eur": -240.94720000000004
+      },
+      {
+        "line": "100012/AP10/2027-11,CLR_DE",
+        "lot": "100012/AP10/2027-11",
+        "channel": "CLR_DE",
+        "quantity": 1244,
+        "lot_supply": 5652,
+        "net_value_eur": 2665.27
+      },
+      {
+        "line": "100012/NA10/2027-12,LIQ_AE",
+        "lot": "100012/NA10/2027-12",
+        "channel": "LIQ_AE",
+        "quantity": 1318,
+        "lot_supply": 4296,
+        "net_value_eur": -74.8624000000001
+      },
+      {
+        "line": "100014/EU10/2027-02,LIQ_AE",
+        "lot": "100014/EU10/2027-02",
+        "channel": "LIQ_AE",
+        "quantity": 100,
+        "lot_supply": 8358,
+        "net_value_eur": 22.240000000000002
+      },
+      {
+        "line": "100016/AP01/2027-01,LIQ_AE",
+        "lot": "100016/AP01/2027-01",
+        "channel": "LIQ_AE",
+        "quantity": 60,
+        "lot_supply": 942,
+        "net_value_eur": -1.6800000000000015
+      },
+      {
+        "line": "100018/EU01/2027-08,LIQ_AE",
+        "lot": "100018/EU01/2027-08",
+        "channel": "LIQ_AE",
+        "quantity": 1499,
+        "lot_supply": 2058,
+        "net_value_eur": 26.38240000000009
+      },
+      {
+        "line": "100018/NA10/2027-10,NGO_ES",
+        "lot": "100018/NA10/2027-10",
+        "channel": "NGO_ES",
+        "quantity": 60,
+        "lot_supply": 1866,
+        "net_value_eur": 12.900000000000002
+      },
+      {
+        "line": "100019/EU10/2027-04,LIQ_AE",
+        "lot": "100019/EU10/2027-04",
+        "channel": "LIQ_AE",
+        "quantity": 60,
+        "lot_supply": 11232,
+        "net_value_eur": 0.2400000000000002
+      },
+      {
+        "line": "100019/EU10/2027-12,NGO_ES",
+        "lot": "100019/EU10/2027-12",
+        "channel": "NGO_ES",
+        "quantity": 60,
+        "lot_supply": 2808,
+        "net_value_eur": 12.150000000000004
+      },
+      {
+        "line": "100019/EU10/2028-01,CLR_DE",
+        "lot": "100019/EU10/2028-01",
+        "channel": "CLR_DE",
+        "quantity": 4151,
+        "lot_supply": 8136,
+        "net_value_eur": 9619.9425
+      },
+      {
+        "line": "100019/EU10/2028-03,FNF_GB",
+        "lot": "100019/EU10/2028-03",
+        "channel": "FNF_GB",
+        "quantity": 60,
+        "lot_supply": 21888,
+        "net_value_eur": 301.65000000000003
+      },
+      {
+        "line": "100019/EU10/2028-03,OUT_PL",
+        "lot": "100019/EU10/2028-03",
+        "channel": "OUT_PL",
+        "quantity": 60,
+        "lot_supply": 21888,
+        "net_value_eur": 247.35000000000002
+      },
+      {
+        "line": "100022/AP01/2028-02,FNF_GB",
+        "lot": "100022/AP01/2028-02",
+        "channel": "FNF_GB",
+        "quantity": 60,
+        "lot_supply": 18378,
+        "net_value_eur": 418.8
+      },
+      {
+        "line": "100022/AP01/2028-07,CLR_DE",
+        "lot": "100022/AP01/2028-07",
+        "channel": "CLR_DE",
+        "quantity": 60,
+        "lot_supply": 7482,
+        "net_value_eur": 213.59999999999997
+      },
+      {
+        "line": "100022/NA01/2027-10,OUT_PL",
+        "lot": "100022/NA01/2027-10",
+        "channel": "OUT_PL",
+        "quantity": 5209,
+        "lot_supply": 24456,
+        "net_value_eur": 30498.694999999996
+      },
+      {
+        "line": "100023/NA10/2026-12,LIQ_AE",
+        "lot": "100023/NA10/2026-12",
+        "channel": "LIQ_AE",
+        "quantity": 60,
+        "lot_supply": 1890,
+        "net_value_eur": -15.120000000000006
+      },
+      {
+        "line": "100026/NA01/2027-11,CLR_DE",
+        "lot": "100026/NA01/2027-11",
+        "channel": "CLR_DE",
+        "quantity": 60,
+        "lot_supply": 14736,
+        "net_value_eur": 70.64999999999999
+      },
+      {
+        "line": "100028/NA10/2028-01,CLR_DE",
+        "lot": "100028/NA10/2028-01",
+        "channel": "CLR_DE",
+        "quantity": 7647,
+        "lot_supply": 9546,
+        "net_value_eur": 17240.161499999995
+      }
+    ]
+  },
+  "trace": {
+    "lines": [
+      {
+        "line": "100003/AP10/2028-08,CLR_DE",
+        "lot": "100003/AP10/2028-08",
+        "channel": "CLR_DE",
+        "quantity": 60,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100003,CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100003,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100003/AP10/2028-08,FNF_GB",
+        "lot": "100003/AP10/2028-08",
+        "channel": "FNF_GB",
+        "quantity": 60,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100003,FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100003,FNF_GB]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100003/AP10/2028-08,OUT_PL",
+        "lot": "100003/AP10/2028-08",
+        "channel": "OUT_PL",
+        "quantity": 2212,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[OUT_PL]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100003,OUT_PL]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100003/NA01/2027-02,LIQ_AE",
+        "lot": "100003/NA01/2027-02",
+        "channel": "LIQ_AE",
+        "quantity": 3457,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100003,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "CLR_DE",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "NGO_ES",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100005/AP10/2028-03,CLR_DE",
+        "lot": "100005/AP10/2028-03",
+        "channel": "CLR_DE",
+        "quantity": 60,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100005,CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100005,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100005/AP10/2028-03,LIQ_AE",
+        "lot": "100005/AP10/2028-03",
+        "channel": "LIQ_AE",
+        "quantity": 60,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100005,LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100005,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100005/NA10/2028-06,FNF_GB",
+        "lot": "100005/NA10/2028-06",
+        "channel": "FNF_GB",
+        "quantity": 2051,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100005,FNF_GB]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100008/EU01/2027-12,LIQ_AE",
+        "lot": "100008/EU01/2027-12",
+        "channel": "LIQ_AE",
+        "quantity": 1154,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100008,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100011/AP10/2026-11,LIQ_AE",
+        "lot": "100011/AP10/2026-11",
+        "channel": "LIQ_AE",
+        "quantity": 362,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_lo",
+            "instance": "cov_lo[100011,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "CLR_DE",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "NGO_ES",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100012/AP10/2027-11,CLR_DE",
+        "lot": "100012/AP10/2027-11",
+        "channel": "CLR_DE",
+        "quantity": 1244,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100012,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100012/AP10/2027-11,LIQ_AE",
+        "lot": "100012/AP10/2027-11",
+        "channel": "LIQ_AE",
+        "quantity": 659,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_lo",
+            "instance": "cov_lo[100012,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100013/EU01/2028-06,OUT_PL",
+        "lot": "100013/EU01/2028-06",
+        "channel": "OUT_PL",
+        "quantity": 159,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[OUT_PL]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100013,OUT_PL]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "LIQ_AE",
+            "reasons": [
+              "TIER"
+            ]
+          },
+          {
+            "channel": "NGO_ES",
+            "reasons": [
+              "TIER"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100014/EU10/2027-02,LIQ_AE",
+        "lot": "100014/EU10/2027-02",
+        "channel": "LIQ_AE",
+        "quantity": 100,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100014,LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100014,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "CLR_DE",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "NGO_ES",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100018/EU01/2027-07,LIQ_AE",
+        "lot": "100018/EU01/2027-07",
+        "channel": "LIQ_AE",
+        "quantity": 1307,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100018,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100018/NA10/2027-09,LIQ_AE",
+        "lot": "100018/NA10/2027-09",
+        "channel": "LIQ_AE",
+        "quantity": 60,
+        "binding": [
+          {
+            "constraint": "supply",
+            "instance": "supply[100018/NA10/2027-09]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100018,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100018/NA10/2027-10,CLR_DE",
+        "lot": "100018/NA10/2027-10",
+        "channel": "CLR_DE",
+        "quantity": 1734,
+        "binding": [
+          {
+            "constraint": "supply",
+            "instance": "supply[100018/NA10/2027-10]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100018,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100018/NA10/2027-10,LIQ_AE",
+        "lot": "100018/NA10/2027-10",
+        "channel": "LIQ_AE",
+        "quantity": 132,
+        "binding": [
+          {
+            "constraint": "supply",
+            "instance": "supply[100018/NA10/2027-10]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100018,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100019/EU10/2027-04,LIQ_AE",
+        "lot": "100019/EU10/2027-04",
+        "channel": "LIQ_AE",
+        "quantity": 60,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100019,LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100019,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "CLR_DE",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "NGO_ES",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100019/EU10/2028-01,FNF_GB",
+        "lot": "100019/EU10/2028-01",
+        "channel": "FNF_GB",
+        "quantity": 60,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100019,FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100019,FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "asrt",
+            "instance": "asrt[Velaire/Makeup,FNF_GB]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100019/EU10/2028-03,CLR_DE",
+        "lot": "100019/EU10/2028-03",
+        "channel": "CLR_DE",
+        "quantity": 4151,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100019,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100022/AP01/2028-02,FNF_GB",
+        "lot": "100022/AP01/2028-02",
+        "channel": "FNF_GB",
+        "quantity": 60,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100022,FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100022,FNF_GB]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "asrt",
+            "instance": "asrt[Velaire/Makeup,FNF_GB]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100022/NA01/2027-10,CLR_DE",
+        "lot": "100022/NA01/2027-10",
+        "channel": "CLR_DE",
+        "quantity": 60,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100022,CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100022,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100022/NA01/2027-10,LIQ_AE",
+        "lot": "100022/NA01/2027-10",
+        "channel": "LIQ_AE",
+        "quantity": 5033,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100022,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100022/NA01/2027-10,NGO_ES",
+        "lot": "100022/NA01/2027-10",
+        "channel": "NGO_ES",
+        "quantity": 2327,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[NGO_ES]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100022,NGO_ES]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100022/NA01/2027-10,OUT_PL",
+        "lot": "100022/NA01/2027-10",
+        "channel": "OUT_PL",
+        "quantity": 5209,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[OUT_PL]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100022,OUT_PL]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100023/EU10/2029-02,OUT_PL",
+        "lot": "100023/EU10/2029-02",
+        "channel": "OUT_PL",
+        "quantity": 356,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[OUT_PL]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100023,OUT_PL]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100026/NA01/2027-11,CLR_DE",
+        "lot": "100026/NA01/2027-11",
+        "channel": "CLR_DE",
+        "quantity": 60,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100026,CLR_DE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100026,CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100026/NA01/2027-11,LIQ_AE",
+        "lot": "100026/NA01/2027-11",
+        "channel": "LIQ_AE",
+        "quantity": 60,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100026,LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100026,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100026/NA01/2027-11,NGO_ES",
+        "lot": "100026/NA01/2027-11",
+        "channel": "NGO_ES",
+        "quantity": 60,
+        "binding": [
+          {
+            "constraint": "sku",
+            "instance": "sku[NGO_ES]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100026,NGO_ES]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100026,NGO_ES]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100028/NA10/2027-12,CLR_DE",
+        "lot": "100028/NA10/2027-12",
+        "channel": "CLR_DE",
+        "quantity": 999,
+        "binding": [
+          {
+            "constraint": "supply",
+            "instance": "supply[100028/NA10/2027-12]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100028/NA10/2027-12,NGO_ES",
+        "lot": "100028/NA10/2027-12",
+        "channel": "NGO_ES",
+        "quantity": 21,
+        "binding": [
+          {
+            "constraint": "supply",
+            "instance": "supply[100028/NA10/2027-12]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "sku",
+            "instance": "sku[NGO_ES]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100028,NGO_ES]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100028,NGO_ES]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100028/NA10/2028-01,CLR_DE",
+        "lot": "100028/NA10/2028-01",
+        "channel": "CLR_DE",
+        "quantity": 5032,
+        "binding": [
+          {
+            "constraint": "supply",
+            "instance": "supply[100028/NA10/2028-01]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100028/NA10/2028-01,LIQ_AE",
+        "lot": "100028/NA10/2028-01",
+        "channel": "LIQ_AE",
+        "quantity": 4475,
+        "binding": [
+          {
+            "constraint": "supply",
+            "instance": "supply[100028/NA10/2028-01]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_lo",
+            "instance": "cov_lo[100028,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100028/NA10/2028-01,NGO_ES",
+        "lot": "100028/NA10/2028-01",
+        "channel": "NGO_ES",
+        "quantity": 39,
+        "binding": [
+          {
+            "constraint": "supply",
+            "instance": "supply[100028/NA10/2028-01]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "sku",
+            "instance": "sku[NGO_ES]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100028,NGO_ES]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100028,NGO_ES]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": [
+          {
+            "channel": "FNF_GB",
+            "reasons": [
+              "RSL"
+            ]
+          },
+          {
+            "channel": "OUT_PL",
+            "reasons": [
+              "RSL"
+            ]
+          }
+        ]
+      },
+      {
+        "line": "100030/NA10/2029-03,CLR_DE",
+        "lot": "100030/NA10/2029-03",
+        "channel": "CLR_DE",
+        "quantity": 581,
+        "binding": [
+          {
+            "constraint": "supply",
+            "instance": "supply[100030/NA10/2029-03]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "sku",
+            "instance": "sku[CLR_DE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100030/NA10/2029-03,LIQ_AE",
+        "lot": "100030/NA10/2029-03",
+        "channel": "LIQ_AE",
+        "quantity": 100,
+        "binding": [
+          {
+            "constraint": "supply",
+            "instance": "supply[100030/NA10/2029-03]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "sku",
+            "instance": "sku[LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100030,LIQ_AE]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "push",
+            "instance": "push[100030,LIQ_AE]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      },
+      {
+        "line": "100030/NA10/2029-03,OUT_PL",
+        "lot": "100030/NA10/2029-03",
+        "channel": "OUT_PL",
+        "quantity": 963,
+        "binding": [
+          {
+            "constraint": "supply",
+            "instance": "supply[100030/NA10/2029-03]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "sku",
+            "instance": "sku[OUT_PL]",
+            "slack": 0.0
+          },
+          {
+            "constraint": "cov_hi",
+            "instance": "cov_hi[100030,OUT_PL]",
+            "slack": 0.0
+          }
+        ],
+        "blocked": []
+      }
+    ],
+    "binding": [
+      {
+        "constraint": "asrt",
+        "instance": "asrt[Velaire/Makeup,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100003,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100003,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100003,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100003,OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100005,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100005,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100005,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100008,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100012,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100013,OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100014,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100018,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100018,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100019,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100019,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100019,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100022,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100022,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100022,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100022,NGO_ES]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100022,OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100023,OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100026,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100026,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100026,NGO_ES]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100028,NGO_ES]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100030,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_hi",
+        "instance": "cov_hi[100030,OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_lo",
+        "instance": "cov_lo[100011,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_lo",
+        "instance": "cov_lo[100012,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "cov_lo",
+        "instance": "cov_lo[100028,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100003,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100003,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100005,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100005,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100014,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100019,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100019,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100022,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100022,FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100026,CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100026,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100026,NGO_ES]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100028,NGO_ES]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "push",
+        "instance": "push[100030,LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "sku",
+        "instance": "sku[CLR_DE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "sku",
+        "instance": "sku[FNF_GB]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "sku",
+        "instance": "sku[LIQ_AE]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "sku",
+        "instance": "sku[NGO_ES]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "sku",
+        "instance": "sku[OUT_PL]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "supply",
+        "instance": "supply[100018/NA10/2027-09]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "supply",
+        "instance": "supply[100018/NA10/2027-10]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "supply",
+        "instance": "supply[100028/NA10/2027-12]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "supply",
+        "instance": "supply[100028/NA10/2028-01]",
+        "slack": 0.0
+      },
+      {
+        "constraint": "supply",
+        "instance": "supply[100030/NA10/2029-03]",
+        "slack": 0.0
+      }
+    ],
+    "lines_per_rule": {
+      "asrt": 2,
+      "cov_hi": 31,
+      "cov_lo": 3,
+      "push": 15,
+      "sku": 37,
+      "supply": 11
+    }
+  },
+  "counterfactuals": [
+    {
+      "constraint": "sku",
+      "instance": "sku[LIQ_AE]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 6352.519,
+      "units_destroyed_by_rule": -2667,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 97961.20009999999,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 213054,
+      "mip_gap": 0.0,
+      "time_s": 0.410464100074023,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[LIQ_AE]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 6822.591,
+      "units_destroyed_by_rule": -2856,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 98431.27209999999,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 213243,
+      "mip_gap": 5.937163091155063e-6,
+      "time_s": 0.2225907000247389,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[CLR_DE]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 4414.244000000006,
+      "units_destroyed_by_rule": -2639,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 96022.9251,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 213026,
+      "mip_gap": 8.691474960525801e-6,
+      "time_s": 0.9547821001615375,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[CLR_DE]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 7772.3868000000075,
+      "units_destroyed_by_rule": -2531,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 99381.0679,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 212918,
+      "mip_gap": 0.0,
+      "time_s": 0.185887600062415,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[OUT_PL]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 4725.302000000011,
+      "units_destroyed_by_rule": -2699,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 96333.9831,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 213086,
+      "mip_gap": 0.000031266225095735097,
+      "time_s": 3.1975745998788625,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[OUT_PL]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 9845.792000000001,
+      "units_destroyed_by_rule": -2257,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 101454.47309999999,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 212644,
+      "mip_gap": 0.00009699917311989767,
+      "time_s": 0.14146840013563633,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[FNF_GB]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 4271.026000000013,
+      "units_destroyed_by_rule": -2759,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 95879.7071,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 213146,
+      "mip_gap": 0.0000787418967803862,
+      "time_s": 2.2596603001002222,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[FNF_GB]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 7627.031800000012,
+      "units_destroyed_by_rule": -2820,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 99235.7129,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 213207,
+      "mip_gap": 0.0,
+      "time_s": 0.22984329983592033,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[NGO_ES]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 4354.544000000009,
+      "units_destroyed_by_rule": -2639,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 95963.2251,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 213026,
+      "mip_gap": 0.0,
+      "time_s": 2.4142515000421554,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "sku",
+      "instance": "sku[NGO_ES]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 6877.429000000004,
+      "units_destroyed_by_rule": -2787,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 98486.11009999999,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 213174,
+      "mip_gap": 0.0,
+      "time_s": 0.2148792000953108,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "cov_hi",
+      "instance": "cov_hi[100018,LIQ_AE]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 2.64000000001397,
+      "units_destroyed_by_rule": 150,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 91611.3211,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 210237,
+      "mip_gap": 0.0,
+      "time_s": 0.6334021000657231,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "cov_hi",
+      "instance": "cov_hi[100018,LIQ_AE]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 42.04640000000654,
+      "units_destroyed_by_rule": 2389,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 91650.7275,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 207998,
+      "mip_gap": 0.0,
+      "time_s": 0.7387576999608427,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "asrt",
+      "instance": "asrt[Velaire/Makeup,FNF_GB]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 1.4551915228366852e-11,
+      "units_destroyed_by_rule": 0,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 91608.6811,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 210387,
+      "mip_gap": 0.0,
+      "time_s": 0.678871699841693,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "asrt",
+      "instance": "asrt[Velaire/Makeup,FNF_GB]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 1.4551915228366852e-11,
+      "units_destroyed_by_rule": 0,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 91608.6811,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 210387,
+      "mip_gap": 0.0,
+      "time_s": 0.627612299984321,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "push",
+      "instance": "push[100028,NGO_ES]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 12.36600000000908,
+      "units_destroyed_by_rule": 0,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 91621.0471,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 210387,
+      "mip_gap": 0.0,
+      "time_s": 0.9748037001118064,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "push",
+      "instance": "push[100028,NGO_ES]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 121.59900000000198,
+      "units_destroyed_by_rule": 0,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 91730.28009999999,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 210387,
+      "mip_gap": 1.586380768978689e-16,
+      "time_s": 0.8211892999242991,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "cov_lo",
+      "instance": "cov_lo[100011,LIQ_AE]",
+      "mode": "plus_10pct",
+      "status": "optimal",
+      "cost_eur": 12.313600000008591,
+      "units_destroyed_by_rule": -37,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 91620.9947,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 210424,
+      "mip_gap": 0.0,
+      "time_s": 0.7479093000292778,
+      "time_limit_s": 10.0,
+      "message": ""
+    },
+    {
+      "constraint": "cov_lo",
+      "instance": "cov_lo[100011,LIQ_AE]",
+      "mode": "off",
+      "status": "optimal",
+      "cost_eur": 120.14080000000831,
+      "units_destroyed_by_rule": -361,
+      "base_objective": 91608.68109999999,
+      "relaxed_objective": 91728.8219,
+      "base_destroyed": 210387,
+      "relaxed_destroyed": 210748,
+      "mip_gap": 0.0,
+      "time_s": 0.6816809000447392,
+      "time_limit_s": 10.0,
+      "message": ""
+    }
+  ],
+  "stock": {
+    "summary": {
+      "total_lots": 84,
+      "total_units": 254964,
+      "value_at_risk": 2587669.86,
+      "allocated_units": 44577,
+      "by_reason": [
+        {
+          "key": "excess",
+          "lots": 29,
+          "units": 142338,
+          "value_at_risk": 1703829.78,
+          "allocated_units": 22620
+        },
+        {
+          "key": "near_expiry",
+          "lots": 18,
+          "units": 46020,
+          "value_at_risk": 331503.84,
+          "allocated_units": 3979
+        },
+        {
+          "key": "overproduction",
+          "lots": 13,
+          "units": 41046,
+          "value_at_risk": 298545.84,
+          "allocated_units": 4332
+        },
+        {
+          "key": "obsolete",
+          "lots": 16,
+          "units": 13458,
+          "value_at_risk": 137251.86,
+          "allocated_units": 3080
+        },
+        {
+          "key": "discontinued",
+          "lots": 8,
+          "units": 12102,
+          "value_at_risk": 116538.54,
+          "allocated_units": 10566
+        }
+      ],
+      "by_brand": [
+        {
+          "key": "Velaire",
+          "lots": 18,
+          "units": 106746,
+          "value_at_risk": 1247776.92,
+          "allocated_units": 20555
+        },
+        {
+          "key": "Noctua",
+          "lots": 23,
+          "units": 63984,
+          "value_at_risk": 890697.96,
+          "allocated_units": 14996
+        },
+        {
+          "key": "Brightleaf",
+          "lots": 18,
+          "units": 30876,
+          "value_at_risk": 177102.3,
+          "allocated_units": 2898
+        },
+        {
+          "key": "Pigment Lab",
+          "lots": 18,
+          "units": 48984,
+          "value_at_risk": 149019.48,
+          "allocated_units": 5969
+        },
+        {
+          "key": "Atelier Sable",
+          "lots": 7,
+          "units": 4374,
+          "value_at_risk": 123073.2,
+          "allocated_units": 159
+        }
+      ],
+      "by_brand_category": [
+        {
+          "key": "Atelier Sable/Fragrance",
+          "lots": 7,
+          "units": 4374,
+          "value_at_risk": 123073.2,
+          "allocated_units": 159,
+          "brand": "Atelier Sable",
+          "category": "Fragrance"
+        },
+        {
+          "key": "Brightleaf/Haircare",
+          "lots": 18,
+          "units": 30876,
+          "value_at_risk": 177102.3,
+          "allocated_units": 2898,
+          "brand": "Brightleaf",
+          "category": "Haircare"
+        },
+        {
+          "key": "Noctua/Skincare",
+          "lots": 23,
+          "units": 63984,
+          "value_at_risk": 890697.96,
+          "allocated_units": 14996,
+          "brand": "Noctua",
+          "category": "Skincare"
+        },
+        {
+          "key": "Pigment Lab/Makeup",
+          "lots": 18,
+          "units": 48984,
+          "value_at_risk": 149019.48,
+          "allocated_units": 5969,
+          "brand": "Pigment Lab",
+          "category": "Makeup"
+        },
+        {
+          "key": "Velaire/Makeup",
+          "lots": 18,
+          "units": 106746,
+          "value_at_risk": 1247776.92,
+          "allocated_units": 20555,
+          "brand": "Velaire",
+          "category": "Makeup"
+        }
+      ]
+    },
+    "lots": [
+      {
+        "lot": "100001/AP01/2028-04",
+        "material": "100001",
+        "description": "Pigment Lab Éclat Fond de Teint 50 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "AP01",
+        "reason": "discontinued",
+        "expiry_date": "2028-04-11",
+        "days_to_expiry": 558,
+        "units": 72,
+        "unit_cost": 4.82,
+        "value_at_risk": 347.04,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100001/AP10/2027-08",
+        "material": "100001",
+        "description": "Pigment Lab Éclat Fond de Teint 50 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "AP10",
+        "reason": "obsolete",
+        "expiry_date": "2027-08-15",
+        "days_to_expiry": 318,
+        "units": 72,
+        "unit_cost": 4.7,
+        "value_at_risk": 338.4,
+        "allocated_units": 0,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100001/EU01/2027-02",
+        "material": "100001",
+        "description": "Pigment Lab Éclat Fond de Teint 50 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "EU01",
+        "reason": "obsolete",
+        "expiry_date": "2027-02-26",
+        "days_to_expiry": 148,
+        "units": 108,
+        "unit_cost": 4.79,
+        "value_at_risk": 517.32,
+        "allocated_units": 0,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100002/NA10/2028-04",
+        "material": "100002",
+        "description": "Atelier Sable Pivoine Eau de Parfum 15 ml",
+        "brand": "Atelier Sable",
+        "category": "Fragrance",
+        "tier": "luxury",
+        "plant": "NA10",
+        "reason": "obsolete",
+        "expiry_date": "2028-04-16",
+        "days_to_expiry": 563,
+        "units": 432,
+        "unit_cost": 24.77,
+        "value_at_risk": 10700.64,
+        "allocated_units": 0,
+        "channels_open": 2,
+        "channels_blocked": 3
+      },
+      {
+        "lot": "100003/AP10/2028-08",
+        "material": "100003",
+        "description": "Pigment Lab Santal Fond de Teint 30 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "AP10",
+        "reason": "overproduction",
+        "expiry_date": "2028-08-10",
+        "days_to_expiry": 679,
+        "units": 14688,
+        "unit_cost": 2.32,
+        "value_at_risk": 34076.16,
+        "allocated_units": 2332,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100003/NA01/2027-02",
+        "material": "100003",
+        "description": "Pigment Lab Santal Fond de Teint 30 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "NA01",
+        "reason": "near_expiry",
+        "expiry_date": "2027-02-25",
+        "days_to_expiry": 147,
+        "units": 3774,
+        "unit_cost": 2.44,
+        "value_at_risk": 9208.56,
+        "allocated_units": 3457,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100003/NA01/2027-03",
+        "material": "100003",
+        "description": "Pigment Lab Santal Fond de Teint 30 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "NA01",
+        "reason": "near_expiry",
+        "expiry_date": "2027-03-07",
+        "days_to_expiry": 157,
+        "units": 4176,
+        "unit_cost": 2.44,
+        "value_at_risk": 10189.44,
+        "allocated_units": 0,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100004/AP01/2028-02",
+        "material": "100004",
+        "description": "Noctua Fleur d'Oranger Crème Visage 100 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "AP01",
+        "reason": "excess",
+        "expiry_date": "2028-02-24",
+        "days_to_expiry": 511,
+        "units": 240,
+        "unit_cost": 20.6,
+        "value_at_risk": 4944.0,
+        "allocated_units": 0,
+        "channels_open": 4,
+        "channels_blocked": 1
+      },
+      {
+        "lot": "100004/AP01/2028-03",
+        "material": "100004",
+        "description": "Noctua Fleur d'Oranger Crème Visage 100 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "AP01",
+        "reason": "excess",
+        "expiry_date": "2028-03-10",
+        "days_to_expiry": 526,
+        "units": 2190,
+        "unit_cost": 20.6,
+        "value_at_risk": 45114.0,
+        "allocated_units": 0,
+        "channels_open": 4,
+        "channels_blocked": 1
+      },
+      {
+        "lot": "100004/EU10/2027-02",
+        "material": "100004",
+        "description": "Noctua Fleur d'Oranger Crème Visage 100 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "EU10",
+        "reason": "near_expiry",
+        "expiry_date": "2027-02-08",
+        "days_to_expiry": 130,
+        "units": 870,
+        "unit_cost": 20.4,
+        "value_at_risk": 17748.0,
+        "allocated_units": 0,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100005/AP10/2028-03",
+        "material": "100005",
+        "description": "Noctua Éclat Crème Visage 30 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "AP10",
+        "reason": "excess",
+        "expiry_date": "2028-03-05",
+        "days_to_expiry": 521,
+        "units": 13542,
+        "unit_cost": 17.66,
+        "value_at_risk": 239151.72,
+        "allocated_units": 120,
+        "channels_open": 4,
+        "channels_blocked": 1
+      },
+      {
+        "lot": "100005/EU01/2028-12",
+        "material": "100005",
+        "description": "Noctua Éclat Crème Visage 30 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "EU01",
+        "reason": "overproduction",
+        "expiry_date": "2028-12-24",
+        "days_to_expiry": 815,
+        "units": 5040,
+        "unit_cost": 16.95,
+        "value_at_risk": 85428.0,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100005/NA10/2028-06",
+        "material": "100005",
+        "description": "Noctua Éclat Crème Visage 30 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "NA10",
+        "reason": "excess",
+        "expiry_date": "2028-06-30",
+        "days_to_expiry": 638,
+        "units": 4944,
+        "unit_cost": 17.48,
+        "value_at_risk": 86421.12,
+        "allocated_units": 2051,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100005/NA10/2028-07",
+        "material": "100005",
+        "description": "Noctua Éclat Crème Visage 30 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "NA10",
+        "reason": "excess",
+        "expiry_date": "2028-07-07",
+        "days_to_expiry": 645,
+        "units": 7632,
+        "unit_cost": 17.48,
+        "value_at_risk": 133407.36,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100006/EU10/2026-11",
+        "material": "100006",
+        "description": "Brightleaf Santal Conditioner 100 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "EU10",
+        "reason": "near_expiry",
+        "expiry_date": "2026-11-28",
+        "days_to_expiry": 58,
+        "units": 30,
+        "unit_cost": 3.45,
+        "value_at_risk": 103.5,
+        "allocated_units": 0,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100006/NA01/2028-12",
+        "material": "100006",
+        "description": "Brightleaf Santal Conditioner 100 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "NA01",
+        "reason": "overproduction",
+        "expiry_date": "2028-12-06",
+        "days_to_expiry": 797,
+        "units": 30,
+        "unit_cost": 3.38,
+        "value_at_risk": 101.4,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100006/NA10/2028-04",
+        "material": "100006",
+        "description": "Brightleaf Santal Conditioner 100 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "NA10",
+        "reason": "excess",
+        "expiry_date": "2028-04-18",
+        "days_to_expiry": 565,
+        "units": 54,
+        "unit_cost": 3.43,
+        "value_at_risk": 185.22,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100007/NA01/2027-04",
+        "material": "100007",
+        "description": "Velaire Soie Rouge à Lèvres 400 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "NA01",
+        "reason": "obsolete",
+        "expiry_date": "2027-04-26",
+        "days_to_expiry": 207,
+        "units": 84,
+        "unit_cost": 8.34,
+        "value_at_risk": 700.56,
+        "allocated_units": 0,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100007/NA01/2027-05",
+        "material": "100007",
+        "description": "Velaire Soie Rouge à Lèvres 400 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "NA01",
+        "reason": "obsolete",
+        "expiry_date": "2027-05-10",
+        "days_to_expiry": 221,
+        "units": 126,
+        "unit_cost": 8.34,
+        "value_at_risk": 1050.84,
+        "allocated_units": 0,
+        "channels_open": 2,
+        "channels_blocked": 3
+      },
+      {
+        "lot": "100008/EU01/2027-11",
+        "material": "100008",
+        "description": "Brightleaf Soie Styling Cream 400 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "EU01",
+        "reason": "obsolete",
+        "expiry_date": "2027-11-29",
+        "days_to_expiry": 424,
+        "units": 252,
+        "unit_cost": 8.53,
+        "value_at_risk": 2149.56,
+        "allocated_units": 0,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100008/EU01/2027-12",
+        "material": "100008",
+        "description": "Brightleaf Soie Styling Cream 400 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "EU01",
+        "reason": "obsolete",
+        "expiry_date": "2027-12-07",
+        "days_to_expiry": 432,
+        "units": 1866,
+        "unit_cost": 8.53,
+        "value_at_risk": 15916.98,
+        "allocated_units": 1154,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100008/EU10/2027-11",
+        "material": "100008",
+        "description": "Brightleaf Soie Styling Cream 400 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "EU10",
+        "reason": "excess",
+        "expiry_date": "2027-11-22",
+        "days_to_expiry": 417,
+        "units": 5346,
+        "unit_cost": 8.46,
+        "value_at_risk": 45227.16,
+        "allocated_units": 0,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100008/EU10/2027-12",
+        "material": "100008",
+        "description": "Brightleaf Soie Styling Cream 400 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "EU10",
+        "reason": "excess",
+        "expiry_date": "2027-12-05",
+        "days_to_expiry": 430,
+        "units": 2202,
+        "unit_cost": 8.46,
+        "value_at_risk": 18628.92,
+        "allocated_units": 0,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100008/NA10/2027-01",
+        "material": "100008",
+        "description": "Brightleaf Soie Styling Cream 400 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "NA10",
+        "reason": "near_expiry",
+        "expiry_date": "2027-01-16",
+        "days_to_expiry": 107,
+        "units": 2610,
+        "unit_cost": 8.43,
+        "value_at_risk": 22002.3,
+        "allocated_units": 0,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100009/EU01/2029-09",
+        "material": "100009",
+        "description": "Atelier Sable Cèdre Eau de Toilette 250 ml",
+        "brand": "Atelier Sable",
+        "category": "Fragrance",
+        "tier": "luxury",
+        "plant": "EU01",
+        "reason": "overproduction",
+        "expiry_date": "2029-09-24",
+        "days_to_expiry": 1089,
+        "units": 270,
+        "unit_cost": 39.74,
+        "value_at_risk": 10729.8,
+        "allocated_units": 0,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100009/NA10/2027-02",
+        "material": "100009",
+        "description": "Atelier Sable Cèdre Eau de Toilette 250 ml",
+        "brand": "Atelier Sable",
+        "category": "Fragrance",
+        "tier": "luxury",
+        "plant": "NA10",
+        "reason": "near_expiry",
+        "expiry_date": "2027-02-15",
+        "days_to_expiry": 137,
+        "units": 120,
+        "unit_cost": 39.21,
+        "value_at_risk": 4705.2,
+        "allocated_units": 0,
+        "channels_open": 0,
+        "channels_blocked": 5
+      },
+      {
+        "lot": "100010/AP01/2028-07",
+        "material": "100010",
+        "description": "Pigment Lab Aurore Rouge à Lèvres 400 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "AP01",
+        "reason": "overproduction",
+        "expiry_date": "2028-07-13",
+        "days_to_expiry": 651,
+        "units": 144,
+        "unit_cost": 2.34,
+        "value_at_risk": 336.96,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100010/EU01/2027-01",
+        "material": "100010",
+        "description": "Pigment Lab Aurore Rouge à Lèvres 400 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "EU01",
+        "reason": "near_expiry",
+        "expiry_date": "2027-01-31",
+        "days_to_expiry": 122,
+        "units": 252,
+        "unit_cost": 2.37,
+        "value_at_risk": 597.24,
+        "allocated_units": 0,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100010/EU01/2028-04",
+        "material": "100010",
+        "description": "Pigment Lab Aurore Rouge à Lèvres 400 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "EU01",
+        "reason": "excess",
+        "expiry_date": "2028-04-15",
+        "days_to_expiry": 562,
+        "units": 486,
+        "unit_cost": 2.37,
+        "value_at_risk": 1151.82,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100011/AP10/2026-11",
+        "material": "100011",
+        "description": "Velaire Cèdre Vernis 250 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "AP10",
+        "reason": "near_expiry",
+        "expiry_date": "2026-11-19",
+        "days_to_expiry": 49,
+        "units": 894,
+        "unit_cost": 5.84,
+        "value_at_risk": 5220.96,
+        "allocated_units": 362,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100012/AP10/2027-11",
+        "material": "100012",
+        "description": "Noctua Océan Gel Nettoyant 400 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "AP10",
+        "reason": "excess",
+        "expiry_date": "2027-11-07",
+        "days_to_expiry": 402,
+        "units": 5652,
+        "unit_cost": 9.55,
+        "value_at_risk": 53976.6,
+        "allocated_units": 1903,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100012/NA10/2027-11",
+        "material": "100012",
+        "description": "Noctua Océan Gel Nettoyant 400 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "NA10",
+        "reason": "obsolete",
+        "expiry_date": "2027-11-30",
+        "days_to_expiry": 425,
+        "units": 846,
+        "unit_cost": 9.29,
+        "value_at_risk": 7859.34,
+        "allocated_units": 0,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100012/NA10/2027-12",
+        "material": "100012",
+        "description": "Noctua Océan Gel Nettoyant 400 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "NA10",
+        "reason": "obsolete",
+        "expiry_date": "2027-12-12",
+        "days_to_expiry": 437,
+        "units": 4296,
+        "unit_cost": 9.29,
+        "value_at_risk": 39909.84,
+        "allocated_units": 0,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100013/EU01/2028-06",
+        "material": "100013",
+        "description": "Atelier Sable Ambre Extrait 15 ml",
+        "brand": "Atelier Sable",
+        "category": "Fragrance",
+        "tier": "luxury",
+        "plant": "EU01",
+        "reason": "excess",
+        "expiry_date": "2028-06-27",
+        "days_to_expiry": 635,
+        "units": 576,
+        "unit_cost": 35.33,
+        "value_at_risk": 20350.08,
+        "allocated_units": 159,
+        "channels_open": 2,
+        "channels_blocked": 3
+      },
+      {
+        "lot": "100013/EU10/2027-08",
+        "material": "100013",
+        "description": "Atelier Sable Ambre Extrait 15 ml",
+        "brand": "Atelier Sable",
+        "category": "Fragrance",
+        "tier": "luxury",
+        "plant": "EU10",
+        "reason": "obsolete",
+        "expiry_date": "2027-08-20",
+        "days_to_expiry": 323,
+        "units": 498,
+        "unit_cost": 35.55,
+        "value_at_risk": 17703.9,
+        "allocated_units": 0,
+        "channels_open": 0,
+        "channels_blocked": 5
+      },
+      {
+        "lot": "100013/NA10/2027-05",
+        "material": "100013",
+        "description": "Atelier Sable Ambre Extrait 15 ml",
+        "brand": "Atelier Sable",
+        "category": "Fragrance",
+        "tier": "luxury",
+        "plant": "NA10",
+        "reason": "near_expiry",
+        "expiry_date": "2027-05-03",
+        "days_to_expiry": 214,
+        "units": 204,
+        "unit_cost": 36.61,
+        "value_at_risk": 7468.44,
+        "allocated_units": 0,
+        "channels_open": 0,
+        "channels_blocked": 5
+      },
+      {
+        "lot": "100014/EU10/2027-02",
+        "material": "100014",
+        "description": "Brightleaf Velours Conditioner 100 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "EU10",
+        "reason": "near_expiry",
+        "expiry_date": "2027-02-07",
+        "days_to_expiry": 129,
+        "units": 8358,
+        "unit_cost": 4.03,
+        "value_at_risk": 33682.74,
+        "allocated_units": 100,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100014/NA01/2026-12",
+        "material": "100014",
+        "description": "Brightleaf Velours Conditioner 100 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "NA01",
+        "reason": "near_expiry",
+        "expiry_date": "2026-12-29",
+        "days_to_expiry": 89,
+        "units": 6816,
+        "unit_cost": 4.02,
+        "value_at_risk": 27400.32,
+        "allocated_units": 0,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100014/NA01/2027-01",
+        "material": "100014",
+        "description": "Brightleaf Velours Conditioner 100 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "NA01",
+        "reason": "near_expiry",
+        "expiry_date": "2027-01-03",
+        "days_to_expiry": 94,
+        "units": 1380,
+        "unit_cost": 4.02,
+        "value_at_risk": 5547.6,
+        "allocated_units": 0,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100015/AP01/2028-03",
+        "material": "100015",
+        "description": "Brightleaf Aurore Shampoo 15 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "AP01",
+        "reason": "excess",
+        "expiry_date": "2028-03-09",
+        "days_to_expiry": 525,
+        "units": 108,
+        "unit_cost": 3.18,
+        "value_at_risk": 343.44,
+        "allocated_units": 0,
+        "channels_open": 4,
+        "channels_blocked": 1
+      },
+      {
+        "lot": "100015/EU10/2027-01",
+        "material": "100015",
+        "description": "Brightleaf Aurore Shampoo 15 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "EU10",
+        "reason": "near_expiry",
+        "expiry_date": "2027-01-22",
+        "days_to_expiry": 113,
+        "units": 36,
+        "unit_cost": 3.33,
+        "value_at_risk": 119.88,
+        "allocated_units": 0,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100015/EU10/2028-06",
+        "material": "100015",
+        "description": "Brightleaf Aurore Shampoo 15 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "EU10",
+        "reason": "excess",
+        "expiry_date": "2028-06-29",
+        "days_to_expiry": 637,
+        "units": 78,
+        "unit_cost": 3.33,
+        "value_at_risk": 259.74,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100015/EU10/2028-07",
+        "material": "100015",
+        "description": "Brightleaf Aurore Shampoo 15 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "EU10",
+        "reason": "excess",
+        "expiry_date": "2028-07-01",
+        "days_to_expiry": 639,
+        "units": 30,
+        "unit_cost": 3.33,
+        "value_at_risk": 99.9,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100016/AP01/2027-01",
+        "material": "100016",
+        "description": "Velaire Nuit Dorée Mascara 15 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "AP01",
+        "reason": "near_expiry",
+        "expiry_date": "2027-01-14",
+        "days_to_expiry": 105,
+        "units": 942,
+        "unit_cost": 9.65,
+        "value_at_risk": 9090.3,
+        "allocated_units": 0,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100016/AP10/2028-07",
+        "material": "100016",
+        "description": "Velaire Nuit Dorée Mascara 15 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "AP10",
+        "reason": "overproduction",
+        "expiry_date": "2028-07-13",
+        "days_to_expiry": 651,
+        "units": 2082,
+        "unit_cost": 9.66,
+        "value_at_risk": 20112.12,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100016/EU10/2027-11",
+        "material": "100016",
+        "description": "Velaire Nuit Dorée Mascara 15 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "EU10",
+        "reason": "excess",
+        "expiry_date": "2027-11-22",
+        "days_to_expiry": 417,
+        "units": 1362,
+        "unit_cost": 9.65,
+        "value_at_risk": 13143.3,
+        "allocated_units": 0,
+        "channels_open": 4,
+        "channels_blocked": 1
+      },
+      {
+        "lot": "100017/AP10/2028-05",
+        "material": "100017",
+        "description": "Noctua Lumière Sérum 15 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "AP10",
+        "reason": "obsolete",
+        "expiry_date": "2028-05-15",
+        "days_to_expiry": 592,
+        "units": 648,
+        "unit_cost": 11.99,
+        "value_at_risk": 7769.52,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100017/EU10/2027-12",
+        "material": "100017",
+        "description": "Noctua Lumière Sérum 15 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "EU10",
+        "reason": "discontinued",
+        "expiry_date": "2027-12-03",
+        "days_to_expiry": 428,
+        "units": 858,
+        "unit_cost": 11.9,
+        "value_at_risk": 10210.2,
+        "allocated_units": 0,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100017/NA01/2028-04",
+        "material": "100017",
+        "description": "Noctua Lumière Sérum 15 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "NA01",
+        "reason": "excess",
+        "expiry_date": "2028-04-30",
+        "days_to_expiry": 577,
+        "units": 1386,
+        "unit_cost": 12.08,
+        "value_at_risk": 16742.88,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100017/NA01/2028-05",
+        "material": "100017",
+        "description": "Noctua Lumière Sérum 15 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "NA01",
+        "reason": "excess",
+        "expiry_date": "2028-05-07",
+        "days_to_expiry": 584,
+        "units": 186,
+        "unit_cost": 12.08,
+        "value_at_risk": 2246.88,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100018/EU01/2027-07",
+        "material": "100018",
+        "description": "Velaire Ambre Vernis 400 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "EU01",
+        "reason": "excess",
+        "expiry_date": "2027-07-28",
+        "days_to_expiry": 300,
+        "units": 1638,
+        "unit_cost": 10.22,
+        "value_at_risk": 16740.36,
+        "allocated_units": 1307,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100018/EU01/2027-08",
+        "material": "100018",
+        "description": "Velaire Ambre Vernis 400 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "EU01",
+        "reason": "excess",
+        "expiry_date": "2027-08-09",
+        "days_to_expiry": 312,
+        "units": 2058,
+        "unit_cost": 10.22,
+        "value_at_risk": 21032.76,
+        "allocated_units": 0,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100018/NA10/2027-09",
+        "material": "100018",
+        "description": "Velaire Ambre Vernis 400 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "NA10",
+        "reason": "obsolete",
+        "expiry_date": "2027-09-26",
+        "days_to_expiry": 360,
+        "units": 60,
+        "unit_cost": 10.3,
+        "value_at_risk": 618.0,
+        "allocated_units": 60,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100018/NA10/2027-10",
+        "material": "100018",
+        "description": "Velaire Ambre Vernis 400 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "NA10",
+        "reason": "obsolete",
+        "expiry_date": "2027-10-06",
+        "days_to_expiry": 370,
+        "units": 1866,
+        "unit_cost": 10.3,
+        "value_at_risk": 19219.8,
+        "allocated_units": 1866,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100019/EU10/2027-04",
+        "material": "100019",
+        "description": "Velaire Soie Rouge à Lèvres 50 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "EU10",
+        "reason": "near_expiry",
+        "expiry_date": "2027-04-11",
+        "days_to_expiry": 192,
+        "units": 11232,
+        "unit_cost": 10.05,
+        "value_at_risk": 112881.6,
+        "allocated_units": 60,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100019/EU10/2027-12",
+        "material": "100019",
+        "description": "Velaire Soie Rouge à Lèvres 50 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "EU10",
+        "reason": "excess",
+        "expiry_date": "2027-12-31",
+        "days_to_expiry": 456,
+        "units": 2808,
+        "unit_cost": 10.05,
+        "value_at_risk": 28220.4,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100019/EU10/2028-01",
+        "material": "100019",
+        "description": "Velaire Soie Rouge à Lèvres 50 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "EU10",
+        "reason": "excess",
+        "expiry_date": "2028-01-03",
+        "days_to_expiry": 459,
+        "units": 8136,
+        "unit_cost": 10.05,
+        "value_at_risk": 81766.8,
+        "allocated_units": 60,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100019/EU10/2028-03",
+        "material": "100019",
+        "description": "Velaire Soie Rouge à Lèvres 50 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "EU10",
+        "reason": "excess",
+        "expiry_date": "2028-03-06",
+        "days_to_expiry": 522,
+        "units": 21888,
+        "unit_cost": 10.05,
+        "value_at_risk": 219974.4,
+        "allocated_units": 4151,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100020/EU10/2028-07",
+        "material": "100020",
+        "description": "Pigment Lab Lumière Rouge à Lèvres 100 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "EU10",
+        "reason": "overproduction",
+        "expiry_date": "2028-07-12",
+        "days_to_expiry": 650,
+        "units": 4326,
+        "unit_cost": 3.81,
+        "value_at_risk": 16482.06,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100020/NA01/2028-09",
+        "material": "100020",
+        "description": "Pigment Lab Lumière Rouge à Lèvres 100 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "NA01",
+        "reason": "overproduction",
+        "expiry_date": "2028-09-12",
+        "days_to_expiry": 712,
+        "units": 4026,
+        "unit_cost": 3.85,
+        "value_at_risk": 15500.1,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100021/AP01/2027-03",
+        "material": "100021",
+        "description": "Atelier Sable Bois Noir Eau de Toilette 15 ml",
+        "brand": "Atelier Sable",
+        "category": "Fragrance",
+        "tier": "luxury",
+        "plant": "AP01",
+        "reason": "near_expiry",
+        "expiry_date": "2027-03-11",
+        "days_to_expiry": 161,
+        "units": 2274,
+        "unit_cost": 22.61,
+        "value_at_risk": 51415.14,
+        "allocated_units": 0,
+        "channels_open": 0,
+        "channels_blocked": 5
+      },
+      {
+        "lot": "100022/AP01/2028-02",
+        "material": "100022",
+        "description": "Velaire Rose Poudrée Rouge à Lèvres 400 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "AP01",
+        "reason": "excess",
+        "expiry_date": "2028-02-11",
+        "days_to_expiry": 498,
+        "units": 18378,
+        "unit_cost": 13.6,
+        "value_at_risk": 249940.8,
+        "allocated_units": 60,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100022/AP01/2028-07",
+        "material": "100022",
+        "description": "Velaire Rose Poudrée Rouge à Lèvres 400 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "AP01",
+        "reason": "overproduction",
+        "expiry_date": "2028-07-18",
+        "days_to_expiry": 656,
+        "units": 7482,
+        "unit_cost": 13.6,
+        "value_at_risk": 101755.2,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100022/NA01/2027-10",
+        "material": "100022",
+        "description": "Velaire Rose Poudrée Rouge à Lèvres 400 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "NA01",
+        "reason": "excess",
+        "expiry_date": "2027-10-19",
+        "days_to_expiry": 383,
+        "units": 24456,
+        "unit_cost": 13.9,
+        "value_at_risk": 339938.4,
+        "allocated_units": 12629,
+        "channels_open": 4,
+        "channels_blocked": 1
+      },
+      {
+        "lot": "100023/EU01/2027-09",
+        "material": "100023",
+        "description": "Noctua Aurore Lotion Tonique 400 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "EU01",
+        "reason": "obsolete",
+        "expiry_date": "2027-09-15",
+        "days_to_expiry": 349,
+        "units": 1044,
+        "unit_cost": 7.04,
+        "value_at_risk": 7349.76,
+        "allocated_units": 0,
+        "channels_open": 2,
+        "channels_blocked": 3
+      },
+      {
+        "lot": "100023/EU10/2029-02",
+        "material": "100023",
+        "description": "Noctua Aurore Lotion Tonique 400 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "EU10",
+        "reason": "overproduction",
+        "expiry_date": "2029-02-19",
+        "days_to_expiry": 872,
+        "units": 1278,
+        "unit_cost": 6.8,
+        "value_at_risk": 8690.4,
+        "allocated_units": 356,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100023/NA10/2026-12",
+        "material": "100023",
+        "description": "Noctua Aurore Lotion Tonique 400 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "NA10",
+        "reason": "near_expiry",
+        "expiry_date": "2026-12-09",
+        "days_to_expiry": 69,
+        "units": 1890,
+        "unit_cost": 6.85,
+        "value_at_risk": 12946.5,
+        "allocated_units": 0,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100024/AP01/2027-03",
+        "material": "100024",
+        "description": "Noctua Santal Lotion Tonique 30 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "AP01",
+        "reason": "near_expiry",
+        "expiry_date": "2027-03-02",
+        "days_to_expiry": 152,
+        "units": 162,
+        "unit_cost": 7.26,
+        "value_at_risk": 1176.12,
+        "allocated_units": 0,
+        "channels_open": 1,
+        "channels_blocked": 4
+      },
+      {
+        "lot": "100024/NA10/2027-11",
+        "material": "100024",
+        "description": "Noctua Santal Lotion Tonique 30 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "NA10",
+        "reason": "excess",
+        "expiry_date": "2027-11-28",
+        "days_to_expiry": 423,
+        "units": 270,
+        "unit_cost": 7.45,
+        "value_at_risk": 2011.5,
+        "allocated_units": 0,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100024/NA10/2027-12",
+        "material": "100024",
+        "description": "Noctua Santal Lotion Tonique 30 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "NA10",
+        "reason": "excess",
+        "expiry_date": "2027-12-02",
+        "days_to_expiry": 427,
+        "units": 24,
+        "unit_cost": 7.45,
+        "value_at_risk": 178.8,
+        "allocated_units": 0,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100024/NA10/2028-04",
+        "material": "100024",
+        "description": "Noctua Santal Lotion Tonique 30 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "NA10",
+        "reason": "obsolete",
+        "expiry_date": "2028-04-20",
+        "days_to_expiry": 567,
+        "units": 420,
+        "unit_cost": 7.45,
+        "value_at_risk": 3129.0,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100025/AP10/2027-12",
+        "material": "100025",
+        "description": "Pigment Lab Nuit Dorée Fard à Joues 400 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "AP10",
+        "reason": "discontinued",
+        "expiry_date": "2027-12-21",
+        "days_to_expiry": 446,
+        "units": 138,
+        "unit_cost": 2.82,
+        "value_at_risk": 389.16,
+        "allocated_units": 0,
+        "channels_open": 4,
+        "channels_blocked": 1
+      },
+      {
+        "lot": "100025/AP10/2028-01",
+        "material": "100025",
+        "description": "Pigment Lab Nuit Dorée Fard à Joues 400 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "AP10",
+        "reason": "discontinued",
+        "expiry_date": "2028-01-03",
+        "days_to_expiry": 459,
+        "units": 234,
+        "unit_cost": 2.82,
+        "value_at_risk": 659.88,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100025/NA10/2027-09",
+        "material": "100025",
+        "description": "Pigment Lab Nuit Dorée Fard à Joues 400 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "NA10",
+        "reason": "obsolete",
+        "expiry_date": "2027-09-02",
+        "days_to_expiry": 336,
+        "units": 840,
+        "unit_cost": 2.76,
+        "value_at_risk": 2318.4,
+        "allocated_units": 0,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100025/NA10/2028-04",
+        "material": "100025",
+        "description": "Pigment Lab Nuit Dorée Fard à Joues 400 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "NA10",
+        "reason": "discontinued",
+        "expiry_date": "2028-04-27",
+        "days_to_expiry": 574,
+        "units": 216,
+        "unit_cost": 2.76,
+        "value_at_risk": 596.16,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100025/NA10/2028-05",
+        "material": "100025",
+        "description": "Pigment Lab Nuit Dorée Fard à Joues 400 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "NA10",
+        "reason": "discontinued",
+        "expiry_date": "2028-05-08",
+        "days_to_expiry": 585,
+        "units": 18,
+        "unit_cost": 2.76,
+        "value_at_risk": 49.68,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100026/NA01/2027-11",
+        "material": "100026",
+        "description": "Pigment Lab Éclat Mascara 100 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "NA01",
+        "reason": "excess",
+        "expiry_date": "2027-11-22",
+        "days_to_expiry": 417,
+        "units": 14736,
+        "unit_cost": 3.65,
+        "value_at_risk": 53786.4,
+        "allocated_units": 180,
+        "channels_open": 4,
+        "channels_blocked": 1
+      },
+      {
+        "lot": "100026/NA01/2027-12",
+        "material": "100026",
+        "description": "Pigment Lab Éclat Mascara 100 ml",
+        "brand": "Pigment Lab",
+        "category": "Makeup",
+        "tier": "mass",
+        "plant": "NA01",
+        "reason": "excess",
+        "expiry_date": "2027-12-10",
+        "days_to_expiry": 435,
+        "units": 678,
+        "unit_cost": 3.65,
+        "value_at_risk": 2474.7,
+        "allocated_units": 0,
+        "channels_open": 4,
+        "channels_blocked": 1
+      },
+      {
+        "lot": "100027/EU01/2029-01",
+        "material": "100027",
+        "description": "Brightleaf Citron Vert Styling Cream 400 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "EU01",
+        "reason": "overproduction",
+        "expiry_date": "2029-01-29",
+        "days_to_expiry": 851,
+        "units": 12,
+        "unit_cost": 3.85,
+        "value_at_risk": 46.2,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100027/EU01/2029-02",
+        "material": "100027",
+        "description": "Brightleaf Citron Vert Styling Cream 400 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "EU01",
+        "reason": "overproduction",
+        "expiry_date": "2029-02-07",
+        "days_to_expiry": 860,
+        "units": 24,
+        "unit_cost": 3.85,
+        "value_at_risk": 92.4,
+        "allocated_units": 0,
+        "channels_open": 5,
+        "channels_blocked": 0
+      },
+      {
+        "lot": "100028/NA10/2027-12",
+        "material": "100028",
+        "description": "Noctua Ambre Gel Nettoyant 50 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "NA10",
+        "reason": "discontinued",
+        "expiry_date": "2027-12-29",
+        "days_to_expiry": 454,
+        "units": 1020,
+        "unit_cost": 9.87,
+        "value_at_risk": 10067.4,
+        "allocated_units": 1020,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100028/NA10/2028-01",
+        "material": "100028",
+        "description": "Noctua Ambre Gel Nettoyant 50 ml",
+        "brand": "Noctua",
+        "category": "Skincare",
+        "tier": "premium",
+        "plant": "NA10",
+        "reason": "discontinued",
+        "expiry_date": "2028-01-05",
+        "days_to_expiry": 461,
+        "units": 9546,
+        "unit_cost": 9.87,
+        "value_at_risk": 94219.02,
+        "allocated_units": 9546,
+        "channels_open": 3,
+        "channels_blocked": 2
+      },
+      {
+        "lot": "100029/AP01/2027-07",
+        "material": "100029",
+        "description": "Velaire Fleur d'Oranger Fond de Teint 15 ml",
+        "brand": "Velaire",
+        "category": "Makeup",
+        "tier": "premium",
+        "plant": "AP01",
+        "reason": "excess",
+        "expiry_date": "2027-07-07",
+        "days_to_expiry": 279,
+        "units": 1254,
+        "unit_cost": 5.08,
+        "value_at_risk": 6370.32,
+        "allocated_units": 0,
+        "channels_open": 2,
+        "channels_blocked": 3
+      },
+      {
+        "lot": "100030/NA10/2029-03",
+        "material": "100030",
+        "description": "Brightleaf Ambre Conditioner 15 ml",
+        "brand": "Brightleaf",
+        "category": "Haircare",
+        "tier": "mass",
+        "plant": "NA10",
+        "reason": "overproduction",
+        "expiry_date": "2029-03-13",
+        "days_to_expiry": 894,
+        "units": 1644,
+        "unit_cost": 3.16,
+        "value_at_risk": 5195.04,
+        "allocated_units": 1644,
+        "channels_open": 5,
+        "channels_blocked": 0
+      }
+    ]
+  },
+  "geo": {
+    "plants": [
+      {
+        "plant": "AP01",
+        "name": "Suzhou",
+        "country": "CN",
+        "lat": 35.9,
+        "lon": 104.2,
+        "value_at_risk": 470833.32,
+        "units": 33246,
+        "allocated_units": 60
+      },
+      {
+        "plant": "AP10",
+        "name": "Singapore",
+        "country": "SG",
+        "lat": 1.35,
+        "lon": 103.8,
+        "value_at_risk": 361694.52,
+        "units": 37950,
+        "allocated_units": 4717
+      },
+      {
+        "plant": "EU01",
+        "name": "Łódź",
+        "country": "PL",
+        "lat": 52.0,
+        "lon": 19.1,
+        "value_at_risk": 182102.28,
+        "units": 13626,
+        "allocated_units": 2620
+      },
+      {
+        "plant": "EU10",
+        "name": "Rotterdam",
+        "country": "NL",
+        "lat": 52.1,
+        "lon": 5.3,
+        "value_at_risk": 624942.9,
+        "units": 69336,
+        "allocated_units": 4727
+      },
+      {
+        "plant": "NA01",
+        "name": "Monterrey",
+        "country": "MX",
+        "lat": 23.6,
+        "lon": -102.5,
+        "value_at_risk": 484888.08,
+        "units": 61854,
+        "allocated_units": 16266
+      },
+      {
+        "plant": "NA10",
+        "name": "Memphis",
+        "country": "US",
+        "lat": 39.8,
+        "lon": -98.6,
+        "value_at_risk": 463208.76,
+        "units": 38952,
+        "allocated_units": 16187
+      }
+    ],
+    "channels": [
+      {
+        "channel": "CLR_DE",
+        "type": "clearance_web",
+        "country": "DE",
+        "lat": 52.52,
+        "lon": 13.4,
+        "allocated_units": 13981
+      },
+      {
+        "channel": "FNF_GB",
+        "type": "friends_family",
+        "country": "GB",
+        "lat": 51.51,
+        "lon": -0.13,
+        "allocated_units": 2231
+      },
+      {
+        "channel": "LIQ_AE",
+        "type": "liquidation",
+        "country": "AE",
+        "lat": 25.2,
+        "lon": 55.27,
+        "allocated_units": 17019
+      },
+      {
+        "channel": "NGO_ES",
+        "type": "ngo_donation",
+        "country": "ES",
+        "lat": 40.42,
+        "lon": -3.7,
+        "allocated_units": 2447
+      },
+      {
+        "channel": "OUT_PL",
+        "type": "outlet",
+        "country": "PL",
+        "lat": 52.23,
+        "lon": 21.01,
+        "allocated_units": 8899
+      }
+    ],
+    "arcs": [
+      {
+        "plant": "AP01",
+        "channel": "FNF_GB",
+        "units": 60
+      },
+      {
+        "plant": "AP10",
+        "channel": "CLR_DE",
+        "units": 1364
+      },
+      {
+        "plant": "AP10",
+        "channel": "FNF_GB",
+        "units": 60
+      },
+      {
+        "plant": "AP10",
+        "channel": "LIQ_AE",
+        "units": 1081
+      },
+      {
+        "plant": "AP10",
+        "channel": "OUT_PL",
+        "units": 2212
+      },
+      {
+        "plant": "EU01",
+        "channel": "LIQ_AE",
+        "units": 2461
+      },
+      {
+        "plant": "EU01",
+        "channel": "OUT_PL",
+        "units": 159
+      },
+      {
+        "plant": "EU10",
+        "channel": "CLR_DE",
+        "units": 4151
+      },
+      {
+        "plant": "EU10",
+        "channel": "FNF_GB",
+        "units": 60
+      },
+      {
+        "plant": "EU10",
+        "channel": "LIQ_AE",
+        "units": 160
+      },
+      {
+        "plant": "EU10",
+        "channel": "OUT_PL",
+        "units": 356
+      },
+      {
+        "plant": "NA01",
+        "channel": "CLR_DE",
+        "units": 120
+      },
+      {
+        "plant": "NA01",
+        "channel": "LIQ_AE",
+        "units": 8550
+      },
+      {
+        "plant": "NA01",
+        "channel": "NGO_ES",
+        "units": 2387
+      },
+      {
+        "plant": "NA01",
+        "channel": "OUT_PL",
+        "units": 5209
+      },
+      {
+        "plant": "NA10",
+        "channel": "CLR_DE",
+        "units": 8346
+      },
+      {
+        "plant": "NA10",
+        "channel": "FNF_GB",
+        "units": 2051
+      },
+      {
+        "plant": "NA10",
+        "channel": "LIQ_AE",
+        "units": 4767
+      },
+      {
+        "plant": "NA10",
+        "channel": "NGO_ES",
+        "units": 60
+      },
+      {
+        "plant": "NA10",
+        "channel": "OUT_PL",
+        "units": 963
+      }
+    ]
+  },
+  "destruction": {
+    "units_at_risk": 254964,
+    "units_placed": 44577,
+    "units_destroyed": 210387,
+    "value_destroyed": 2134664.7899999996,
+    "causes": [
+      {
+        "cause": "coverage_ceiling",
+        "lever": "coverage_days",
+        "units": 142012,
+        "value_at_risk": 1612467.4524567134,
+        "share": 0.6750036836876803,
+        "top_materials": [
+          {
+            "material": "100019",
+            "description": "Velaire Soie Rouge à Lèvres 50 ml",
+            "units": 37505
+          },
+          {
+            "material": "100022",
+            "description": "Velaire Rose Poudrée Rouge à Lèvres 400 ml",
+            "units": 37271
+          },
+          {
+            "material": "100005",
+            "description": "Noctua Éclat Crème Visage 30 ml",
+            "units": 25843
+          }
+        ]
+      },
+      {
+        "cause": "push_ceiling",
+        "lever": "push_quantity_units",
+        "units": 59631,
+        "value_at_risk": 390808.51135681086,
+        "share": 0.28343481298749446,
+        "top_materials": [
+          {
+            "material": "100014",
+            "description": "Brightleaf Velours Conditioner 100 ml",
+            "units": 16454
+          },
+          {
+            "material": "100026",
+            "description": "Pigment Lab Éclat Mascara 100 ml",
+            "units": 15174
+          },
+          {
+            "material": "100020",
+            "description": "Pigment Lab Lumière Rouge à Lèvres 100 ml",
+            "units": 8052
+          }
+        ]
+      },
+      {
+        "cause": "sku_limit",
+        "lever": "channel_sku_limit_scale",
+        "units": 4627,
+        "value_at_risk": 41787.70855853711,
+        "share": 0.02199280373787354,
+        "top_materials": [
+          {
+            "material": "100017",
+            "description": "Noctua Lumière Sérum 15 ml",
+            "units": 799
+          },
+          {
+            "material": "100025",
+            "description": "Pigment Lab Nuit Dorée Fard à Joues 400 ml",
+            "units": 344
+          },
+          {
+            "material": "100016",
+            "description": "Velaire Nuit Dorée Mascara 15 ml",
+            "units": 300
+          }
+        ]
+      },
+      {
+        "cause": "blocked",
+        "lever": null,
+        "units": 3096,
+        "value_at_risk": 81292.68,
+        "share": 0.014715738139713956,
+        "top_materials": [
+          {
+            "material": "100021",
+            "description": "Atelier Sable Bois Noir Eau de Toilette 15 ml",
+            "units": 2274
+          },
+          {
+            "material": "100013",
+            "description": "Atelier Sable Ambre Extrait 15 ml",
+            "units": 702
+          },
+          {
+            "material": "100009",
+            "description": "Atelier Sable Cèdre Eau de Toilette 250 ml",
+            "units": 120
+          }
+        ]
+      },
+      {
+        "cause": "not_worth",
+        "lever": null,
+        "units": 1021,
+        "value_at_risk": 8308.437627938365,
+        "share": 0.00485296144723771,
+        "top_materials": [
+          {
+            "material": "100012",
+            "description": "Noctua Océan Gel Nettoyant 400 ml",
+            "units": 659
+          },
+          {
+            "material": "100011",
+            "description": "Velaire Cèdre Vernis 250 ml",
+            "units": 362
+          }
+        ]
+      }
+    ]
+  }
+}
