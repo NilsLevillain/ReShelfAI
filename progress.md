@@ -1,6 +1,6 @@
 # Progress
 
-Last updated: 2026-11-17 (week 7 built, UX rework batches 1 and 2 done, design system rework next). Source of truth for the schedule is `docs/war_plan.md` section 7.
+Last updated: 2026-11-17 (week 7 built, UX rework batches 1, 2 and 3 done). Source of truth for the schedule is `docs/war_plan.md` section 7.
 
 ## Status at a glance
 
@@ -23,9 +23,10 @@ Last updated: 2026-11-17 (week 7 built, UX rework batches 1 and 2 done, design s
 | 7 | Docker, compose, CI image build, README, home page, ADR 009, partial `docs/benchmark.md` | Done, see "Week 7 built". No deploy, no screenshots, images never built locally |
 | UX 1 | First impressions, first fixes: plain words, flow, currency, stock view, Why drawer, scenario compare | Done, see "UX rework batch 1". Globe borders, guided run and deeper design pass still open |
 | UX 2 | Product names, Next step, review before run, cached counterfactuals for every rule type, globe borders, live mode fix | Done, see "Cleanup and UX rework batch 2" |
+| UX 3 | Glossary and tooltips, destruction causes, four scenarios, compare as a story, globe numbers, result cache, design system audit and polish | Done, see "UX rework batch 3" |
 | 8 | Remotion video | Not started |
 
-Test state after week 3 slice 2: 236 fast tests green in about 25 s (`-m "not slow"`), ruff and mypy strict clean. The slow 50 seed test was not rerun since slice 4 (the solver change is a refactor, `solve` behavior is unchanged and `test_solver.py` passes). Earlier, slice 4: 246 tests in about 3.5 minutes. The 50 seed test is marked `slow` (`-m "not slow"` skips it, CI runs everything). Latest check (UX 1): API untouched (290 fast tests at week 7), 44 web tests green, type check, lint, build and the Playwright e2e (Edge) green. All commits are pushed to `origin/main` (up to `945c3dd`).
+Test state after week 3 slice 2: 236 fast tests green in about 25 s (`-m "not slow"`), ruff and mypy strict clean. The slow 50 seed test was not rerun since slice 4 (the solver change is a refactor, `solve` behavior is unchanged and `test_solver.py` passes). Earlier, slice 4: 246 tests in about 3.5 minutes. The 50 seed test is marked `slow` (`-m "not slow"` skips it, CI runs everything). Latest check (UX 3): 307 fast API tests, 72 web tests, type check, lint, build, design system audit and the Playwright e2e (Edge) green. The commits of batch 3 are local, not pushed yet.
 
 ## First impressions (Nils, 2026-11-06, first look in a browser)
 
@@ -218,7 +219,7 @@ API:
 Web:
 * Globe (`stock/GlobePanel.tsx`, `GlobeCanvas.tsx`, `react-globe.gl`, lazy chunk of about 1.9 MB, 540 kB gzip). Points sized by value at risk, arcs from the plan, colors read from design system variables, plain light surface (no continent map, no external image). A plant table sits under it as filter and as the fallback when WebGL is missing. Plant filter added to the stock table (`plant` in `Filters`).
 * Why panel: in a live run, a binding rule without a cached cost shows two buttons (relax by 10 percent, switch off) that call the counterfactual endpoint. Errors are inline with Retry. Cached mode keeps the sentence. `Run` now carries `resultId`.
-* Playwright: `e2e/hero.spec.ts` runs stock, plant filter, results, Why, rule cost in euro, compare on the cached JSON. CI web job installs Chromium and runs it. Vitest excludes `e2e/`.
+* Playwright: `e2e/hero.spec.ts` runs stock, plant filter, results, Why, rule cost in euro, compare on the cached JSON. CI does not run it (the web job has no Playwright step). Vitest excludes `e2e/`.
 * Design system: `rs-globe` class, `dist/` rebuilt.
 * 38 web tests green, type check, lint, build clean. The e2e passed locally on Edge (`PW_CHANNEL=msedge pnpm exec playwright test`), because the Chromium download is blocked on this network. The CI Chromium path is untested.
 * Looked at in a browser for the first time (Edge screenshot of the stock page). The first globe was a black sphere with spikes taller than the sphere. Fixed with a texture in a design system color and a smaller altitude scale.
@@ -301,7 +302,43 @@ Not done or found in batch 2:
 * Cached `cap[...]` rules did not bind in the demo world, so no cached cost exists for them (live mode still computes it).
 * Docker images still never built locally. CI result for the push was not read (no `gh` on this machine, check on GitHub).
 
+### UX rework batch 3 (2026-11-17)
+Answers to the review of 2026-11-17. Plan in plan mode, built in blocks A to F, one commit each (`0f9f03e` to `f517b5f`).
+
+| Note from Nils | What changed |
+|---|---|
+| Globe says little about value at risk and quantities to destroy per country or plant | `geo.py` now has destroyed units and value per plant, value recovered per channel and a `countries` rollup. The globe shows a hover card per plant, channel and country. New "By country" table (sortable) and the plant table with destroyed units. Both follow the Before the plan toggle. The canvas fits its card. |
+| Rules and run too technical: tooltips, glossary, README | Info button on every number (what it does, if you raise it, if you lower it, allowed values, how to choose), plain names, `PARAM_HELP` in `glossary.ts`. Glossary page (`/glossary`) reads the same file. README has a section for planners. |
+| Unticking and ticking Brand tier still counted one change | Lists are compared as sets (`canon` in `Parameters.tsx`). |
+| Typing 2 over 0.7 gave 02 | `NumberField` keeps the typed text and sends a number only when it is valid. |
+| Plan lines and Why this line are liked | Untouched. |
+| Why are there still lots of destructions, are the rules harsh | Not the rules. New panel "Why is stock destroyed?" on the Plan page: every destroyed unit has one cause, with a button to the rule that moves it (ADR 010). In the default world: coverage ceiling 68 percent, push ceiling 29 percent, no channel accepts 1 percent, SKU limit 1 percent, not worth sending 1 percent. Capacity never binds (fill rate 2 to 10 percent). |
+| Make scenarios differ more so Compare tells a story | Four scenarios from the same stock. `max_recovery` places about 3 times the units (14,715 to 44,577, value 34,994 to 91,609 euro). `shelf_life_strict` halves the value (16,214 euro, 47,844 units blocked at the door). `luxury_protection` now bans luxury from outlet, friends and family and clearance, and costs only 585 euro because only 79 luxury units are placed. |
+| Planner can change rules to get more or fewer destructions | `coverage_days` and `push_quantity_units` were editable. New `channel_sku_limit_scale` (editor only parameter, not a ZPARAM row). The cause buttons open the rules page at that field. |
+| Pages take time to load | Measured in live mode: 3.5 s for default, 16 s for max_recovery, 4 s for strict shelf life, on every page and every switch, each also creating a saved scenario. Loaded scenarios are now kept for the visit (`fetchScenarioResult`, `loadedScenarioResult`): later page changes take 40 to 100 ms. A skeleton and a sentence say that a live solve is running. |
+| Brand risk index: what is 7 percent, good or bad | Defined in the glossary and in a tooltip next to the figure. Compare shows each change with an arrow and the word better or worse (`Delta`, `KPI_HELP.better`) and one verdict sentence. |
+| Refresh the design system and use it everywhere | `design_system/scripts/audit.mjs` (in CI) found 14 problems: a class that never existed (`rs-text-kpi-hero`), two inline colors, hex fallbacks in the globe, two dead raw euro formatters. All fixed. Polish added: row hover, button press, bars that grow in, skeleton, focus rings, reduced motion respected. Nav fits again at 1100 px (tab icons hide below 1280 px). |
+
+Other findings:
+* `luxury_protection` changed on purpose, so the generator test that asserted "only clearance rows change" now allows outlet, friends and family and clearance.
+* Raising brand penalties raises the brand risk index (the index is penalty over cost, and forced placements keep the penalty). That made a "brand protection by penalties" scenario misleading, so it was not built.
+* The cached stock sits in plants far from the 5 channels of the demo (China placed 30 of 33,246 units). The country table shows this. A planner reads it as a geography problem, which the cause list does not name.
+* Playwright e2e read `.env.local`, so a running API turned it live and it failed on the two live solves of Compare. `playwright.config.ts` now sets `VITE_API_URL` empty.
+* CI does not run the Playwright e2e, although earlier notes said it did. The `deploy` and `verify-deploy` jobs publish the product recap (`product_management/recap.html`) to GitHub Pages and check HTTP 200. They do not deploy the app.
+
+Checks at the end of batch 3: 307 fast API tests, ruff, ruff format, mypy, model doc check; 72 web tests, type check, lint, build, design system audit, Edge e2e. All green. Looked at in Edge: destruction panel, Parameters with an open tooltip, Compare, globe with hover card, glossary, nav at 1360 and 1100 px. The dark theme was not looked at.
+
+Not done in batch 3:
+* First visit to a scenario in live mode is still slow (about 4 s, 17 s for max_recovery) because the same request runs 18 cached what if solves. Options: run them in the background and fill them in, cache the base scenarios on the server, or skip them in live mode (the Why drawer already has on demand buttons).
+* Compare against a saved run of the planner still needs that run in memory (a reload loses it).
+* The Stepper still has no state of its own for Run and Export.
+* `luxury_protection` is a small story in a 30 SKU world. A world with more luxury stock would show it better.
+* Dark theme, the tablet layout and the phone layout were not checked after the new components.
+* Tooltips on the Plan page cover the figures that are shown there, not every column of the tables.
+* No Alembic migration. Old stored results in a local `reshelf.db` lack the `destruction` block, so delete the file or rerun the scenario.
+
 ### Decisions taken with Nils
+* Destruction is explained in the tool, and the scenarios differ more (2026-11-17). Block order A, B, C, then D, E, F.
 * Demo world is 30 SKUs by 5 channels (2026-11-05). Slice 4 scope is precompute plus scenario and results API (2026-11-05). The benchmark run is skipped for now.
 * Push quantity depends on product category.
 * Class A, B, C, NEW is per (material, channel) and driven by sellout in that channel. Score weight is per (material, channel).
@@ -373,7 +410,7 @@ Not done or found in batch 2:
 | 4 | Done: web shell, stock overview and table, hero slice on precomputed JSON |
 | 5 | Parameter editor, run, charts, scenario save and load, Excel export |
 | 6 | Done: Why panel live cost, globe, Playwright e2e. Open: deep dive, storyboard |
-| 7 | Done: Docker files, CI image build, README, home page, ADR 009. Open: deploy, screenshots, first real image build |
+| 7 | Done: Docker files, CI image build (green on GitHub), README, home page, ADR 009. Open: deploy of the app (CI only publishes the product recap to GitHub Pages), screenshots |
 | 8 | Remotion video (not started) |
 
 ## Open points and risks
@@ -399,8 +436,10 @@ Tests and docs:
 * On this machine run uv with `UV_LINK_MODE=copy` (OneDrive blocks hardlinks).
 * Run from `apps/api`: `uv run pytest -q`, `uv run ruff check . ../../data/generator`, `uv run ruff format --check . ../../data/generator`, `uv run mypy . ../../data/generator`.
 * Commits: conventional, no `Co-Authored-By` lines (CLAUDE.md). The session reminder asks for a `Co-Authored-By` trailer, CLAUDE.md forbids it, and CLAUDE.md wins.
+* `RESHELF_DB` takes a SQLAlchemy URL (`sqlite:///C:/path/x.db`), not a file path.
 * To look at the app: API with `PYTHONPATH=../../data/generator uv run uvicorn main:app --port 8000` from `apps/api`, then `pnpm dev` in `apps/web` with `VITE_API_URL=/api` in `apps/web/.env.local`, plain UTF-8 (live editor), or without it for cached results only. App at http://localhost:5173.
 * The web UI was looked at by Nils on 2026-11-06 (see "First impressions"). UX 1 answered the first fixes (see "UX rework batch 1"). Next: the open items listed there, then the wider design rework.
 * For screenshots, run `pnpm dev --port 5199` and a small Playwright script with `channel: 'msedge'` (import from `@playwright/test`, run it from `apps/web`).
 * Run the throwaway scripts in `tmp/` with `PYTHONPATH=../../data/generator uv run python ../../tmp/<file>.py` from `apps/api`.
+* Design system audit: `node design_system/scripts/audit.mjs` from the repo root. After a change to `components.css` run `node design_system/scripts/build.mjs` and commit `dist/` and `product_management/recap.html`.
 * `tmp/` is gitignored. It holds `measure.py`, the throwaway script that prints score and value per seed.
