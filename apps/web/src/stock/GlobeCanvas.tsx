@@ -1,5 +1,6 @@
-import { useMemo } from 'react';
-import Globe from 'react-globe.gl';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import Globe, { type GlobeMethods } from 'react-globe.gl';
+import { activeCountryIds, countryShapes, type CountryShape } from './countries';
 import type { Geo } from './GlobePanel';
 
 /** A design system variable as a plain rgb string. A probe element resolves var() chains that three.js cannot parse. */
@@ -12,6 +13,18 @@ const css = (name: string) => {
   return value || undefined;
 };
 
+/** The theme set on the page root. The globe reads colors once per theme, so it needs to know when this changes. */
+function useRootTheme(): string {
+  const root = document.documentElement;
+  const [theme, setTheme] = useState(root.getAttribute('data-theme') ?? 'light');
+  useEffect(() => {
+    const watcher = new MutationObserver(() => setTheme(root.getAttribute('data-theme') ?? 'light'));
+    watcher.observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => watcher.disconnect();
+  }, [root]);
+  return theme;
+}
+
 /** The WebGL part, in its own chunk. Colors come from the design system variables. */
 export default function GlobeCanvas({
   geo,
@@ -22,24 +35,45 @@ export default function GlobeCanvas({
   selected?: string;
   onSelect: (plant: string) => void;
 }) {
-  // The globe has no map, so its surface is a one pixel texture in a design system color.
+  const theme = useRootTheme();
+  const globe = useRef<GlobeMethods | undefined>(undefined);
+
+  // The sea is a one pixel texture in a design system color. Countries are drawn as polygons on top.
+  const colors = useMemo(() => {
+    void theme;
+    return {
+      sea: css('--rs-bg-info') ?? '#e6f1ff',
+      land: css('--rs-bg-surface') ?? '#ffffff',
+      active: css('--rs-bg-hint') ?? '#ddefe4',
+      outline: css('--rs-border-strong') ?? '#898989',
+      activeOutline: css('--rs-border-brand') ?? '#187573',
+      plant: css('--rs-compare-delta-cost'),
+      channel: css('--rs-compare-optimizer'),
+    };
+  }, [theme]);
   const surface = useMemo(() => {
     const canvas = document.createElement('canvas');
     canvas.width = canvas.height = 1;
     const ctx = canvas.getContext('2d');
     if (ctx) {
-      ctx.fillStyle = css('--rs-border-default') ?? '#dadada';
+      ctx.fillStyle = colors.sea;
       ctx.fillRect(0, 0, 1, 1);
     }
     return canvas.toDataURL();
-  }, []);
-  const plantColor = css('--rs-compare-delta-cost');
-  const channelColor = css('--rs-compare-optimizer');
+  }, [colors.sea]);
+
+  const shapes = useMemo(() => countryShapes(), []);
+  const active = useMemo(
+    () => activeCountryIds([...geo.plants.map((p) => p.country), ...geo.channels.map((c) => c.country)]),
+    [geo],
+  );
+  const isActive = (d: object) => active.has(String((d as CountryShape).id ?? ''));
+
   const byCode = new Map([...geo.plants, ...geo.channels].map((p) => [('plant' in p ? p.plant : p.channel), p]));
   const maxRisk = Math.max(1, ...geo.plants.map((p) => p.value_at_risk));
   const points = [
-    ...geo.plants.map((p) => ({ lat: p.lat, lng: p.lon, size: 0.02 + (0.1 * p.value_at_risk) / maxRisk, color: plantColor, plant: p.plant })),
-    ...geo.channels.map((c) => ({ lat: c.lat, lng: c.lon, size: 0.01, color: channelColor, plant: '' })),
+    ...geo.plants.map((p) => ({ lat: p.lat, lng: p.lon, size: 0.02 + (0.1 * p.value_at_risk) / maxRisk, color: colors.plant, plant: p.plant })),
+    ...geo.channels.map((c) => ({ lat: c.lat, lng: c.lon, size: 0.01, color: colors.channel, plant: '' })),
   ];
   const arcs = geo.arcs.flatMap((a) => {
     const p = byCode.get(a.plant);
@@ -48,9 +82,25 @@ export default function GlobeCanvas({
   });
   const maxUnits = Math.max(1, ...geo.arcs.map((a) => a.units));
 
+  // Open on the stock: the view starts at the value weighted centre of the plants, not on an empty ocean.
+  const lookAtPlants = () => {
+    const total = geo.plants.reduce((s, p) => s + p.value_at_risk, 0);
+    if (!total) return;
+    const lat = geo.plants.reduce((s, p) => s + p.lat * p.value_at_risk, 0) / total;
+    const lng = geo.plants.reduce((s, p) => s + p.lon * p.value_at_risk, 0) / total;
+    globe.current?.pointOfView({ lat, lng, altitude: 2.4 }, 0);
+  };
+
   return (
     <Globe
-      showGraticules
+      ref={globe}
+      onGlobeReady={lookAtPlants}
+      polygonsData={shapes}
+      polygonCapColor={(d) => (isActive(d as object) ? colors.active : colors.land)}
+      polygonSideColor={() => 'rgba(0,0,0,0)'}
+      polygonStrokeColor={(d) => (isActive(d as object) ? colors.activeOutline : colors.outline)}
+      polygonAltitude={(d) => (isActive(d as object) ? 0.012 : 0.006)}
+      polygonLabel={(d) => (d as CountryShape).properties.name ?? ''}
       width={560}
       height={420}
       backgroundColor="rgba(0,0,0,0)"
@@ -61,14 +111,13 @@ export default function GlobeCanvas({
       pointLng="lng"
       pointAltitude="size"
       pointRadius={(d) => ((d as { plant: string }).plant === selected ? 0.9 : 0.5)}
-      atmosphereColor={plantColor}
       pointColor="color"
       onPointClick={(d) => {
         const code = (d as { plant: string }).plant;
         if (code) onSelect(code);
       }}
       arcsData={arcs}
-      arcColor={() => channelColor ?? '#0f766e'}
+      arcColor={() => colors.channel ?? '#0f766e'}
       arcStroke={(d) => 0.2 + (0.8 * (d as { units: number }).units) / maxUnits}
       arcDashLength={1}
       arcDashGap={0}

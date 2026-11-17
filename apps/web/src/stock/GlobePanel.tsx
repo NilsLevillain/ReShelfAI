@@ -34,11 +34,28 @@ export function GlobePanel({
     <section className="rs-card" data-testid="globe-panel">
       <h3>Where the stock sits</h3>
       {webgl ? (
-        <div className="rs-globe" data-testid="globe">
-          <Suspense fallback={<p role="status">Loading globe</p>}>
-            <GlobeCanvas geo={geo} selected={selected} onSelect={(p) => onSelect(selected === p ? undefined : p)} />
-          </Suspense>
-        </div>
+        <>
+          <div className="rs-globe" data-testid="globe">
+            <Suspense fallback={<p role="status">Loading globe</p>}>
+              <GlobeCanvas geo={geo} selected={selected} onSelect={(p) => onSelect(selected === p ? undefined : p)} />
+            </Suspense>
+          </div>
+          <div className="rs-legend" data-testid="globe-legend">
+            <span>
+              <span className="rs-dot" style={{ '--rs-dot': 'var(--rs-compare-delta-cost)' } as React.CSSProperties} aria-hidden="true" />
+              Plant, taller means more value at risk
+            </span>
+            <span>
+              <span className="rs-dot" style={{ '--rs-dot': 'var(--rs-compare-optimizer)' } as React.CSSProperties} aria-hidden="true" />
+              Second life channel
+            </span>
+            <span>
+              <span className="rs-dot rs-dot--outline" style={{ '--rs-dot': 'var(--rs-bg-hint)' } as React.CSSProperties} aria-hidden="true" />
+              Country with a plant or a channel
+            </span>
+            <span>Lines show where the plan sends stock. Click a plant to filter the table.</span>
+          </div>
+        </>
       ) : (
         <p data-testid="globe-fallback">This browser has no WebGL, so the globe is off. The table below shows the same plants.</p>
       )}
