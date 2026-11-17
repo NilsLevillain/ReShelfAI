@@ -96,6 +96,31 @@ describe('parameter editor', () => {
     expect(screen.getByTestId('export-xlsx')).toHaveAttribute('href', '/scenarios/7/export.xlsx');
   });
 
+  it('ticking a rule off and on again is not a change', async () => {
+    mockApi();
+    renderAt('/parameters', 'live');
+    await screen.findByLabelText('Coverage days');
+    const tier = screen.getByRole('checkbox', { name: 'Brand tier' });
+    await userEvent.click(tier);
+    expect(screen.getByTestId('changed-count')).toHaveTextContent('1 parameter(s)');
+    await userEvent.click(tier);
+    expect(screen.getByTestId('changed-count')).toHaveTextContent('0 parameter(s)');
+  });
+
+  it('typing a number over the old one leaves no leading zero', async () => {
+    mockApi();
+    renderAt('/parameters', 'live');
+    const alpha = (await screen.findByLabelText('Coverage floor share')) as HTMLInputElement;
+    await userEvent.clear(alpha);
+    expect(alpha.value).toBe('');
+    await userEvent.type(alpha, '1');
+    expect(alpha.value).toBe('1');
+    expect(screen.getByTestId('changed-count')).toHaveTextContent('1 parameter(s)');
+    await userEvent.clear(alpha);
+    await userEvent.tab();
+    expect(alpha.value).toBe('1');
+  });
+
   it('review says defaults are used and lets the planner go back', async () => {
     mockApi();
     renderAt('/parameters', 'live');

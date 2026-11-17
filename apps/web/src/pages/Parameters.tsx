@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { InlineError } from '../components/InlineError';
+import { NumberField } from '../components/NumberField';
 import { useSource } from '../data/DataSource';
 import { liveApi, type ScenarioSpec, type ScenarioSummary } from '../data/live';
 import { useRun } from '../data/run';
@@ -23,7 +24,9 @@ const SCALARS: { key: string; label: string; hint: string; step: number }[] = [
 ];
 
 const asRecord = (v: unknown): Record<string, number> => (v ?? {}) as Record<string, number>;
-const num = (e: React.ChangeEvent<HTMLInputElement>) => Number(e.target.value);
+
+/** Same value for the editor, whatever the order of a list (ticking a rule off and on again is not a change). */
+const canon = (v: unknown): string => JSON.stringify(Array.isArray(v) ? [...v].sort() : v);
 
 export function Parameters() {
   const source = useSource();
@@ -118,7 +121,7 @@ function Editor() {
   useEffect(loadSaved, [loadSaved]);
 
   const edits = (): Params =>
-    Object.fromEntries(Object.entries(params).filter(([k, v]) => JSON.stringify(v) !== JSON.stringify(defaults?.[k])));
+    Object.fromEntries(Object.entries(params).filter(([k, v]) => canon(v) !== canon(defaults?.[k])));
   const changes = describeEdits(edits(), defaults);
   const spec = (): ScenarioSpec => ({ name, base, n_skus: nSkus, n_channels: nChannels, time_limit_s: timeLimit, params: edits() });
 
@@ -219,16 +222,16 @@ function Editor() {
             </label>
             <label className="rs-field">
               <span className="rs-field__label">SKUs</span>
-              <input className="rs-input" type="number" min={1} max={2000} value={nSkus} onChange={(e) => setNSkus(num(e))} />
+              <NumberField min={1} max={2000} value={nSkus} onValue={setNSkus} aria-label="SKUs" />
               <span className="rs-field__hint">Bigger worlds solve slower</span>
             </label>
             <label className="rs-field">
               <span className="rs-field__label">Channels</span>
-              <input className="rs-input" type="number" min={1} max={20} value={nChannels} onChange={(e) => setNChannels(num(e))} />
+              <NumberField min={1} max={20} value={nChannels} onValue={setNChannels} aria-label="Channels" />
             </label>
             <label className="rs-field">
               <span className="rs-field__label">Solver time limit (s)</span>
-              <input className="rs-input" type="number" min={1} max={600} value={timeLimit} onChange={(e) => setTimeLimit(num(e))} />
+              <NumberField min={1} max={600} value={timeLimit} onValue={setTimeLimit} aria-label="Solver time limit" />
             </label>
           </fieldset>
 
@@ -237,14 +240,7 @@ function Editor() {
             {SCALARS.map((s) => (
               <label key={s.key} className="rs-field">
                 <span className="rs-field__label">{s.label}</span>
-                <input
-                  className="rs-input"
-                  type="number"
-                  step={s.step}
-                  aria-label={s.label}
-                  value={Number(params[s.key] ?? 0)}
-                  onChange={(e) => set(s.key, num(e))}
-                />
+                <NumberField step={s.step} aria-label={s.label} value={Number(params[s.key] ?? 0)} onValue={(n) => set(s.key, n)} />
                 <span className="rs-field__hint">{s.hint}</span>
               </label>
             ))}
@@ -255,13 +251,11 @@ function Editor() {
             {CLASSES.map((c) => (
               <label key={c} className="rs-field">
                 <span className="rs-field__label">Class {c}</span>
-                <input
-                  className="rs-input"
-                  type="number"
+                <NumberField
                   step={0.05}
                   aria-label={`Score class ${c}`}
                   value={asRecord(params.score_base)[c] ?? 0}
-                  onChange={(e) => setIn('score_base', c, num(e))}
+                  onValue={(n) => setIn('score_base', c, n)}
                 />
               </label>
             ))}
@@ -272,13 +266,11 @@ function Editor() {
             {Object.keys(asRecord(defaults.push_quantity_units)).map((c) => (
               <label key={c} className="rs-field">
                 <span className="rs-field__label">{c}</span>
-                <input
-                  className="rs-input"
-                  type="number"
+                <NumberField
                   min={0}
                   aria-label={`Push ${c}`}
                   value={asRecord(params.push_quantity_units)[c] ?? 0}
-                  onChange={(e) => setIn('push_quantity_units', c, num(e))}
+                  onValue={(n) => setIn('push_quantity_units', c, n)}
                 />
               </label>
             ))}
