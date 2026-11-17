@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { InlineError } from '../components/InlineError';
+import { NextStep } from '../components/NextStep';
 import { ScenarioSwitch, type Choice } from '../components/ScenarioSwitch';
 import { useChoiceResult } from '../data/useScenarioResult';
 import { useRun } from '../data/run';
@@ -151,6 +152,12 @@ export function Results() {
       </section>
 
       <BaselineCompare result={r} />
+
+      <NextStep
+        to="/compare"
+        label="Compare with another scenario"
+        text="The plan is ready. Export it with the button at the top of this page, or compare it with another scenario."
+      />
 
       {line && (
         <WhyPanel

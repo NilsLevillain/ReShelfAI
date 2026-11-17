@@ -83,6 +83,36 @@ export function solverDetails(solve: Solve): string {
   return `Solver status: ${solve.status}, ${gap}, ${solve.time_s.toFixed(1)} s of ${solve.time_limit_s} s`;
 }
 
+const PARAM_LABELS: Record<string, string> = {
+  coverage_days: 'Coverage days',
+  coverage_alpha: 'Coverage floor share',
+  score_rank_weight: 'Rank bonus',
+  epsilon: 'Score give up (epsilon)',
+  score_base: 'Score for class',
+  push_quantity_units: 'Push quantity for',
+  planner_rules: 'Rules the greedy baseline applies by hand',
+};
+
+export type ParamChange = { label: string; from: string; to: string };
+
+const show = (v: unknown): string => (Array.isArray(v) ? (v.length ? v.join(', ') : 'none') : String(v ?? 'not set'));
+
+/** Changed values against the defaults, one plain line each. Nested values (class scores, push quantities) get one line per entry. */
+export function describeEdits(edits: Record<string, unknown>, defaults: Record<string, unknown> | null): ParamChange[] {
+  const out: ParamChange[] = [];
+  for (const [key, value] of Object.entries(edits)) {
+    const base = PARAM_LABELS[key] ?? key;
+    const before = defaults?.[key];
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      const old = (before ?? {}) as Record<string, unknown>;
+      for (const [sub, v] of Object.entries(value as Record<string, unknown>)) {
+        if (JSON.stringify(v) !== JSON.stringify(old[sub])) out.push({ label: `${base} ${sub}`, from: show(old[sub]), to: show(v) });
+      }
+    } else out.push({ label: base, from: show(before), to: show(value) });
+  }
+  return out;
+}
+
 /** "sku[LIQ_AE]" becomes "Channel limit on SKUs, Liquidation, United Arab Emirates". Unknown parts stay as they are. */
 export function ruleLabel(instance: string, channels: Channel[]): string {
   const m = /^(\w+)\[(.*)\]$/.exec(instance);

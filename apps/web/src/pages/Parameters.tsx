@@ -4,6 +4,7 @@ import { InlineError } from '../components/InlineError';
 import { useSource } from '../data/DataSource';
 import { liveApi, type ScenarioSpec, type ScenarioSummary } from '../data/live';
 import { useRun } from '../data/run';
+import { describeEdits } from '../glossary';
 
 type Params = Record<string, unknown>;
 const BASES = ['default', 'luxury_protection'] as const;
@@ -86,6 +87,7 @@ function Editor() {
   const [retry, setRetry] = useState<() => void>(() => () => undefined);
   const [busy, setBusy] = useState<'run' | 'save' | null>(null);
   const [notice, setNotice] = useState('');
+  const [reviewing, setReviewing] = useState(false);
 
   const fail = useCallback((e: unknown, again: () => void) => {
     setError(e as Error);
@@ -117,6 +119,7 @@ function Editor() {
 
   const edits = (): Params =>
     Object.fromEntries(Object.entries(params).filter(([k, v]) => JSON.stringify(v) !== JSON.stringify(defaults?.[k])));
+  const changes = describeEdits(edits(), defaults);
   const spec = (): ScenarioSpec => ({ name, base, n_skus: nSkus, n_channels: nChannels, time_limit_s: timeLimit, params: edits() });
 
   const save = async (): Promise<number | null> => {
@@ -295,9 +298,43 @@ function Editor() {
             ))}
           </fieldset>
 
+          {reviewing && (
+            <section className="rs-card rs-review" data-testid="review-step" aria-label="Review before you run">
+              <h3>Review before you run</h3>
+              {changes.length === 0 ? (
+                <p>You are using the default rules.</p>
+              ) : (
+                <>
+                  <p>These values differ from the defaults:</p>
+                  <ul className="rs-list">
+                    {changes.map((c) => (
+                      <li key={c.label} className="rs-review__row">
+                        <strong>{c.label}</strong>
+                        <span>
+                          {c.from} to {c.to}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              <p className="rs-section__sub">
+                Scenario "{name}": {nSkus} SKUs, {nChannels} channels, up to {timeLimit} s of solving.
+              </p>
+              <div className="rs-actions">
+                <button type="button" className="rs-btn rs-btn--primary" disabled={busy !== null} onClick={() => void onRun()} data-testid="confirm-run">
+                  {busy === 'run' ? 'Solving' : 'Confirm and run'}
+                </button>
+                <button type="button" className="rs-btn" disabled={busy !== null} onClick={() => setReviewing(false)} data-testid="back-to-edit">
+                  Back to edit
+                </button>
+              </div>
+            </section>
+          )}
+
           <div className="rs-actions">
-            <button type="button" className="rs-btn rs-btn--primary" disabled={busy !== null} onClick={() => void onRun()} data-testid="run-solver">
-              {busy === 'run' ? 'Solving' : 'Run the plan'}
+            <button type="button" className="rs-btn rs-btn--primary" disabled={busy !== null} onClick={() => setReviewing(true)} data-testid="run-solver">
+              Review and run the plan
             </button>
             <button type="button" className="rs-btn" disabled={busy !== null} onClick={() => void onSave()} data-testid="save-scenario">
               Save scenario

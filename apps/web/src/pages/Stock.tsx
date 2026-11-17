@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { HBars } from '../components/HBars';
 import { InlineError } from '../components/InlineError';
+import { NextStep } from '../components/NextStep';
 import { useScenarioResult } from '../data/useScenarioResult';
 import { useMoney } from '../data/currency';
 import { REASON_LABEL, applyFilters, int, totalsOf, type Filters, type StockLot } from '../stock/model';
@@ -136,10 +136,12 @@ export function Stock() {
           </div>
         )}
         <StockTable lots={visible} showPlan={withPlan} />
-        <p className="rs-section__sub">
-          Ready to plan? <Link to="/parameters">Check the rules and run the plan</Link>.
-        </p>
       </section>
+      <NextStep
+        to="/parameters"
+        label="Set the rules and run the plan"
+        text="You have seen the stock that needs a second life. Check the business rules, then run the plan."
+      />
     </div>
   );
 }

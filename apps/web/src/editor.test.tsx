@@ -83,12 +83,27 @@ describe('parameter editor', () => {
     await userEvent.type(days, '45');
     expect(screen.getByTestId('changed-count')).toHaveTextContent('1 parameter(s)');
     await userEvent.click(screen.getByTestId('run-solver'));
+    const review = await screen.findByTestId('review-step');
+    expect(review).toHaveTextContent('Coverage days');
+    expect(review).toHaveTextContent('90 to 45');
+    expect(calls.some((c) => c.url.endsWith('/solve'))).toBe(false);
+    await userEvent.click(screen.getByTestId('confirm-run'));
     expect(await screen.findByTestId('solver-status')).toHaveTextContent('optimal');
     const post = calls.find((c) => c.method === 'POST' && c.url.endsWith('/scenarios'));
     expect(post?.body).toMatchObject({ name: 'My scenario', params: { coverage_days: 45 } });
     expect(calls.some((c) => c.url === '/scenarios/7/solve')).toBe(true);
     expect(screen.getByTestId('switch-run')).toHaveTextContent('My scenario');
     expect(screen.getByTestId('export-xlsx')).toHaveAttribute('href', '/scenarios/7/export.xlsx');
+  });
+
+  it('review says defaults are used and lets the planner go back', async () => {
+    mockApi();
+    renderAt('/parameters', 'live');
+    await screen.findByLabelText('Coverage days');
+    await userEvent.click(screen.getByTestId('run-solver'));
+    expect(await screen.findByTestId('review-step')).toHaveTextContent('default rules');
+    await userEvent.click(screen.getByTestId('back-to-edit'));
+    expect(screen.queryByTestId('review-step')).toBeNull();
   });
 
   it('shows a failed request inline and retries', async () => {
