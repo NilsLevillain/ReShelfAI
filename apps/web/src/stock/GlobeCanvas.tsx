@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import Globe, { type GlobeMethods } from 'react-globe.gl';
 import { activeCountryIds, countryShapes, type CountryShape } from './countries';
 import type { Geo } from './GlobePanel';
@@ -30,13 +30,27 @@ export default function GlobeCanvas({
   geo,
   selected,
   onSelect,
+  labelOf,
 }: {
   geo: Geo;
   selected?: string;
   onSelect: (plant: string) => void;
+  /** HTML of the hover card for a plant, a channel or a country (map id). */
+  labelOf: (kind: 'plant' | 'channel' | 'country', code: string) => string;
 }) {
   const theme = useRootTheme();
   const globe = useRef<GlobeMethods | undefined>(undefined);
+  const box = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(560);
+  useLayoutEffect(() => {
+    const el = box.current;
+    if (!el) return;
+    const fit = () => setWidth(Math.max(320, Math.min(900, el.clientWidth || 560)));
+    fit();
+    const watcher = new ResizeObserver(fit);
+    watcher.observe(el);
+    return () => watcher.disconnect();
+  }, []);
 
   // The sea is a one pixel texture in a design system color. Countries are drawn as polygons on top.
   const colors = useMemo(() => {
@@ -72,8 +86,8 @@ export default function GlobeCanvas({
   const byCode = new Map([...geo.plants, ...geo.channels].map((p) => [('plant' in p ? p.plant : p.channel), p]));
   const maxRisk = Math.max(1, ...geo.plants.map((p) => p.value_at_risk));
   const points = [
-    ...geo.plants.map((p) => ({ lat: p.lat, lng: p.lon, size: 0.02 + (0.1 * p.value_at_risk) / maxRisk, color: colors.plant, plant: p.plant })),
-    ...geo.channels.map((c) => ({ lat: c.lat, lng: c.lon, size: 0.01, color: colors.channel, plant: '' })),
+    ...geo.plants.map((p) => ({ lat: p.lat, lng: p.lon, size: 0.02 + (0.1 * p.value_at_risk) / maxRisk, color: colors.plant, plant: p.plant, kind: 'plant' as const, code: p.plant })),
+    ...geo.channels.map((c) => ({ lat: c.lat, lng: c.lon, size: 0.01, color: colors.channel, plant: '', kind: 'channel' as const, code: c.channel })),
   ];
   const arcs = geo.arcs.flatMap((a) => {
     const p = byCode.get(a.plant);
@@ -92,6 +106,7 @@ export default function GlobeCanvas({
   };
 
   return (
+    <div ref={box} className="rs-globe__box">
     <Globe
       ref={globe}
       onGlobeReady={lookAtPlants}
@@ -100,9 +115,9 @@ export default function GlobeCanvas({
       polygonSideColor={() => 'rgba(0,0,0,0)'}
       polygonStrokeColor={(d) => (isActive(d as object) ? colors.activeOutline : colors.outline)}
       polygonAltitude={(d) => (isActive(d as object) ? 0.012 : 0.006)}
-      polygonLabel={(d) => (d as CountryShape).properties.name ?? ''}
-      width={560}
-      height={420}
+      polygonLabel={(d) => labelOf('country', String((d as CountryShape).id ?? '')) || (d as CountryShape).properties.name || ''}
+      width={width}
+      height={Math.round(width * 0.75)}
       backgroundColor="rgba(0,0,0,0)"
       globeImageUrl={surface}
       showAtmosphere={false}
@@ -112,6 +127,7 @@ export default function GlobeCanvas({
       pointAltitude="size"
       pointRadius={(d) => ((d as { plant: string }).plant === selected ? 0.9 : 0.5)}
       pointColor="color"
+      pointLabel={(d) => labelOf((d as { kind: 'plant' | 'channel' }).kind, (d as { code: string }).code)}
       onPointClick={(d) => {
         const code = (d as { plant: string }).plant;
         if (code) onSelect(code);
@@ -123,5 +139,6 @@ export default function GlobeCanvas({
       arcDashGap={0}
       arcDashAnimateTime={0}
     />
+    </div>
   );
 }

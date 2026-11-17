@@ -704,6 +704,14 @@ button.rs-hbar:hover .rs-hbar__label { text-decoration: underline; }
 
 /* Globe panel: the canvas sits in the middle of its card. */
 .rs-globe { display: flex; justify-content: center; }
+.rs-globe__box { width: 100%; display: flex; justify-content: center; }
+.rs-globe__tip { display: grid; gap: var(--rs-space-1); padding: var(--rs-space-2) var(--rs-space-3); border-radius: var(--rs-radius-md); background: var(--rs-bg-surface); color: var(--rs-text-primary); border: 1px solid var(--rs-border-default); box-shadow: var(--rs-shadow-overlay); font-size: var(--rs-type-size-sm); }
+.rs-globe__tip strong { font-weight: var(--rs-type-weight-semibold); }
+.rs-dot--plant { --rs-dot: var(--rs-compare-delta-cost); }
+.rs-dot--channel { --rs-dot: var(--rs-compare-optimizer); }
+.rs-dot--land { --rs-dot: var(--rs-bg-hint); }
+.rs-sortbtn { background: none; border: 0; padding: 0; font: inherit; font-weight: inherit; color: inherit; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 0.25em; }
+.rs-sortbtn:hover { color: var(--rs-text-brand); }
 
 /* ---------- UX rework (first impressions, 2026-11-06) ---------- */
 /* Links that look like cards or buttons carry no underline and keep their own text color. */

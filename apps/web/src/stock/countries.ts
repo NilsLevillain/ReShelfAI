@@ -22,3 +22,8 @@ export function countryShapes(): CountryShape[] {
 export function activeCountryIds(countries: string[]): Set<string> {
   return new Set(countries.flatMap((c) => (NUMERIC[c] ? [NUMERIC[c]] : [])));
 }
+
+/** The two letter code of a map id, or undefined for a country the app has no plant or channel in. */
+export function codeOfCountryId(id: string): string | undefined {
+  return Object.entries(NUMERIC).find(([, n]) => n === id)?.[0];
+}

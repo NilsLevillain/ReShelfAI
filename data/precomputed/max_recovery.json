@@ -10,7 +10,7 @@
     "score": 29.801785714285714,
     "best_score": 30.09464285714286,
     "mip_gap": 0.0,
-    "time_s": 0.7634467000607401,
+    "time_s": 0.7874853000976145,
     "time_limit_s": 60.0,
     "solver": "highs",
     "message": ""
@@ -2075,7 +2075,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 213054,
       "mip_gap": 0.0,
-      "time_s": 0.410464100074023,
+      "time_s": 0.3284199999179691,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2091,7 +2091,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 213243,
       "mip_gap": 5.937163091155063e-6,
-      "time_s": 0.2225907000247389,
+      "time_s": 0.21217889990657568,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2107,7 +2107,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 213026,
       "mip_gap": 8.691474960525801e-6,
-      "time_s": 0.9547821001615375,
+      "time_s": 0.940762999933213,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2123,7 +2123,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 212918,
       "mip_gap": 0.0,
-      "time_s": 0.185887600062415,
+      "time_s": 0.1879626999143511,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2139,7 +2139,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 213086,
       "mip_gap": 0.000031266225095735097,
-      "time_s": 3.1975745998788625,
+      "time_s": 3.188831300009042,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2155,7 +2155,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 212644,
       "mip_gap": 0.00009699917311989767,
-      "time_s": 0.14146840013563633,
+      "time_s": 0.13654269999824464,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2171,7 +2171,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 213146,
       "mip_gap": 0.0000787418967803862,
-      "time_s": 2.2596603001002222,
+      "time_s": 2.2624361999332905,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2187,7 +2187,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 213207,
       "mip_gap": 0.0,
-      "time_s": 0.22984329983592033,
+      "time_s": 0.2317283998709172,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2203,7 +2203,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 213026,
       "mip_gap": 0.0,
-      "time_s": 2.4142515000421554,
+      "time_s": 2.1818941000383347,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2219,7 +2219,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 213174,
       "mip_gap": 0.0,
-      "time_s": 0.2148792000953108,
+      "time_s": 0.1940768000204116,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2235,7 +2235,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 210237,
       "mip_gap": 0.0,
-      "time_s": 0.6334021000657231,
+      "time_s": 0.6238490000832826,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2251,7 +2251,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 207998,
       "mip_gap": 0.0,
-      "time_s": 0.7387576999608427,
+      "time_s": 0.7987573998980224,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2267,7 +2267,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 210387,
       "mip_gap": 0.0,
-      "time_s": 0.678871699841693,
+      "time_s": 0.599251399980858,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2283,7 +2283,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 210387,
       "mip_gap": 0.0,
-      "time_s": 0.627612299984321,
+      "time_s": 0.6180942000355572,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2299,7 +2299,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 210387,
       "mip_gap": 0.0,
-      "time_s": 0.9748037001118064,
+      "time_s": 0.9019397001247853,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2315,7 +2315,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 210387,
       "mip_gap": 1.586380768978689e-16,
-      "time_s": 0.8211892999242991,
+      "time_s": 0.5654016998596489,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2331,7 +2331,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 210424,
       "mip_gap": 0.0,
-      "time_s": 0.7479093000292778,
+      "time_s": 0.6744051999412477,
       "time_limit_s": 10.0,
       "message": ""
     },
@@ -2347,7 +2347,7 @@
       "base_destroyed": 210387,
       "relaxed_destroyed": 210748,
       "mip_gap": 0.0,
-      "time_s": 0.6816809000447392,
+      "time_s": 0.6437097999732941,
       "time_limit_s": 10.0,
       "message": ""
     }
@@ -4005,7 +4005,9 @@
         "lon": 104.2,
         "value_at_risk": 470833.32,
         "units": 33246,
-        "allocated_units": 60
+        "allocated_units": 60,
+        "destroyed_units": 33186,
+        "value_destroyed": 470017.32
       },
       {
         "plant": "AP10",
@@ -4015,7 +4017,9 @@
         "lon": 103.8,
         "value_at_risk": 361694.52,
         "units": 37950,
-        "allocated_units": 4717
+        "allocated_units": 4717,
+        "destroyed_units": 33233,
+        "value_destroyed": 333877.35
       },
       {
         "plant": "EU01",
@@ -4025,7 +4029,9 @@
         "lon": 19.1,
         "value_at_risk": 182102.28,
         "units": 13626,
-        "allocated_units": 2620
+        "allocated_units": 2620,
+        "destroyed_units": 11006,
+        "value_destroyed": 153283.65
       },
       {
         "plant": "EU10",
@@ -4035,7 +4041,9 @@
         "lon": 5.3,
         "value_at_risk": 624942.9,
         "units": 69336,
-        "allocated_units": 4727
+        "allocated_units": 4727,
+        "destroyed_units": 64609,
+        "value_destroyed": 579195.55
       },
       {
         "plant": "NA01",
@@ -4045,7 +4053,9 @@
         "lon": -102.5,
         "value_at_risk": 484888.08,
         "units": 61854,
-        "allocated_units": 16266
+        "allocated_units": 16266,
+        "destroyed_units": 45588,
+        "value_destroyed": 300252.9
       },
       {
         "plant": "NA10",
@@ -4055,7 +4065,9 @@
         "lon": -98.6,
         "value_at_risk": 463208.76,
         "units": 38952,
-        "allocated_units": 16187
+        "allocated_units": 16187,
+        "destroyed_units": 22765,
+        "value_destroyed": 298038.02
       }
     ],
     "channels": [
@@ -4065,7 +4077,8 @@
         "country": "DE",
         "lat": 52.52,
         "lon": 13.4,
-        "allocated_units": 13981
+        "allocated_units": 13981,
+        "value_recovered": 31268.99
       },
       {
         "channel": "FNF_GB",
@@ -4073,7 +4086,8 @@
         "country": "GB",
         "lat": 51.51,
         "lon": -0.13,
-        "allocated_units": 2231
+        "allocated_units": 2231,
+        "value_recovered": 19489.82
       },
       {
         "channel": "LIQ_AE",
@@ -4081,7 +4095,8 @@
         "country": "AE",
         "lat": 25.2,
         "lon": 55.27,
-        "allocated_units": 17019
+        "allocated_units": 17019,
+        "value_recovered": 2494.41
       },
       {
         "channel": "NGO_ES",
@@ -4089,7 +4104,8 @@
         "country": "ES",
         "lat": 40.42,
         "lon": -3.7,
-        "allocated_units": 2447
+        "allocated_units": 2447,
+        "value_recovered": 941.73
       },
       {
         "channel": "OUT_PL",
@@ -4097,7 +4113,8 @@
         "country": "PL",
         "lat": 52.23,
         "lon": 21.01,
-        "allocated_units": 8899
+        "allocated_units": 8899,
+        "value_recovered": 37413.73
       }
     ],
     "arcs": [
@@ -4200,6 +4217,150 @@
         "plant": "NA10",
         "channel": "OUT_PL",
         "units": 963
+      }
+    ],
+    "countries": [
+      {
+        "country": "AE",
+        "plants": [],
+        "channels": [
+          "LIQ_AE"
+        ],
+        "units": 0,
+        "value_at_risk": 0.0,
+        "allocated_units": 0,
+        "destroyed_units": 0,
+        "value_destroyed": 0.0,
+        "received_units": 17019,
+        "value_recovered": 2494.41
+      },
+      {
+        "country": "CN",
+        "plants": [
+          "AP01"
+        ],
+        "channels": [],
+        "units": 33246,
+        "value_at_risk": 470833.32,
+        "allocated_units": 60,
+        "destroyed_units": 33186,
+        "value_destroyed": 470017.32,
+        "received_units": 0,
+        "value_recovered": 0.0
+      },
+      {
+        "country": "DE",
+        "plants": [],
+        "channels": [
+          "CLR_DE"
+        ],
+        "units": 0,
+        "value_at_risk": 0.0,
+        "allocated_units": 0,
+        "destroyed_units": 0,
+        "value_destroyed": 0.0,
+        "received_units": 13981,
+        "value_recovered": 31268.99
+      },
+      {
+        "country": "ES",
+        "plants": [],
+        "channels": [
+          "NGO_ES"
+        ],
+        "units": 0,
+        "value_at_risk": 0.0,
+        "allocated_units": 0,
+        "destroyed_units": 0,
+        "value_destroyed": 0.0,
+        "received_units": 2447,
+        "value_recovered": 941.73
+      },
+      {
+        "country": "GB",
+        "plants": [],
+        "channels": [
+          "FNF_GB"
+        ],
+        "units": 0,
+        "value_at_risk": 0.0,
+        "allocated_units": 0,
+        "destroyed_units": 0,
+        "value_destroyed": 0.0,
+        "received_units": 2231,
+        "value_recovered": 19489.82
+      },
+      {
+        "country": "MX",
+        "plants": [
+          "NA01"
+        ],
+        "channels": [],
+        "units": 61854,
+        "value_at_risk": 484888.08,
+        "allocated_units": 16266,
+        "destroyed_units": 45588,
+        "value_destroyed": 300252.9,
+        "received_units": 0,
+        "value_recovered": 0.0
+      },
+      {
+        "country": "NL",
+        "plants": [
+          "EU10"
+        ],
+        "channels": [],
+        "units": 69336,
+        "value_at_risk": 624942.9,
+        "allocated_units": 4727,
+        "destroyed_units": 64609,
+        "value_destroyed": 579195.55,
+        "received_units": 0,
+        "value_recovered": 0.0
+      },
+      {
+        "country": "PL",
+        "plants": [
+          "EU01"
+        ],
+        "channels": [
+          "OUT_PL"
+        ],
+        "units": 13626,
+        "value_at_risk": 182102.28,
+        "allocated_units": 2620,
+        "destroyed_units": 11006,
+        "value_destroyed": 153283.65,
+        "received_units": 8899,
+        "value_recovered": 37413.73
+      },
+      {
+        "country": "SG",
+        "plants": [
+          "AP10"
+        ],
+        "channels": [],
+        "units": 37950,
+        "value_at_risk": 361694.52,
+        "allocated_units": 4717,
+        "destroyed_units": 33233,
+        "value_destroyed": 333877.35,
+        "received_units": 0,
+        "value_recovered": 0.0
+      },
+      {
+        "country": "US",
+        "plants": [
+          "NA10"
+        ],
+        "channels": [],
+        "units": 38952,
+        "value_at_risk": 463208.76,
+        "allocated_units": 16187,
+        "destroyed_units": 22765,
+        "value_destroyed": 298038.02,
+        "received_units": 0,
+        "value_recovered": 0.0
       }
     ]
   },

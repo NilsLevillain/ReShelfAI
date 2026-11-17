@@ -490,6 +490,10 @@
           "type": {
             "title": "Type",
             "type": "string"
+          },
+          "value_recovered": {
+            "title": "Value Recovered",
+            "type": "number"
           }
         },
         "required": [
@@ -498,9 +502,75 @@
           "country",
           "lat",
           "lon",
-          "allocated_units"
+          "allocated_units",
+          "value_recovered"
         ],
         "title": "GeoChannel",
+        "type": "object"
+      },
+      "GeoCountry": {
+        "description": "Everything the plan does in one country: stock held there and stock sent there.",
+        "properties": {
+          "allocated_units": {
+            "title": "Allocated Units",
+            "type": "integer"
+          },
+          "channels": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Channels",
+            "type": "array"
+          },
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "destroyed_units": {
+            "title": "Destroyed Units",
+            "type": "integer"
+          },
+          "plants": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Plants",
+            "type": "array"
+          },
+          "received_units": {
+            "title": "Received Units",
+            "type": "integer"
+          },
+          "units": {
+            "title": "Units",
+            "type": "integer"
+          },
+          "value_at_risk": {
+            "title": "Value At Risk",
+            "type": "number"
+          },
+          "value_destroyed": {
+            "title": "Value Destroyed",
+            "type": "number"
+          },
+          "value_recovered": {
+            "title": "Value Recovered",
+            "type": "number"
+          }
+        },
+        "required": [
+          "country",
+          "plants",
+          "channels",
+          "units",
+          "value_at_risk",
+          "allocated_units",
+          "destroyed_units",
+          "value_destroyed",
+          "received_units",
+          "value_recovered"
+        ],
+        "title": "GeoCountry",
         "type": "object"
       },
       "GeoOut": {
@@ -519,6 +589,13 @@
             "title": "Channels",
             "type": "array"
           },
+          "countries": {
+            "items": {
+              "$ref": "#/components/schemas/GeoCountry"
+            },
+            "title": "Countries",
+            "type": "array"
+          },
           "plants": {
             "items": {
               "$ref": "#/components/schemas/GeoPlant"
@@ -530,7 +607,8 @@
         "required": [
           "plants",
           "channels",
-          "arcs"
+          "arcs",
+          "countries"
         ],
         "title": "GeoOut",
         "type": "object"
@@ -544,6 +622,10 @@
           "country": {
             "title": "Country",
             "type": "string"
+          },
+          "destroyed_units": {
+            "title": "Destroyed Units",
+            "type": "integer"
           },
           "lat": {
             "title": "Lat",
@@ -568,6 +650,10 @@
           "value_at_risk": {
             "title": "Value At Risk",
             "type": "number"
+          },
+          "value_destroyed": {
+            "title": "Value Destroyed",
+            "type": "number"
           }
         },
         "required": [
@@ -578,7 +664,9 @@
           "lon",
           "value_at_risk",
           "units",
-          "allocated_units"
+          "allocated_units",
+          "destroyed_units",
+          "value_destroyed"
         ],
         "title": "GeoPlant",
         "type": "object"

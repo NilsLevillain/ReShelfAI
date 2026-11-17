@@ -82,7 +82,7 @@ export function Stock() {
         )}
       </div>
 
-      <GlobePanel geo={state.result.geo} selected={filters.plant} onSelect={(plant) => set({ plant })} />
+      <GlobePanel geo={state.result.geo} selected={filters.plant} onSelect={(plant) => set({ plant })} withPlan={withPlan} />
 
       <div className="rs-cards">
         <div className="rs-card">

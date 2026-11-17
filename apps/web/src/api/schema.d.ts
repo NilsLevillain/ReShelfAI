@@ -418,6 +418,34 @@ export interface components {
             lon: number;
             /** Type */
             type: string;
+            /** Value Recovered */
+            value_recovered: number;
+        };
+        /**
+         * GeoCountry
+         * @description Everything the plan does in one country: stock held there and stock sent there.
+         */
+        GeoCountry: {
+            /** Allocated Units */
+            allocated_units: number;
+            /** Channels */
+            channels: string[];
+            /** Country */
+            country: string;
+            /** Destroyed Units */
+            destroyed_units: number;
+            /** Plants */
+            plants: string[];
+            /** Received Units */
+            received_units: number;
+            /** Units */
+            units: number;
+            /** Value At Risk */
+            value_at_risk: number;
+            /** Value Destroyed */
+            value_destroyed: number;
+            /** Value Recovered */
+            value_recovered: number;
         };
         /** GeoOut */
         GeoOut: {
@@ -425,6 +453,8 @@ export interface components {
             arcs: components["schemas"]["GeoArc"][];
             /** Channels */
             channels: components["schemas"]["GeoChannel"][];
+            /** Countries */
+            countries: components["schemas"]["GeoCountry"][];
             /** Plants */
             plants: components["schemas"]["GeoPlant"][];
         };
@@ -434,6 +464,8 @@ export interface components {
             allocated_units: number;
             /** Country */
             country: string;
+            /** Destroyed Units */
+            destroyed_units: number;
             /** Lat */
             lat: number;
             /** Lon */
@@ -446,6 +478,8 @@ export interface components {
             units: number;
             /** Value At Risk */
             value_at_risk: number;
+            /** Value Destroyed */
+            value_destroyed: number;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
