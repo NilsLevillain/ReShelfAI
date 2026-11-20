@@ -49,9 +49,24 @@ Source tables (SAP style CSV or Parquet) -> SourceAdapter -> Canonical dataset -
 ## Run it
 Python 3.11 or newer and uv, Node 20 and pnpm 9.
 
+Bash (Git Bash, macOS, Linux). On Windows with OneDrive run `export UV_LINK_MODE=copy` first. Start the API in one terminal and the web app in another:
 ```
-cd apps/api && uv sync --all-extras && PYTHONPATH=../../data/generator uv run uvicorn main:app --port 8000   # on Windows with OneDrive first: export UV_LINK_MODE=copy
+cd apps/api && uv sync --all-extras && PYTHONPATH=../../data/generator uv run uvicorn main:app --port 8000
 cd apps/web && pnpm install && pnpm dev
+```
+
+Windows PowerShell (version 5 has no `&&` and no `VAR=value command` syntax). On OneDrive run `$env:UV_LINK_MODE = "copy"` first:
+```
+cd apps/api
+uv sync --all-extras
+$env:PYTHONPATH = "../../data/generator"
+uv run uvicorn main:app --port 8000
+```
+In a second PowerShell window:
+```
+cd apps/web
+pnpm install
+pnpm dev
 ```
 The app shows cached results from `data/precomputed/*.json`. Set `VITE_API_URL=/api` in `apps/web/.env.local` (plain UTF-8, the dev server proxies `/api` to the API on port 8000) to use the live solver and the parameter editor. Banner text says "Cached results" or "Live solver".
 
